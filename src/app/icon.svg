@@ -1,0 +1,5 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="13" fill="#0A1628"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="12.25" fill="none" stroke="#C9A96E" stroke-opacity="0.35" stroke-width="1.5"/>
+  <text x="32" y="34" font-family="Playfair Display, Georgia, 'Times New Roman', serif" font-size="23" font-weight="700" letter-spacing="-0.5" fill="#C9A96E" text-anchor="middle" dominant-baseline="central">WTL</text>
+</svg>

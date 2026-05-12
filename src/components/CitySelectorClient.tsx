@@ -68,9 +68,11 @@ function CityCard({ city }: { city: CityData }) {
       {/* Top accent line */}
       <div className="absolute top-0 inset-x-0 h-px bg-champagne/10" />
 
-      {/* City image — blended into card colour */}
+      {/* City image — blended into card colour.
+          On phones it's nudged to the right half so it clears the left-aligned text;
+          from `sm:` up it spans the card width as before. */}
       <div
-        className="absolute inset-x-4 top-8 pointer-events-none overflow-hidden"
+        className="absolute left-[38%] right-4 sm:inset-x-4 top-8 pointer-events-none overflow-hidden"
         style={{ height: '52%', mixBlendMode: 'screen' }}
       >
         <div
@@ -81,7 +83,7 @@ function CityCard({ city }: { city: CityData }) {
             src={`/city-${city.slug}.png`}
             alt={city.name}
             fill
-            className="object-contain object-bottom"
+            className="object-contain object-right-bottom sm:object-bottom"
             unoptimized
           />
         </div>
