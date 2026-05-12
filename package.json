@@ -1,0 +1,43 @@
+{
+  "name": "wheretolarp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@googlemaps/js-api-loader": "^2.0.2",
+    "@googlemaps/markerclusterer": "^2.6.2",
+    "@internationalized/date": "^3.12.1",
+    "@radix-ui/react-icons": "^1.3.2",
+    "@stripe/react-stripe-js": "^6.3.0",
+    "@stripe/stripe-js": "^9.4.0",
+    "@supabase/supabase-js": "^2.43.1",
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "mapbox-gl": "^3.4.0",
+    "next": "14.2.3",
+    "next-auth": "^4.24.14",
+    "react": "^18",
+    "react-aria-components": "^1.17.0",
+    "react-dom": "^18",
+    "stripe": "^22.1.0",
+    "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/mapbox-gl": "^3.4.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
