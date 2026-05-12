@@ -49,9 +49,23 @@ export default function Footer() {
           <p className="font-sans text-cream/20 text-xs">
             Nobody needs to know.
           </p>
-          <p className="font-sans text-cream/15 text-[11px]">
-            &copy; {new Date().getFullYear()} Where To LARP
-          </p>
+          <div className="flex items-center gap-5">
+            <Link
+              href="/privacy"
+              className="font-sans text-cream/30 text-[11px] tracking-wide hover:text-champagne transition-colors duration-200"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/terms"
+              className="font-sans text-cream/30 text-[11px] tracking-wide hover:text-champagne transition-colors duration-200"
+            >
+              Terms
+            </Link>
+            <p className="font-sans text-cream/15 text-[11px]">
+              &copy; {new Date().getFullYear()} Where To LARP
+            </p>
+          </div>
         </div>
       </div>
     </footer>
