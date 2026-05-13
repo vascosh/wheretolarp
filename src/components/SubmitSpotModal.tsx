@@ -43,13 +43,14 @@ const INITIAL_FORM: FormState = {
   submitter_email: '',
 };
 
-type SubmitStatus = 'approved' | 'rejected' | 'pending' | null;
+const THANK_YOU_MESSAGE =
+  "Thank you for your submission! Keep your eyes peeled for next week's location update...maybe your submission makes the cut!";
 
 export default function SubmitSpotModal({ isOpen, onClose, onSuccess }: SubmitSpotModalProps) {
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
-  const [statusMessage, setStatusMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const [error, setError] = useState('');
 
   if (!isOpen) return null;
@@ -81,8 +82,8 @@ export default function SubmitSpotModal({ isOpen, onClose, onSuccess }: SubmitSp
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Something went wrong');
 
-      setSubmitStatus(data.status);
-      setStatusMessage(data.message ?? '');
+      setSuccessMessage(data.message || THANK_YOU_MESSAGE);
+      setSubmitted(true);
       setForm(INITIAL_FORM);
       onSuccess?.();
     } catch (err) {
@@ -93,14 +94,12 @@ export default function SubmitSpotModal({ isOpen, onClose, onSuccess }: SubmitSp
   }
 
   function handleClose() {
-    setSubmitStatus(null);
-    setStatusMessage('');
+    setSubmitted(false);
+    setSuccessMessage('');
     setError('');
     setForm(INITIAL_FORM);
     onClose();
   }
-
-  const successScreen = submitStatus !== null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -126,48 +125,17 @@ export default function SubmitSpotModal({ isOpen, onClose, onSuccess }: SubmitSp
 
         {/* Content */}
         <div className="overflow-y-auto flex-1 p-4 sm:p-6">
-          {successScreen ? (
+          {submitted ? (
             <div className="text-center py-8">
-              {submitStatus === 'approved' && (
-                <>
-                  <div className="w-14 h-14 rounded-full bg-champagne/15 flex items-center justify-center mx-auto mb-4">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-champagne">
-                      <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <h3 className="font-serif text-navy text-xl mb-3">Spot Approved</h3>
-                  <p className="font-sans text-charcoal/70 text-sm leading-relaxed mb-6">
-                    {statusMessage || 'Your spot passed our curation standard and has been added to the guide. Excellent taste.'}
-                  </p>
-                </>
-              )}
-              {submitStatus === 'pending' && (
-                <>
-                  <div className="w-14 h-14 rounded-full bg-navy/10 flex items-center justify-center mx-auto mb-4">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-navy/60">
-                      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-                      <path d="M12 7v5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  </div>
-                  <h3 className="font-serif text-navy text-xl mb-3">Under Review</h3>
-                  <p className="font-sans text-charcoal/70 text-sm leading-relaxed mb-6">
-                    {statusMessage || 'Your submission is being reviewed by our editors. If it meets the standard, it will be added shortly.'}
-                  </p>
-                </>
-              )}
-              {submitStatus === 'rejected' && (
-                <>
-                  <div className="w-14 h-14 rounded-full bg-charcoal/[0.08] flex items-center justify-center mx-auto mb-4">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-charcoal/40">
-                      <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  </div>
-                  <h3 className="font-serif text-navy text-xl mb-3">Not Quite</h3>
-                  <p className="font-sans text-charcoal/70 text-sm leading-relaxed mb-6">
-                    This spot didn&apos;t meet our curation standards this time. We&apos;re looking for genuinely aspirational, luxury-adjacent, or culturally significant venues.
-                  </p>
-                </>
-              )}
+              <div className="w-14 h-14 rounded-full bg-champagne/15 flex items-center justify-center mx-auto mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-champagne">
+                  <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h3 className="font-serif text-navy text-xl mb-3">Submission Received</h3>
+              <p className="font-sans text-charcoal/70 text-sm leading-relaxed mb-6 max-w-sm mx-auto">
+                {successMessage || THANK_YOU_MESSAGE}
+              </p>
               <button onClick={handleClose} className="btn-champagne">
                 Close
               </button>
@@ -265,10 +233,10 @@ export default function SubmitSpotModal({ isOpen, onClose, onSuccess }: SubmitSp
               <div className="pt-2">
                 <button type="submit" disabled={isSubmitting}
                   className="w-full btn-navy py-3 justify-center disabled:opacity-50 disabled:cursor-not-allowed">
-                  {isSubmitting ? 'Reviewing your spot...' : 'Submit for Review'}
+                  {isSubmitting ? 'Submitting...' : 'Submit for Review'}
                 </button>
                 <p className="text-center font-sans text-xs text-muted mt-3 italic">
-                  Submissions are evaluated automatically. Good spots go live immediately.
+                  Every submission is reviewed by hand.
                 </p>
               </div>
             </form>
