@@ -146,6 +146,25 @@ export async function PATCH(req: NextRequest) {
     read: false,
   });
 
+  // Convert the original "X sent you a friend request" notification on the
+  // accepter's side into a passive "X started following you" entry so it
+  // doesn't keep showing Accept/Decline buttons on every refresh.
+  const { data: sender } = await supabase
+    .from('users')
+    .select('name')
+    .eq('id', friendship.user_id)
+    .single();
+  await supabase
+    .from('notifications')
+    .update({
+      type: 'now_following',
+      title: `${sender?.name ?? 'Someone'} started following you`,
+      body: null,
+    })
+    .eq('user_id', session.user.id)
+    .eq('type', 'friend_request')
+    .filter('data->>friendship_id', 'eq', friendshipId);
+
   return NextResponse.json({ success: true });
 }
 
@@ -185,6 +204,15 @@ export async function DELETE(req: NextRequest) {
         .eq('follower_id', friendship.friend_id).eq('following_id', friendship.user_id),
     ]);
   }
+
+  // Drop any lingering friend_request notification tied to this friendship —
+  // matters most for declines (recipient) and cancels (sender), so the
+  // notification doesn't keep showing dead Accept/Decline buttons.
+  await supabase
+    .from('notifications')
+    .delete()
+    .eq('type', 'friend_request')
+    .filter('data->>friendship_id', 'eq', id);
 
   return NextResponse.json({ success: true });
 }

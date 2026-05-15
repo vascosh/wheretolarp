@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface Notification {
   id: string;
@@ -45,6 +46,16 @@ function notifIcon(type: string) {
       </svg>
     </div>
   );
+  if (type === 'now_following' || type === 'friend_accepted') return (
+    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+      style={{ background: 'rgba(201,169,110,0.12)', border: '1px solid rgba(201,169,110,0.25)' }}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-champagne/80">
+        <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M22 11l-3 3-2-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </div>
+  );
   return (
     <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
       style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -58,6 +69,7 @@ function notifIcon(type: string) {
 
 export default function NotificationBell({ onOpenDMs }: Props) {
   const { data: session } = useSession();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -113,6 +125,13 @@ export default function NotificationBell({ onOpenDMs }: Props) {
     if (n.type === 'new_message' && n.data?.conversation_id) {
       setOpen(false);
       onOpenDMs(n.data.conversation_id);
+      return;
+    }
+    // Tapping a "now following" or "friend accepted" notification opens that user's profile.
+    const profileTarget = n.data?.sender_id ?? n.data?.accepter_id;
+    if ((n.type === 'now_following' || n.type === 'friend_accepted') && profileTarget) {
+      setOpen(false);
+      router.push(`/u/${profileTarget}`);
     }
   }
 
@@ -125,8 +144,11 @@ export default function NotificationBell({ onOpenDMs }: Props) {
       body: JSON.stringify({ friendshipId: n.data.friendship_id }),
     });
     if (res.ok) {
+      // Optimistic: remove the request UI immediately, then refresh so the
+      // server-side conversion to "X started following you" appears in place.
       setNotifications(ns => ns.filter(x => x.id !== n.id));
       setUnreadCount(c => Math.max(0, c - (n.read ? 0 : 1)));
+      fetchNotifs();
     }
     setProcessingIds(s => { const next = new Set(s); next.delete(n.id); return next; });
   }
@@ -136,6 +158,7 @@ export default function NotificationBell({ onOpenDMs }: Props) {
     setProcessingIds(s => new Set(s).add(n.id));
     const res = await fetch(`/api/friends?id=${n.data.friendship_id}`, { method: 'DELETE' });
     if (res.ok) {
+      // Server deletes the row outright on decline; just mirror that locally.
       setNotifications(ns => ns.filter(x => x.id !== n.id));
       setUnreadCount(c => Math.max(0, c - (n.read ? 0 : 1)));
     }
