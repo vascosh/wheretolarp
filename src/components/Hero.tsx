@@ -18,6 +18,13 @@ export default function Hero() {
           <div className="md:col-start-2 flex justify-center">
             <DropCountdown />
           </div>
+          <div className="md:col-start-3 text-center md:text-right">
+            <p className="font-serif text-cream text-xl sm:text-2xl italic leading-tight">
+              A New Way Of{' '}
+              <span className="text-champagne font-semibold">Exploring</span>{' '}
+              Cities
+            </p>
+          </div>
         </div>
       </div>
     </section>
