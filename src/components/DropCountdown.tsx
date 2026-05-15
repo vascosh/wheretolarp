@@ -53,9 +53,11 @@ export default function DropCountdown() {
       <p className="font-sans text-champagne text-[10px] tracking-[0.35em] uppercase mb-2">
         Swatch × Audemars Piguet · Drops 16 May, 10:00
       </p>
-      <div className="flex items-stretch gap-3 sm:gap-7">
+      {/* Stack regions vertically on phones (more breathing room),
+          side-by-side from sm: up. */}
+      <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-2.5 sm:gap-7">
         <Region label="London · BST" t={bst} ready={ready} />
-        <div className="w-px bg-champagne/15" />
+        <div className="h-px w-12 sm:h-auto sm:w-px bg-champagne/15" />
         <Region label="New York · EDT" t={edt} ready={ready} />
       </div>
     </div>
