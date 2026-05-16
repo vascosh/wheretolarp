@@ -317,7 +317,7 @@ function QuizModal({
       <div
         className="relative w-full max-w-lg rounded-3xl p-5 sm:p-8 shadow-2xl"
         style={{
-          background: 'linear-gradient(160deg, #152844 0%, #0e1e35 100%)',
+          background: '#0a1628',
           border: '1px solid rgba(201,169,110,0.15)',
         }}
         onClick={(e) => e.stopPropagation()}
@@ -734,7 +734,7 @@ export default function ChallengesClient() {
       <div
         className="min-h-screen flex items-center justify-center"
         style={{
-          background: 'linear-gradient(160deg, #0e1e35 0%, #152844 60%, #0b1a2e 100%)',
+          background: '#0a1628',
         }}
       >
         <div className="text-center px-6">
@@ -763,7 +763,7 @@ export default function ChallengesClient() {
     <div
       className="min-h-screen pb-20"
       style={{
-        background: 'linear-gradient(160deg, #0e1e35 0%, #152844 60%, #0b1a2e 100%)',
+        background: '#0a1628',
       }}
     >
       {/* Confetti & points animations */}

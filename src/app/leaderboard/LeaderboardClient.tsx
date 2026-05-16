@@ -306,8 +306,7 @@ export default function LeaderboardClient() {
   const myEntry = session?.user?.id ? entries.find(e => e.id === session.user.id) ?? null : null;
 
   return (
-    <div className="min-h-screen pt-nav"
-      style={{ background: 'linear-gradient(160deg, #0e1e35 0%, #152844 60%, #0b1a2e 100%)' }}>
+    <div className="min-h-screen pt-nav bg-navy">
       <div className="fixed inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 70% 35% at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 60%)' }} />
 
