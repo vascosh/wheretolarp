@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import DropCountdown from './DropCountdown';
+import Image from 'next/image';
 import BentoSubmitButton from './BentoSubmitButton';
 
 export interface BentoCity {
@@ -15,11 +15,29 @@ interface Props {
   cities: BentoCity[];
 }
 
-/* City accent gradients & colours per the design spec */
-const CITY_THEMES: Record<string, { bg: string; accent: string }> = {
-  'new-york': { bg: 'linear-gradient(160deg, #0f2318 0%, #162d1e 100%)', accent: '#4a9e6a' },
-  london:     { bg: 'linear-gradient(160deg, #0a1628 0%, #0e1f38 100%)', accent: '#4a7abf' },
-  miami:      { bg: 'linear-gradient(160deg, #0d2535 0%, #103044 100%)', accent: '#4ab5d4' },
+/* City accent gradients, colours, skyline image filter + base fade colour */
+const CITY_THEMES: Record<
+  string,
+  { bg: string; accent: string; imgFilter: string; solid: string }
+> = {
+  'new-york': {
+    bg: 'linear-gradient(160deg, #0f2318 0%, #162d1e 100%)',
+    accent: '#4a9e6a',
+    imgFilter: 'brightness(0.85) saturate(0.9) contrast(1.05)',
+    solid: '#0f2318',
+  },
+  london: {
+    bg: 'linear-gradient(160deg, #0a1628 0%, #0e1f38 100%)',
+    accent: '#4a7abf',
+    imgFilter: 'brightness(0.75) saturate(0.4) sepia(0.5) hue-rotate(185deg) contrast(1.1)',
+    solid: '#0a1628',
+  },
+  miami: {
+    bg: 'linear-gradient(160deg, #0d2535 0%, #103044 100%)',
+    accent: '#4ab5d4',
+    imgFilter: 'brightness(0.75) saturate(0.5) sepia(0.6) hue-rotate(155deg) contrast(1.1)',
+    solid: '#0d2535',
+  },
 };
 
 const CARD_BASE =
@@ -28,10 +46,12 @@ const CARD_BASE =
 export default function BentoLanding({ cities }: Props) {
   return (
     <section className="bg-navy pt-nav pb-10 sm:pb-12 pb-safe">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 md:auto-rows-[minmax(0,1fr)]">
-          <HeroCard />
-          <CountdownCard />
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-8 flex flex-col gap-3 sm:gap-4 lg:gap-5">
+        {/* Full-width horizontal hero bar */}
+        <HeroCard />
+
+        {/* Challenges + Leaderboard side-by-side, under the hero */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-5">
           <FeatureCard
             label="Earn It"
             title="Challenges"
@@ -39,7 +59,6 @@ export default function BentoLanding({ cities }: Props) {
             href="/challenges"
             cta="Take the Challenge"
           />
-          <TaglineCard />
           <FeatureCard
             label="The Standings"
             title="Leaderboard"
@@ -47,120 +66,47 @@ export default function BentoLanding({ cities }: Props) {
             href="/leaderboard"
             cta="View Rankings"
           />
-          <div id="cities" className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 mt-1">
-            {cities.map((c) => (
-              <CityCard key={c.slug} city={c} />
-            ))}
-          </div>
+        </div>
+
+        {/* City cards row */}
+        <div id="cities" className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
+          {cities.map((c) => (
+            <CityCard key={c.slug} city={c} />
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* ─── Hero card (left column, spans 2 rows) ─── */
+/* ─── Hero bar (full-width, horizontal) ─── */
 function HeroCard() {
   return (
     <div
-      className={`${CARD_BASE} md:row-span-2 relative flex flex-col justify-between md:min-h-[440px]`}
+      className={`${CARD_BASE} relative flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10`}
       style={{ borderTop: '1px solid rgba(201,169,110,0.6)' }}
     >
-      <div>
-        <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-4 sm:mb-5">
+      <div className="md:flex-1">
+        <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-3">
           Curated · 03 Cities
         </p>
-        <h1 className="font-serif text-cream text-3xl sm:text-display-md md:text-display-lg font-semibold leading-[1.05] mb-4 sm:mb-5">
+        <h1 className="font-serif text-cream text-3xl sm:text-4xl md:text-display-md font-semibold leading-[1.05] mb-3">
           Start <span className="text-champagne italic">LARPing</span> Now
         </h1>
-        <p className="font-sans text-cream/60 text-[13px] sm:text-base leading-relaxed max-w-md">
+        <p className="font-sans text-cream/60 text-[13px] sm:text-base leading-relaxed max-w-xl">
           Discover the most photogenic, aspirational spots in New York, London, and Miami.
           Dress the part. Show up. Get the photo.
         </p>
       </div>
-      {/* Buttons stack full-width on phones for big tap targets, inline on sm+ */}
-      <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-3 mt-6 sm:mt-8">
+      {/* Buttons: full-width stacked on phones, inline beside the copy on md+ */}
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-2.5 sm:gap-3 md:shrink-0">
         <Link
           href="#cities"
-          className="btn-champagne w-full sm:w-auto justify-center"
+          className="btn-champagne w-full sm:w-auto justify-center whitespace-nowrap"
         >
           Explore Cities
         </Link>
-        <BentoSubmitButton className="btn-navy w-full sm:w-auto justify-center" />
-      </div>
-    </div>
-  );
-}
-
-/* ─── Centre top: drop countdown gradient card ─── */
-function CountdownCard() {
-  return (
-    <div
-      className={`${CARD_BASE} relative overflow-hidden flex flex-col justify-center`}
-      style={{ background: 'linear-gradient(135deg, #1a2d4a 0%, #0a1628 100%)' }}
-    >
-      {/* champagne shimmer */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 90% 60% at 50% 0%, rgba(201,169,110,0.08), transparent 70%)',
-        }}
-      />
-      <div className="relative">
-        <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-4 text-center">
-          Limited Drop
-        </p>
-        <DropCountdown />
-      </div>
-    </div>
-  );
-}
-
-/* ─── Centre bottom: tagline / dark feature card ─── */
-function TaglineCard() {
-  return (
-    <div
-      className={`${CARD_BASE} relative overflow-hidden flex flex-col justify-center min-h-[120px] sm:min-h-[180px]`}
-      style={{ background: '#081222' }}
-    >
-      {/* SVG wave overlay */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <pattern
-            id="bento-wave"
-            x="0"
-            y="0"
-            width="200"
-            height="120"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M0,60 Q50,20 100,60 T200,60"
-              stroke="rgba(201,169,110,0.1)"
-              strokeWidth="1"
-              fill="none"
-            />
-            <path
-              d="M0,90 Q50,50 100,90 T200,90"
-              stroke="rgba(201,169,110,0.07)"
-              strokeWidth="1"
-              fill="none"
-            />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#bento-wave)" />
-      </svg>
-      <div className="relative">
-        <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-3">
-          The Brief
-        </p>
-        <p className="font-serif text-cream text-xl sm:text-2xl md:text-3xl italic leading-tight">
-          A New Way Of{' '}
-          <span className="text-champagne font-semibold">Exploring</span> Cities
-        </p>
+        <BentoSubmitButton className="btn-navy w-full sm:w-auto justify-center whitespace-nowrap" />
       </div>
     </div>
   );
@@ -218,6 +164,33 @@ function CityCard({ city }: { city: BentoCity }) {
           background: `radial-gradient(ellipse at center, ${theme.accent}22, transparent 70%)`,
         }}
       />
+
+      {/* Skyline image — small, blended into the card colour, bottom-right */}
+      <div
+        className={`absolute right-2 pointer-events-none transition-transform duration-700 group-hover:scale-105 ${
+          city.slug === 'london'
+            ? 'w-[56%] h-[62%] bottom-10 sm:bottom-14'
+            : 'w-[52%] h-[58%] bottom-6 sm:bottom-8'
+        }`}
+        style={{ mixBlendMode: 'screen' }}
+      >
+        <div className="relative w-full h-full" style={{ filter: theme.imgFilter }}>
+          <Image
+            src={`/city-${city.slug}.png`}
+            alt={city.name}
+            fill
+            sizes="(max-width: 768px) 50vw, 220px"
+            className="object-contain object-right-bottom"
+            unoptimized
+          />
+        </div>
+      </div>
+      {/* Fade so the skyline melts into the card instead of a hard edge */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-[55%] pointer-events-none"
+        style={{ background: `linear-gradient(to top, ${theme.solid} 20%, transparent 100%)` }}
+      />
+
       <div className="relative">
         <p
           className="font-sans text-[10px] tracking-[0.3em] uppercase mb-3 font-medium"
@@ -228,7 +201,7 @@ function CityCard({ city }: { city: BentoCity }) {
         <h3 className="font-serif text-cream text-3xl sm:text-4xl font-semibold leading-none mb-3 capitalize group-hover:text-champagne transition-colors">
           {city.name}
         </h3>
-        <p className="font-sans text-cream/45 text-xs italic leading-relaxed mb-6 max-w-[240px]">
+        <p className="font-sans text-cream/45 text-xs italic leading-relaxed mb-6 max-w-[150px]">
           {city.tagline}
         </p>
       </div>
