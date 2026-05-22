@@ -1,6 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
+  // The LARP portfolio page is meant to look real — hide site chrome there.
+  if (pathname?.startsWith('/portfolio')) return null;
+
   return (
     <footer className="bg-navy border-t border-champagne/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

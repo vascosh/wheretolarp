@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import SubmitSpotModal from './SubmitSpotModal';
 import AuthModal from './AuthModal';
@@ -30,6 +31,7 @@ function Avatar({ name, image, size = 28 }: { name?: string | null; image?: stri
 }
 
 export default function Navigation() {
+  const pathname = usePathname();
   const [submitOpen, setSubmitOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [authTab, setAuthTab] = useState<'signin' | 'signup'>('signin');
@@ -86,6 +88,10 @@ export default function Navigation() {
     setDmOpen(false);
     setDmInitialConvId(undefined);
   }
+
+  // Hide site chrome on the LARP portfolio page so it looks like a real
+  // standalone app. (Kept after all hooks to respect the rules of hooks.)
+  if (pathname?.startsWith('/portfolio')) return null;
 
   return (
     <>

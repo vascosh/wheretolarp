@@ -53,14 +53,14 @@ export default function BentoLanding({ cities }: Props) {
         {/* Full-width horizontal hero bar */}
         <HeroCard />
 
-        {/* Challenges · Instagram · Leaderboard — under the hero */}
+        {/* Portfolio · Instagram · Leaderboard — under the hero */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
           <FeatureCard
-            label="Earn It"
-            title="Challenges"
-            body="Hit the spots, log the visits, climb the ranks. New challenges every week."
-            href="/challenges"
-            cta="Take the Challenge"
+            label="LARP Mode"
+            title="Portfolio"
+            body="Larp or be Larped"
+            href="/portfolio"
+            cta="Open Portfolio"
           />
           <InstagramCard />
           <FeatureCard
