@@ -178,7 +178,7 @@ function InstagramCard() {
           {INSTAGRAM_HANDLE}
         </h3>
         <p className="font-sans text-cream/55 text-[13px] sm:text-sm leading-relaxed">
-          Behind the scenes, city drops, and the weekly LARP edit.
+          Behind the scenes, city drops, and the daily LARP edit.
         </p>
       </div>
       <span className="inline-flex items-center gap-2 mt-4 sm:mt-6 self-start transition-transform group-hover:translate-x-0.5">
