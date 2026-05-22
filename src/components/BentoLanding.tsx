@@ -43,6 +43,9 @@ const CITY_THEMES: Record<
 const CARD_BASE =
   'rounded-[20px] sm:rounded-[22px] border border-champagne/15 bg-navy shadow-[0_4px_32px_rgba(0,0,0,0.3)] p-5 sm:p-8';
 
+const INSTAGRAM_URL = 'https://www.instagram.com/wheretolarp/';
+const INSTAGRAM_HANDLE = 'wheretolarp';
+
 export default function BentoLanding({ cities }: Props) {
   return (
     <section className="bg-navy pt-nav pb-10 sm:pb-12 pb-safe">
@@ -50,8 +53,8 @@ export default function BentoLanding({ cities }: Props) {
         {/* Full-width horizontal hero bar */}
         <HeroCard />
 
-        {/* Challenges + Leaderboard side-by-side, under the hero */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-5">
+        {/* Challenges · Instagram · Leaderboard — under the hero */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
           <FeatureCard
             label="Earn It"
             title="Challenges"
@@ -59,6 +62,7 @@ export default function BentoLanding({ cities }: Props) {
             href="/challenges"
             cta="Take the Challenge"
           />
+          <InstagramCard />
           <FeatureCard
             label="The Standings"
             title="Leaderboard"
@@ -145,6 +149,59 @@ function FeatureCard({
         <span aria-hidden>→</span>
       </span>
     </Link>
+  );
+}
+
+/* ─── Instagram feature card (slots between Challenges + Leaderboard) ─── */
+function InstagramCard() {
+  return (
+    <a
+      href={INSTAGRAM_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Follow ${INSTAGRAM_HANDLE} on Instagram`}
+      className={`${CARD_BASE} group relative overflow-hidden flex flex-col justify-between transition-colors duration-300 hover:bg-navy-light active:bg-navy-light min-h-[140px] sm:min-h-[180px]`}
+    >
+      {/* Subtle Instagram-tinted hover glow (kept low so the navy palette stays dominant) */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse at top right, rgba(225,48,108,0.10), transparent 65%)',
+        }}
+      />
+      <div className="relative">
+        <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-2 sm:mb-3">
+          Follow Us
+        </p>
+        <h3 className="font-serif text-cream text-xl sm:text-2xl font-semibold leading-tight mb-2 sm:mb-3 group-hover:text-champagne transition-colors">
+          {INSTAGRAM_HANDLE}
+        </h3>
+        <p className="font-sans text-cream/55 text-[13px] sm:text-sm leading-relaxed">
+          Behind the scenes, city drops, and the weekly LARP edit.
+        </p>
+      </div>
+      <span className="inline-flex items-center gap-2 mt-4 sm:mt-6 self-start transition-transform group-hover:translate-x-0.5">
+        {/* Instagram glyph with brand-gradient stroke so it reads as Instagram
+            without clashing with the navy/champagne palette */}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <defs>
+            <linearGradient id="bento-ig-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#feda75" />
+              <stop offset="35%" stopColor="#fa7e1e" />
+              <stop offset="65%" stopColor="#d62976" />
+              <stop offset="100%" stopColor="#962fbf" />
+            </linearGradient>
+          </defs>
+          <rect x="3" y="3" width="18" height="18" rx="5" stroke="url(#bento-ig-grad)" strokeWidth="1.8" />
+          <circle cx="12" cy="12" r="4" stroke="url(#bento-ig-grad)" strokeWidth="1.8" />
+          <circle cx="17.5" cy="6.5" r="1.1" fill="url(#bento-ig-grad)" />
+        </svg>
+        <span className="font-sans text-champagne text-[10px] tracking-[0.15em] uppercase">
+          Open Instagram <span aria-hidden>↗</span>
+        </span>
+      </span>
+    </a>
   );
 }
 
