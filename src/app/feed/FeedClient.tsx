@@ -1,0 +1,342 @@
+'use client';
+
+/**
+ * Feed: a single-column Instagram-style stream of LARP posts, styled to
+ * match the bento landing (navy + champagne accents on cream text).
+ *
+ * Visibility is server-enforced in /api/posts (own + friends + public).
+ * Ranking is server-side too. The page itself just renders, likes, shares,
+ * and lets the author delete their own posts.
+ */
+
+import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import NewPostModal from '@/components/NewPostModal';
+
+interface Author {
+  id: string;
+  name: string | null;
+  username: string | null;
+  avatar_url: string | null;
+  public: boolean;
+}
+interface FeedPost {
+  id: string;
+  image_url: string;
+  media_type: 'image' | 'video';
+  caption: string | null;
+  city_slug: string | null;
+  location_name: string | null;
+  location_lat: number | null;
+  location_lng: number | null;
+  location_place_id: string | null;
+  like_count: number;
+  share_count: number;
+  created_at: string;
+  liked: boolean;
+  is_friend: boolean;
+  is_own: boolean;
+  author: Author;
+}
+
+function timeAgo(iso: string) {
+  const diff = (Date.now() - new Date(iso).getTime()) / 1000;
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return `${Math.floor(diff / 60)}m`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
+  if (diff < 604800) return `${Math.floor(diff / 86400)}d`;
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+export default function FeedClient() {
+  const { data: session } = useSession();
+  const [posts, setPosts] = useState<FeedPost[] | null>(null);
+  const [composerOpen, setComposerOpen] = useState(false);
+  const [pending, setPending] = useState<Set<string>>(new Set());
+
+  const fetchFeed = useCallback(async () => {
+    try {
+      const res = await fetch('/api/posts');
+      if (!res.ok) return;
+      const data = await res.json();
+      setPosts(data.posts ?? []);
+    } catch {/* ignore */}
+  }, []);
+
+  useEffect(() => { fetchFeed(); }, [fetchFeed]);
+
+  async function toggleLike(post: FeedPost) {
+    if (!session?.user?.id) return;
+    if (pending.has(post.id)) return;
+    setPending((s) => new Set(s).add(post.id));
+
+    // Optimistic
+    setPosts((cur) =>
+      cur?.map((p) =>
+        p.id === post.id
+          ? { ...p, liked: !p.liked, like_count: p.like_count + (p.liked ? -1 : 1) }
+          : p
+      ) ?? cur
+    );
+
+    try {
+      const res = await fetch(`/api/posts/${post.id}/like`, { method: 'POST' });
+      if (res.ok) {
+        const data = await res.json();
+        setPosts((cur) =>
+          cur?.map((p) =>
+            p.id === post.id
+              ? { ...p, liked: data.liked, like_count: data.like_count ?? p.like_count }
+              : p
+          ) ?? cur
+        );
+      }
+    } catch {/* ignore */}
+    finally {
+      setPending((s) => { const n = new Set(s); n.delete(post.id); return n; });
+    }
+  }
+
+  async function sharePost(post: FeedPost) {
+    const url = `${window.location.origin}/feed?p=${post.id}`;
+    const text = post.caption ?? `${post.author.name ?? 'A LARPer'} on Where To LARP`;
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Where To LARP', text, url }); return; }
+      catch {/* user cancelled */}
+    }
+    try { await navigator.clipboard.writeText(url); alert('Link copied'); } catch {/* ignore */}
+  }
+
+  async function deletePost(post: FeedPost) {
+    if (!post.is_own) return;
+    if (!confirm('Delete this post?')) return;
+    try {
+      const res = await fetch(`/api/posts/${post.id}`, { method: 'DELETE' });
+      if (res.ok) setPosts((cur) => cur?.filter((p) => p.id !== post.id) ?? cur);
+    } catch {/* ignore */}
+  }
+
+  return (
+    <div className="min-h-screen bg-navy pt-nav pb-12 pb-safe">
+      <div className="max-w-md mx-auto px-3 sm:px-4 pt-6 sm:pt-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6 sm:mb-8">
+          <div>
+            <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-1">
+              The Feed
+            </p>
+            <h1 className="font-serif text-cream text-3xl sm:text-4xl font-semibold leading-tight">
+              Craziest <span className="text-champagne italic">LARPs</span>
+            </h1>
+          </div>
+          {session?.user?.id ? (
+            <button
+              onClick={() => setComposerOpen(true)}
+              className="btn-champagne whitespace-nowrap"
+            >
+              New Post
+            </button>
+          ) : (
+            <Link href="/auth/signin" className="btn-champagne whitespace-nowrap">
+              Sign in
+            </Link>
+          )}
+        </div>
+
+        {/* Feed */}
+        {posts === null ? (
+          <div className="space-y-4">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="rounded-2xl border border-champagne/10 bg-navy-light/40 aspect-[4/5] animate-pulse" />
+            ))}
+          </div>
+        ) : posts.length === 0 ? (
+          <EmptyState onCompose={() => setComposerOpen(true)} signedIn={!!session?.user?.id} />
+        ) : (
+          <ul className="space-y-4 sm:space-y-5">
+            {posts.map((p) => (
+              <li key={p.id}>
+                <PostCard
+                  post={p}
+                  onLike={() => toggleLike(p)}
+                  onShare={() => sharePost(p)}
+                  onDelete={() => deletePost(p)}
+                  signedIn={!!session?.user?.id}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {composerOpen && (
+        <NewPostModal
+          isOpen
+          onClose={() => setComposerOpen(false)}
+          onCreated={fetchFeed}
+        />
+      )}
+    </div>
+  );
+
+  // ── helpers (inner so they close over context-free state shape) ──
+  function EmptyState({ onCompose, signedIn }: { onCompose: () => void; signedIn: boolean }) {
+    return (
+      <div className="rounded-2xl border border-champagne/15 bg-navy/60 shadow-[0_4px_32px_rgba(0,0,0,0.3)] p-8 sm:p-10 text-center">
+        <p className="font-serif text-cream text-xl mb-3">Quiet so far.</p>
+        <p className="font-sans text-cream/50 text-sm leading-relaxed mb-6 max-w-xs mx-auto">
+          When your friends post — or anyone with a public profile does — their LARPs show up here.
+        </p>
+        {signedIn ? (
+          <button onClick={onCompose} className="btn-champagne">Post the first one</button>
+        ) : (
+          <Link href="/auth/signin" className="btn-champagne">Sign in</Link>
+        )}
+      </div>
+    );
+  }
+}
+
+/* ── PostCard (matches the bento card recipe: rounded, champagne/15 border, navy bg) ── */
+
+function PostCard({
+  post, onLike, onShare, onDelete, signedIn,
+}: {
+  post: FeedPost;
+  onLike: () => void;
+  onShare: () => void;
+  onDelete: () => void;
+  signedIn: boolean;
+}) {
+  return (
+    <article className="rounded-2xl border border-champagne/15 bg-navy shadow-[0_4px_32px_rgba(0,0,0,0.3)] overflow-hidden">
+      {/* Author row */}
+      <header className="px-4 sm:px-5 py-3 flex items-center gap-3">
+        <Link href={`/u/${post.author.id}`} className="flex items-center gap-3 min-w-0 flex-1 group">
+          <Avatar name={post.author.name} image={post.author.avatar_url} />
+          <div className="min-w-0">
+            <p className="font-sans text-cream text-sm font-medium leading-tight truncate group-hover:text-champagne transition-colors">
+              {post.author.name ?? 'LARPer'}
+            </p>
+            <p className="font-sans text-cream/35 text-[11px] truncate">
+              {post.location_name ? post.location_name : (post.city_slug ? cityLabel(post.city_slug) : timeAgo(post.created_at))}
+              {post.location_name && (
+                <> · <span className="text-cream/30">{timeAgo(post.created_at)}</span></>
+              )}
+            </p>
+          </div>
+        </Link>
+        {post.is_friend && (
+          <span className="font-sans text-[9px] tracking-[0.2em] uppercase text-champagne/70 px-2 py-0.5 rounded-full border border-champagne/30 hidden sm:inline">
+            Friend
+          </span>
+        )}
+        {post.is_own && (
+          <button
+            onClick={onDelete}
+            aria-label="Delete post"
+            className="text-cream/25 hover:text-red-400/80 transition-colors p-1"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        )}
+      </header>
+
+      {/* Media — image or video */}
+      <div className="block bg-black">
+        {post.media_type === 'video' ? (
+          <video
+            src={post.image_url}
+            className="w-full h-auto max-h-[70vh] object-cover bg-black"
+            controls
+            playsInline
+            preload="metadata"
+          />
+        ) : (
+          <Link href={`/u/${post.author.id}`} className="block">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={post.image_url}
+              alt={post.caption ?? 'LARP'}
+              className="w-full h-auto max-h-[70vh] object-cover"
+              loading="lazy"
+            />
+          </Link>
+        )}
+      </div>
+
+      {/* Actions */}
+      <div className="px-4 sm:px-5 pt-3 flex items-center gap-4">
+        <button
+          onClick={onLike}
+          disabled={!signedIn}
+          aria-label={post.liked ? 'Unlike' : 'Like'}
+          className={`flex items-center gap-1.5 transition-colors ${post.liked ? 'text-champagne' : 'text-cream/55 hover:text-cream'} disabled:opacity-40 disabled:cursor-not-allowed`}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill={post.liked ? 'currentColor' : 'none'}>
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span className="font-sans text-sm tabular-nums">{post.like_count}</span>
+        </button>
+
+        <button
+          onClick={onShare}
+          aria-label="Share"
+          className="flex items-center gap-1.5 text-cream/55 hover:text-cream transition-colors"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span className="font-sans text-sm">Share</span>
+        </button>
+      </div>
+
+      {/* Caption */}
+      {(post.caption || post.author.username) && (
+        <div className="px-4 sm:px-5 pt-2 pb-4 sm:pb-5">
+          <p className="font-sans text-cream/80 text-sm leading-relaxed">
+            {post.author.username && (
+              <span className="font-semibold text-cream mr-1.5">@{post.author.username}</span>
+            )}
+            {post.caption}
+          </p>
+        </div>
+      )}
+    </article>
+  );
+}
+
+function cityLabel(slug: string) {
+  if (slug === 'new-york') return 'New York';
+  if (slug === 'london') return 'London';
+  if (slug === 'miami') return 'Miami';
+  return slug;
+}
+
+function Avatar({ name, image, size = 36 }: { name: string | null; image: string | null; size?: number }) {
+  const initials = (name ?? '?').split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+  if (image) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={image}
+        alt={name ?? ''}
+        referrerPolicy="no-referrer"
+        className="rounded-full object-cover border border-champagne/20 shrink-0"
+        style={{ width: size, height: size }}
+      />
+    );
+  }
+  return (
+    <div
+      className="rounded-full flex items-center justify-center font-sans font-semibold text-navy shrink-0"
+      style={{ width: size, height: size, background: 'linear-gradient(135deg, #C9A96E, #b8944d)', fontSize: size * 0.35 }}
+    >
+      {initials}
+    </div>
+  );
+}

@@ -105,8 +105,12 @@ export default function Navigation() {
               Where To LARP
             </Link>
 
-            {/* Center — Leaderboard & Challenges */}
-            <div className="hidden sm:flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
+            {/* Center — Feed & Leaderboard & Challenges */}
+            <div className="hidden sm:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
+              <Link href="/feed"
+                className="bg-champagne hover:bg-champagne-dark text-navy font-sans font-semibold text-xs tracking-[0.15em] uppercase px-5 py-2.5 rounded-full transition-all duration-200 hover:shadow-lg hover:shadow-champagne/20 hover:-translate-y-px">
+                Feed
+              </Link>
               <Link href="/leaderboard"
                 className="bg-champagne hover:bg-champagne-dark text-navy font-sans font-semibold text-xs tracking-[0.15em] uppercase px-5 py-2.5 rounded-full transition-all duration-200 hover:shadow-lg hover:shadow-champagne/20 hover:-translate-y-px">
                 Leaderboard
@@ -217,6 +221,10 @@ export default function Navigation() {
         {mobileMenuOpen && (
           <div className="sm:hidden bg-cream/97 backdrop-blur-md border-t border-champagne/10 px-4 pt-2 space-y-0.5"
             style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
+            <Link href="/feed" onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center py-4 font-sans font-semibold text-sm tracking-[0.12em] uppercase text-charcoal-light hover:text-champagne transition-colors border-b border-champagne/[0.08]">
+              Feed
+            </Link>
             <Link href="/leaderboard" onClick={() => setMobileMenuOpen(false)}
               className="flex items-center py-4 font-sans font-semibold text-sm tracking-[0.12em] uppercase text-charcoal-light hover:text-champagne transition-colors border-b border-champagne/[0.08]">
               Leaderboard
