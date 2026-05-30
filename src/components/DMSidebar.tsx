@@ -229,8 +229,8 @@ function MessageBubble({ msg, isMe }: { msg: Message; isMe: boolean }) {
   }
 
   return (
-    <div className={clsx('max-w-[78%] rounded-2xl px-3.5 py-2.5 break-words',
-      isMe ? 'rounded-br-sm bg-champagne/[0.18] border border-champagne/25 text-cream' : 'rounded-bl-sm text-cream/85')}
+    <div className={clsx('max-w-[78%] rounded-3xl px-4 py-2.5 break-words',
+      isMe ? 'rounded-br-md bg-champagne/[0.18] border border-champagne/25 text-cream' : 'rounded-bl-md text-cream/85')}
       style={!isMe ? { background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.09)' } : {}}>
 
       {msg.message_type === 'image' && msg.media_url && (
@@ -565,17 +565,20 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
         onClick={() => { if (view === 'thread') backToList(); else onClose(); }}
       />
 
-      {/* Sidebar panel */}
+      {/* Floating bubble panel — softly rounded, detached from screen edges */}
       <div
-        className="fixed right-0 top-0 h-full z-[401] w-full sm:w-[390px] flex flex-col"
-        style={{ background: '#07111d', borderLeft: '1px solid rgba(255,255,255,0.07)' }}
+        className="fixed z-[401] flex flex-col left-3 right-3 sm:left-auto sm:right-6 sm:w-[400px] rounded-3xl overflow-hidden border border-champagne/15 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+        style={{
+          background: '#07111d',
+          top: 'calc(4.5rem + env(safe-area-inset-top))',
+          bottom: 'calc(1rem + env(safe-area-inset-bottom))',
+        }}
         onClick={e => e.stopPropagation()}
       >
         {/* ── Conversations list ─────────────────────────────────────────── */}
         {view === 'list' && (
           <>
-            <div className="px-5 border-b border-white/[0.07] flex items-center justify-between shrink-0"
-              style={{ paddingTop: 'calc(1.25rem + env(safe-area-inset-top))', paddingBottom: '1.25rem' }}>
+            <div className="px-5 py-5 border-b border-white/[0.07] flex items-center justify-between shrink-0">
               <div>
                 <h2 className="font-serif text-cream text-xl font-semibold">Messages</h2>
                 {totalUnread > 0 && (
@@ -655,8 +658,7 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
         {view === 'thread' && selectedConv && (
           <>
             {/* Thread header */}
-            <div className="px-4 border-b border-white/[0.07] flex items-center gap-3 shrink-0"
-              style={{ paddingTop: 'calc(1rem + env(safe-area-inset-top))', paddingBottom: '1rem' }}>
+            <div className="px-4 py-4 border-b border-white/[0.07] flex items-center gap-3 shrink-0">
               <button onClick={backToList}
                 className="text-cream/30 hover:text-cream transition-colors p-1.5 rounded-full hover:bg-white/[0.06] shrink-0">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -819,8 +821,7 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
             )}
 
             {/* Composer */}
-            <div className="px-4 pt-2 border-t border-white/[0.07] shrink-0"
-              style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}>
+            <div className="px-4 pt-2 pb-3 border-t border-white/[0.07] shrink-0">
               <div className="flex items-end gap-2">
                 <button onClick={() => fileInputRef.current?.click()}
                   className="p-2.5 rounded-full text-cream/30 hover:text-champagne hover:bg-champagne/[0.08] transition-all shrink-0 mb-0.5"
