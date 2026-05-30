@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import NewPostModal from '@/components/NewPostModal';
 import FeedDMLauncher from '@/components/FeedDMLauncher';
+import SharePostModal from '@/components/SharePostModal';
 
 interface Author {
   id: string;
@@ -54,6 +55,7 @@ export default function FeedClient() {
   const { data: session } = useSession();
   const [posts, setPosts] = useState<FeedPost[] | null>(null);
   const [composerOpen, setComposerOpen] = useState(false);
+  const [sharingPost, setSharingPost] = useState<FeedPost | null>(null);
   const [pending, setPending] = useState<Set<string>>(new Set());
 
   const fetchFeed = useCallback(async () => {
@@ -97,16 +99,6 @@ export default function FeedClient() {
     finally {
       setPending((s) => { const n = new Set(s); n.delete(post.id); return n; });
     }
-  }
-
-  async function sharePost(post: FeedPost) {
-    const url = `${window.location.origin}/feed?p=${post.id}`;
-    const text = post.caption ?? `${post.author.name ?? 'A LARPer'} on Where To LARP`;
-    if (navigator.share) {
-      try { await navigator.share({ title: 'Where To LARP', text, url }); return; }
-      catch {/* user cancelled */}
-    }
-    try { await navigator.clipboard.writeText(url); alert('Link copied'); } catch {/* ignore */}
   }
 
   async function deletePost(post: FeedPost) {
@@ -161,7 +153,7 @@ export default function FeedClient() {
                 <PostCard
                   post={p}
                   onLike={() => toggleLike(p)}
-                  onShare={() => sharePost(p)}
+                  onShare={() => setSharingPost(p)}
                   onDelete={() => deletePost(p)}
                   signedIn={!!session?.user?.id}
                 />
@@ -181,6 +173,15 @@ export default function FeedClient() {
 
       {/* Floating Messages launcher (left side) */}
       <FeedDMLauncher />
+
+      {sharingPost && (
+        <SharePostModal
+          postId={sharingPost.id}
+          postCaption={sharingPost.caption}
+          authorName={sharingPost.author.name}
+          onClose={() => setSharingPost(null)}
+        />
+      )}
     </div>
   );
 
