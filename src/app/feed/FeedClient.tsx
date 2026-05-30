@@ -13,6 +13,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import NewPostModal from '@/components/NewPostModal';
+import FeedDMLauncher from '@/components/FeedDMLauncher';
 
 interface Author {
   id: string;
@@ -177,6 +178,9 @@ export default function FeedClient() {
           onCreated={fetchFeed}
         />
       )}
+
+      {/* Floating Messages launcher (left side) */}
+      <FeedDMLauncher />
     </div>
   );
 
