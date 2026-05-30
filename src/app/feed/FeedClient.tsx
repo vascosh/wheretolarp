@@ -9,7 +9,7 @@
  * and lets the author delete their own posts.
  */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import NewPostModal from '@/components/NewPostModal';
@@ -248,13 +248,7 @@ function PostCard({
       {/* Media — image or video */}
       <div className="block bg-black">
         {post.media_type === 'video' ? (
-          <video
-            src={post.image_url}
-            className="w-full h-auto max-h-[70vh] object-cover bg-black"
-            controls
-            playsInline
-            preload="metadata"
-          />
+          <FeedVideo src={post.image_url} />
         ) : (
           <Link href={`/u/${post.author.id}`} className="block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -337,6 +331,69 @@ function Avatar({ name, image, size = 36 }: { name: string | null; image: string
       style={{ width: size, height: size, background: 'linear-gradient(135deg, #C9A96E, #b8944d)', fontSize: size * 0.35 }}
     >
       {initials}
+    </div>
+  );
+}
+
+/* ── Instagram-style autoplay video.
+ *    - muted by default (browsers require muted for autoplay)
+ *    - plays when ≥60% in view, pauses when it scrolls out
+ *    - loops
+ *    - small tap-to-unmute speaker icon in the bottom-right */
+function FeedVideo({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // play() returns a promise that can reject if interrupted
+            // — swallowing is fine, the user can manually play
+            el.play().catch(() => {});
+          } else {
+            el.pause();
+          }
+        });
+      },
+      { threshold: [0, 0.6] }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div className="relative">
+      <video
+        ref={videoRef}
+        src={src}
+        className="w-full h-auto max-h-[70vh] object-cover bg-black"
+        muted={muted}
+        loop
+        playsInline
+        autoPlay
+        preload="metadata"
+      />
+      <button
+        onClick={() => setMuted((m) => !m)}
+        aria-label={muted ? 'Unmute' : 'Mute'}
+        className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-black/55 backdrop-blur-sm text-white/85 hover:bg-black/75 hover:text-white transition-colors flex items-center justify-center"
+      >
+        {muted ? (
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M22 9l-6 6M16 9l6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+          </svg>
+        ) : (
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+          </svg>
+        )}
+      </button>
     </div>
   );
 }
