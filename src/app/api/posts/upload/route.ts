@@ -54,13 +54,36 @@ export async function POST(req: NextRequest) {
 
   const path = `${session.user.id}/${Date.now()}.${ext}`;
 
-  const { data, error } = await supabase
+  // First attempt
+  let { data, error } = await supabase
     .storage
     .from('posts')
     .createSignedUploadUrl(path);
 
+  // Bucket may not exist yet — Supabase returns
+  // "The related resource does not exist". Auto-create it (public read) and retry.
+  if (error && /not exist|not found/i.test(error.message)) {
+    const { error: createErr } = await supabase.storage.createBucket('posts', {
+      public: true,
+      fileSizeLimit: 52428800, // 50MB
+    });
+    if (createErr && !/already exists/i.test(createErr.message)) {
+      return NextResponse.json(
+        { error: `Could not create 'posts' storage bucket: ${createErr.message}` },
+        { status: 500 }
+      );
+    }
+    ({ data, error } = await supabase
+      .storage
+      .from('posts')
+      .createSignedUploadUrl(path));
+  }
+
   if (error || !data) {
-    return NextResponse.json({ error: error?.message ?? 'Could not sign URL' }, { status: 500 });
+    return NextResponse.json(
+      { error: `Could not sign upload URL: ${error?.message ?? 'unknown error'}` },
+      { status: 500 }
+    );
   }
 
   const { data: { publicUrl } } = supabase.storage.from('posts').getPublicUrl(path);

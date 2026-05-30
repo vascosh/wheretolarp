@@ -151,6 +151,21 @@ export async function POST(req: NextRequest) {
     .select('id')
     .single();
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) {
+    // Surface common setup misses more clearly:
+    if (/relation .* does not exist|schema cache/i.test(error.message)) {
+      return NextResponse.json(
+        { error: "The `posts` table doesn't exist yet — run supabase/posts_schema.sql in the SQL editor." },
+        { status: 500 }
+      );
+    }
+    if (/violates foreign key/i.test(error.message)) {
+      return NextResponse.json(
+        { error: 'Your user record is missing or stale — try signing out and back in.' },
+        { status: 500 }
+      );
+    }
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
   return NextResponse.json({ id: data.id });
 }
