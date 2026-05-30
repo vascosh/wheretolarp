@@ -8,8 +8,18 @@ import UserActions from '@/components/UserActions';
 import ProfileStats from '@/components/ProfileStats';
 import FriendPlansSection from '@/components/FriendPlansSection';
 
+/** Routes /u/[id] support either a UUID or a custom username. UUID lookup is
+ *  tried first when the slug shape matches; otherwise we look up by username. */
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function lookupKey(slug: string): { field: 'id' | 'username'; value: string } {
+  return UUID_RE.test(slug)
+    ? { field: 'id', value: slug }
+    : { field: 'username', value: slug.toLowerCase() };
+}
+
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const { data } = await supabase.from('users').select('name').eq('id', params.id).single();
+  const { field, value } = lookupKey(params.id);
+  const { data } = await supabase.from('users').select('name').eq(field, value).maybeSingle();
   return { title: data?.name ? `${data.name} — Where To LARP` : 'Profile — Where To LARP' };
 }
 
@@ -40,11 +50,12 @@ type FriendStatus = 'none' | 'pending_sent' | 'pending_received' | 'accepted';
 export default async function PublicProfilePage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
 
+  const { field, value } = lookupKey(params.id);
   const { data: user } = await supabase
     .from('users')
     .select('id, name, bio, avatar_url, username, show_email, email, public_profile, created_at')
-    .eq('id', params.id)
-    .single();
+    .eq(field, value)
+    .maybeSingle();
 
   if (!user) {
     return (

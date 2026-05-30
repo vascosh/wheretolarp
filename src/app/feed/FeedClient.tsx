@@ -218,7 +218,7 @@ function PostCard({
     <article className="rounded-2xl border border-champagne/15 bg-navy shadow-[0_4px_32px_rgba(0,0,0,0.3)] overflow-hidden">
       {/* Author row */}
       <header className="px-4 sm:px-5 py-3 flex items-center gap-3">
-        <Link href={`/u/${post.author.id}`} className="flex items-center gap-3 min-w-0 flex-1 group">
+        <Link href={`/u/${post.author.username ?? post.author.id}`} className="flex items-center gap-3 min-w-0 flex-1 group">
           <Avatar name={post.author.name} image={post.author.avatar_url} />
           <div className="min-w-0">
             <p className="font-sans text-cream text-sm font-medium leading-tight truncate group-hover:text-champagne transition-colors">
@@ -255,7 +255,7 @@ function PostCard({
         {post.media_type === 'video' ? (
           <FeedVideo src={post.image_url} />
         ) : (
-          <Link href={`/u/${post.author.id}`} className="block">
+          <Link href={`/u/${post.author.username ?? post.author.id}`} className="block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={post.image_url}

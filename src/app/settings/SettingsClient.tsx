@@ -332,6 +332,11 @@ export default function SettingsClient({ user }: { user: SettingsUser }) {
                 {usernameStatus === 'available' && (
                   <p className="font-sans text-[11px] text-champagne/50 mt-1">Available!</p>
                 )}
+                {username.trim().length >= 3 && usernameStatus !== 'taken' && usernameStatus !== 'invalid' && (
+                  <p className="font-sans text-[11px] text-cream/30 mt-1.5">
+                    Your profile URL: <span className="text-cream/55">wheretolarp.com/u/{username.trim().toLowerCase()}</span>
+                  </p>
+                )}
               </div>
 
               {/* Email (read-only) */}
