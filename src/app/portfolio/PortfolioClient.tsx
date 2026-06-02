@@ -277,7 +277,7 @@ export default function PortfolioClient() {
       {/* ── Top tab strip ── */}
       <header
         className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/80 bg-black"
-        style={{ borderBottom: `1px solid ${DIVIDER}` }}
+        style={{ borderBottom: `1px solid ${DIVIDER}`, paddingTop: 'env(safe-area-inset-top)' }}
       >
         <div className="px-3 sm:px-4 h-11 flex items-center gap-1 sm:gap-2">
           {/* Discreet back-to-menu. Nearly invisible until hovered. */}

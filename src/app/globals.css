@@ -117,6 +117,16 @@
     background-color: rgba(201, 169, 110, 0.3);
     color: #0A1628;
   }
+
+  /* iOS Safari zooms in when an input is focused if its font-size < 16px.
+     Force ≥16px on phones so the page never jumps. Desktop is unaffected. */
+  @media (max-width: 640px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px;
+    }
+  }
 }
 
 @layer components {

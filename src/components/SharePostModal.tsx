@@ -107,7 +107,10 @@ export default function SharePostModal({ postId, postCaption, authorName, onClos
   }
 
   return (
-    <div className="fixed inset-0 z-[300] flex items-end sm:items-center justify-center p-3 sm:p-6">
+    <div
+      className="fixed inset-0 z-[300] flex items-end sm:items-center justify-center p-3 sm:p-6"
+      style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+    >
       <div className="absolute inset-0 bg-navy/85 backdrop-blur-sm" onClick={onClose} />
       <div className="relative z-10 w-full max-w-sm max-h-[80vh] rounded-3xl border border-champagne/15 bg-navy flex flex-col overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
         {/* Header */}

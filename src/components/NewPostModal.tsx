@@ -117,7 +117,10 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6">
+    <div
+      className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-3 sm:p-6"
+      style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+    >
       <div className="absolute inset-0 bg-navy/85 backdrop-blur-sm" onClick={handleClose} />
       <div className="relative z-10 w-full max-w-lg max-h-[92vh] rounded-2xl border border-champagne/15 bg-navy flex flex-col overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
         {/* Header */}

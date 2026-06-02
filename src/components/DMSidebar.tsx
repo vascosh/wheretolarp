@@ -565,13 +565,15 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
         onClick={() => { if (view === 'thread') backToList(); else onClose(); }}
       />
 
-      {/* Floating bubble panel — softly rounded, detached from screen edges */}
+      {/* Floating bubble panel — softly rounded, detached from screen edges.
+          On phones, sit close to the bottom (the home indicator) so the bubble
+          fills the visible area; on tablet/desktop float between the nav and bottom. */}
       <div
-        className="fixed z-[401] flex flex-col left-3 right-3 sm:left-auto sm:right-6 sm:w-[400px] rounded-3xl overflow-hidden border border-champagne/15 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+        className="fixed z-[401] flex flex-col left-2 right-2 sm:left-auto sm:right-6 sm:w-[400px] rounded-3xl overflow-hidden border border-champagne/15 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
         style={{
           background: '#07111d',
           top: 'calc(4.5rem + env(safe-area-inset-top))',
-          bottom: 'calc(1rem + env(safe-area-inset-bottom))',
+          bottom: 'calc(0.5rem + env(safe-area-inset-bottom))',
         }}
         onClick={e => e.stopPropagation()}
       >
