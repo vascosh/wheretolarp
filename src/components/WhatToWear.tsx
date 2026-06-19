@@ -116,15 +116,14 @@ function WhatToWearModal({
       />
 
       {/* Modal panel */}
-      <div className="relative z-10 bg-cream w-full max-w-lg max-h-[85vh] rounded-lg shadow-modal overflow-hidden animate-modal-enter flex flex-col">
+      <div className="relative z-10 bg-cream w-full max-w-lg max-h-[85vh] shadow-modal overflow-hidden animate-modal-enter flex flex-col border border-champagne/20">
         {/* Header */}
-        <div className="bg-navy px-6 py-6 sm:px-8 sm:py-7 shrink-0">
+        <div className="relative bg-ink px-6 py-7 sm:px-8 sm:py-8 shrink-0">
+          <span className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-champagne to-transparent" />
           <div className="flex items-start justify-between">
             <div>
-              <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-champagne/70 mb-2">
-                What to Wear
-              </p>
-              <h2 className="font-serif text-cream text-xl sm:text-2xl font-semibold leading-snug">
+              <p className="eyebrow mb-3">What to Wear</p>
+              <h2 className="headline-editorial text-cream text-3xl sm:text-4xl">
                 {spotName}
               </h2>
             </div>
@@ -145,7 +144,7 @@ function WhatToWearModal({
           </div>
 
           {/* Tabs inside header */}
-          <div className="flex mt-5 border-b border-cream/10">
+          <div className="flex mt-6 border-b border-champagne/15">
             {(['men', 'women'] as const).map((tab) => (
               <button
                 key={tab}
@@ -188,13 +187,13 @@ export default function WhatToWear({ data, spotName }: WhatToWearProps) {
 
   return (
     <>
-      <div className="border-t border-cream-dark">
+      <div className="border-t border-champagne/15">
         <button
           onClick={(e) => {
             e.stopPropagation();
             setIsOpen(true);
           }}
-          className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-cream-dark/50 transition-colors duration-150"
+          className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-champagne/[0.06] transition-colors duration-200"
         >
           <div className="flex items-center gap-2">
             <svg
@@ -216,7 +215,7 @@ export default function WhatToWear({ data, spotName }: WhatToWearProps) {
                 strokeLinecap="round"
               />
             </svg>
-            <span className="font-sans text-xs tracking-[0.2em] uppercase text-champagne font-medium">
+            <span className="font-sans text-[11px] tracking-[0.25em] uppercase text-champagne-dark font-medium">
               What to Wear
             </span>
           </div>

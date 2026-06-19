@@ -123,13 +123,14 @@ function LARPTogetherModal({
     <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6">
       <div className="absolute inset-0 bg-navy/70 backdrop-blur-[8px] animate-backdrop-enter" onClick={onClose} />
 
-      <div className="relative z-10 bg-cream w-full max-w-md rounded-lg shadow-modal overflow-hidden animate-modal-enter flex flex-col max-h-[85vh]">
+      <div className="relative z-10 bg-cream w-full max-w-md shadow-modal overflow-hidden animate-modal-enter flex flex-col max-h-[85vh] border border-champagne/20">
         {/* Header */}
-        <div className="bg-navy px-6 py-6 sm:px-8 sm:py-7 shrink-0">
+        <div className="relative bg-ink px-6 py-7 sm:px-8 sm:py-8 shrink-0">
+          <span className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-champagne to-transparent" />
           <div className="flex items-start justify-between">
             <div>
-              <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-champagne/70 mb-2">LARP Here</p>
-              <h2 className="font-serif text-cream text-xl sm:text-2xl font-semibold leading-snug">{name}</h2>
+              <p className="eyebrow mb-3">LARP Here</p>
+              <h2 className="headline-editorial text-cream text-3xl sm:text-4xl">{name}</h2>
             </div>
             <button onClick={onClose} className="text-cream/30 hover:text-cream transition-colors duration-200 p-1 -mr-1 -mt-1 rounded-full">
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -287,9 +288,9 @@ function LARPTogetherModal({
               onClick={handleSave}
               disabled={!date || saving}
               className={clsx(
-                'w-full py-3 rounded-full text-xs font-sans font-medium tracking-[0.15em] uppercase transition-all duration-300',
+                'w-full py-3.5 text-[11px] font-sans font-semibold tracking-[0.22em] uppercase transition-all duration-300',
                 date && !saving
-                  ? 'bg-champagne text-navy hover:bg-champagne-dark hover:text-cream cursor-pointer'
+                  ? 'bg-champagne text-navy hover:bg-champagne-light cursor-pointer'
                   : 'bg-charcoal/10 text-charcoal/30 cursor-not-allowed'
               )}
             >
@@ -324,9 +325,9 @@ export default function LARPTogether({
     <>
       <button
         onClick={e => { e.stopPropagation(); setIsOpen(true); }}
-        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 mt-3
-          border border-champagne/30 text-champagne/80 hover:border-champagne hover:text-champagne
-          font-sans text-xs tracking-widest uppercase transition-all duration-200 rounded-full"
+        className="w-full flex items-center justify-center gap-2 py-3 px-4 mt-3
+          border border-champagne/30 text-champagne-dark hover:border-champagne hover:bg-champagne/[0.06]
+          font-sans text-[11px] tracking-[0.22em] uppercase transition-all duration-300"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

@@ -580,11 +580,12 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
         {/* ── Conversations list ─────────────────────────────────────────── */}
         {view === 'list' && (
           <>
-            <div className="px-5 py-5 border-b border-white/[0.07] flex items-center justify-between shrink-0">
+            <div className="px-5 py-5 border-b border-champagne/15 flex items-center justify-between shrink-0">
               <div>
-                <h2 className="font-serif text-cream text-xl font-semibold">Messages</h2>
+                <p className="eyebrow mb-1">Private Wire</p>
+                <h2 className="headline-editorial text-cream text-2xl">Messages</h2>
                 {totalUnread > 0 && (
-                  <p className="font-sans text-[10px] text-champagne/50 mt-0.5 tracking-wide">{totalUnread} unread</p>
+                  <p className="font-sans text-[10px] text-champagne/60 mt-1 tracking-[0.2em] uppercase">{totalUnread} unread</p>
                 )}
               </div>
               <button onClick={onClose}
@@ -609,8 +610,8 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
                     </svg>
                   </div>
                   <div>
-                    <p className="font-sans text-cream/30 text-sm mb-1">No messages yet</p>
-                    <p className="font-sans text-cream/15 text-xs leading-relaxed">
+                    <p className="eyebrow mb-2">No messages yet</p>
+                    <p className="font-sans text-cream/25 text-xs leading-relaxed">
                       Visit a friend&apos;s profile to start a conversation
                     </p>
                   </div>
@@ -630,7 +631,7 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-0.5">
-                          <p className={clsx('font-sans text-sm truncate',
+                          <p className={clsx('font-serif text-sm truncate',
                             conv.unreadCount > 0 ? 'text-cream font-semibold' : 'text-cream/70')}>
                             {conv.other.name ?? conv.other.username ?? 'Unknown'}
                           </p>
@@ -660,7 +661,7 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
         {view === 'thread' && selectedConv && (
           <>
             {/* Thread header */}
-            <div className="px-4 py-4 border-b border-white/[0.07] flex items-center gap-3 shrink-0">
+            <div className="px-4 py-4 border-b border-champagne/15 flex items-center gap-3 shrink-0">
               <button onClick={backToList}
                 className="text-cream/30 hover:text-cream transition-colors p-1.5 rounded-full hover:bg-white/[0.06] shrink-0">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -671,7 +672,7 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
                 <Avatar name={selectedConv.other.name} image={selectedConv.other.avatar_url} size={36} />
               </Link>
               <Link href={`/u/${selectedConv.other.id}`} onClick={onClose} className="flex-1 min-w-0 hover:opacity-80 transition-opacity">
-                <p className="font-sans text-sm text-cream/85 font-medium truncate">
+                <p className="font-serif text-sm text-cream/90 truncate">
                   {selectedConv.other.name ?? selectedConv.other.username ?? 'Unknown'}
                 </p>
                 {selectedConv.other.username && (
@@ -823,7 +824,7 @@ export default function DMSidebar({ isOpen, onClose, initialConvId }: DMSidebarP
             )}
 
             {/* Composer */}
-            <div className="px-4 pt-2 pb-3 border-t border-white/[0.07] shrink-0">
+            <div className="px-4 pt-2 pb-3 border-t border-champagne/15 shrink-0">
               <div className="flex items-end gap-2">
                 <button onClick={() => fileInputRef.current?.click()}
                   className="p-2.5 rounded-full text-cream/30 hover:text-champagne hover:bg-champagne/[0.08] transition-all shrink-0 mb-0.5"

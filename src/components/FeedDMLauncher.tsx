@@ -47,7 +47,7 @@ export default function FeedDMLauncher() {
     <button
       onClick={open}
       aria-label={unread > 0 ? `Messages — ${unread} unread` : 'Messages'}
-      className="group fixed z-30 left-3 sm:left-5 pl-3 pr-4 sm:pl-3.5 sm:pr-5 h-11 sm:h-12 rounded-full border border-champagne/25 bg-navy/85 backdrop-blur-md text-cream shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:border-champagne/60 hover:bg-navy hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center gap-2"
+      className="group fixed z-30 left-3 sm:left-5 pl-3 pr-4 sm:pl-3.5 sm:pr-5 h-11 sm:h-12 rounded-full border border-champagne/30 bg-ink/85 backdrop-blur-md text-cream shadow-[0_4px_24px_rgba(0,0,0,0.45)] hover:border-champagne/70 hover:bg-ink hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center gap-2"
       style={{ bottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
     >
       <span className="relative inline-flex items-center justify-center w-6 h-6 rounded-full bg-champagne/15 text-champagne">
@@ -64,7 +64,7 @@ export default function FeedDMLauncher() {
           </span>
         )}
       </span>
-      <span className="font-sans text-xs tracking-[0.15em] uppercase font-semibold">
+      <span className="font-sans text-[11px] tracking-[0.25em] uppercase font-semibold">
         Messages
       </span>
     </button>

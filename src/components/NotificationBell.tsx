@@ -191,15 +191,15 @@ export default function NotificationBell({ onOpenDMs }: Props) {
 
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-1rem)] rounded-2xl overflow-hidden shadow-modal z-50"
-          style={{ background: '#0a1628', border: '1px solid rgba(255,255,255,0.08)' }}
+          className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-1rem)] rounded-sm overflow-hidden shadow-modal z-50 animate-scale-in"
+          style={{ background: '#060D18', border: '1px solid rgba(201,169,110,0.18)' }}
         >
-          <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between">
-            <p className="font-serif text-cream/80 text-sm font-semibold">Notifications</p>
+          <div className="px-4 py-3.5 border-b border-champagne/12 flex items-center justify-between">
+            <p className="eyebrow">Notifications</p>
             {notifications.some(n => !n.read) && (
               <button
                 onClick={markAllRead}
-                className="font-sans text-[10px] text-champagne/50 hover:text-champagne transition-colors tracking-wide"
+                className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne/50 hover:text-champagne transition-colors"
               >
                 Mark all read
               </button>

@@ -112,23 +112,22 @@ function ProfileCalendar({ plans, onDateSelect, selectedDate }: {
   }
 
   return (
-    <div className="rounded-2xl p-5 select-none"
-      style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.07)' }}>
+    <div className="p-5 select-none border border-champagne/15 bg-navy/40">
       <div className="flex items-center justify-between mb-5">
-        <button onClick={prev} className="w-8 h-8 flex items-center justify-center rounded-full text-cream/40 hover:text-cream hover:bg-white/[0.06] transition-all">
+        <button onClick={prev} aria-label="Previous month" className="w-8 h-8 flex items-center justify-center text-cream/40 hover:text-champagne transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </button>
-        <h3 className="font-serif text-cream text-base font-semibold">
-          {MONTHS[viewMonth]} <span className="text-cream/35 font-normal text-sm">{viewYear}</span>
+        <h3 className="font-display text-cream text-xl">
+          {MONTHS[viewMonth]} <span className="text-champagne/45 italic">{viewYear}</span>
         </h3>
-        <button onClick={next} className="w-8 h-8 flex items-center justify-center rounded-full text-cream/40 hover:text-cream hover:bg-white/[0.06] transition-all">
+        <button onClick={next} aria-label="Next month" className="w-8 h-8 flex items-center justify-center text-cream/40 hover:text-champagne transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </button>
       </div>
 
       <div className="grid grid-cols-7 mb-1">
         {WEEKDAYS.map(d => (
-          <div key={d} className="text-center font-sans text-[10px] tracking-wider uppercase text-cream/20 py-1">{d}</div>
+          <div key={d} className="text-center font-sans text-[10px] tracking-[0.2em] uppercase text-cream/25 py-1">{d}</div>
         ))}
       </div>
 
@@ -159,14 +158,14 @@ function ProfileCalendar({ plans, onDateSelect, selectedDate }: {
         })}
       </div>
 
-      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-white/[0.05]">
+      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-champagne/10">
         <div className="flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-champagne/50 inline-block" />
-          <span className="font-sans text-[10px] text-cream/25 tracking-wide">Plan saved</span>
+          <span className="font-sans text-[10px] text-cream/30 tracking-wide">Plan saved</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-3.5 h-3.5 rounded-sm border border-champagne/15 bg-champagne/[0.06] inline-block" />
-          <span className="font-sans text-[10px] text-cream/25 tracking-wide">Today</span>
+          <span className="font-sans text-[10px] text-cream/30 tracking-wide">Today</span>
         </div>
       </div>
     </div>
@@ -241,31 +240,34 @@ function EditProfileModal({ user, showEmail, onToggleShowEmail, onSaved, onClose
 
   return createPortal(
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-navy/70 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-md rounded-2xl overflow-hidden"
-        style={{ background: '#0e1e32', border: '1px solid rgba(255,255,255,0.08)' }}>
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
-          <h2 className="font-serif text-cream text-lg font-semibold">Edit Profile</h2>
-          <button onClick={onClose} className="text-cream/30 hover:text-cream transition-colors p-1 rounded-full">
+      <div className="absolute inset-0 bg-ink/80 backdrop-blur-[8px]" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-md overflow-hidden bg-ink border border-champagne/20 shadow-[0_8px_48px_rgba(0,0,0,0.5)]"
+        role="dialog" aria-modal="true" aria-label="Edit profile">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-champagne/15">
+          <div>
+            <p className="eyebrow mb-1">Your Dossier</p>
+            <h2 className="headline-editorial text-cream text-2xl">Edit Profile</h2>
+          </div>
+          <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           </button>
         </div>
-        <form onSubmit={handleSave} className="px-6 py-6 space-y-5">
+        <form onSubmit={handleSave} className="px-6 py-6 space-y-6">
           {/* Avatar upload */}
           <div className="flex items-center gap-4">
             <div className="relative shrink-0">
               <Avatar name={name || 'U'} image={avatarUrl || null} size={56} />
               {uploading && (
                 <div className="absolute inset-0 rounded-full flex items-center justify-center"
-                  style={{ background: 'rgba(7,15,26,0.7)' }}>
+                  style={{ background: 'rgba(6,13,24,0.7)' }}>
                   <div className="w-4 h-4 border-2 border-champagne/40 border-t-champagne rounded-full animate-spin" />
                 </div>
               )}
             </div>
             <div className="flex-1">
-              <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/35 mb-2">Profile Photo</p>
+              <p className="eyebrow-muted mb-2">Profile Photo</p>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -277,37 +279,38 @@ function EditProfileModal({ user, showEmail, onToggleShowEmail, onSaved, onClose
                 type="button"
                 disabled={uploading}
                 onClick={() => fileInputRef.current?.click()}
-                className="px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-cream/50 font-sans text-xs tracking-widest uppercase hover:bg-white/[0.07] hover:text-cream/70 transition-all disabled:opacity-40"
+                className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/55 border-b border-champagne/30 pb-1 hover:text-champagne hover:border-champagne transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50"
               >
                 {uploading ? 'Uploading…' : 'Choose Photo'}
               </button>
             </div>
           </div>
           <div>
-            <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-cream/35 mb-2">Name</label>
-            <input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Your name"
-              className="w-full bg-white/[0.04] border border-white/[0.07] rounded-lg px-3 py-2 font-sans text-sm text-cream placeholder:text-cream/15 focus:outline-none focus:border-champagne/35 transition-all" />
+            <label htmlFor="edit-name" className="eyebrow-muted block mb-2">Name</label>
+            <input id="edit-name" type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Your name"
+              className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all" />
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-sans text-sm text-cream/70 mb-0.5">Show email address</p>
-              <p className="font-sans text-xs text-cream/25">Hide your email from the profile header.</p>
+              <p className="font-sans text-sm text-cream/75 mb-0.5">Show email address</p>
+              <p className="font-sans text-xs text-cream/35">Hide your email from the profile header.</p>
             </div>
             <button type="button" onClick={() => setEmailPrivacy(!emailPrivacy)}
-              className={clsx('relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 shrink-0 ml-4',
-                emailPrivacy ? 'bg-champagne' : 'bg-white/10')}>
+              aria-pressed={emailPrivacy} aria-label="Show email address"
+              className={clsx('relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 shrink-0 ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink',
+                emailPrivacy ? 'bg-champagne' : 'bg-cream/15')}>
               <span className={clsx('inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200',
                 emailPrivacy ? 'translate-x-6' : 'translate-x-1')} />
             </button>
           </div>
           {error && <p className="font-sans text-xs text-red-400/70">{error}</p>}
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-4 pt-2">
             <button type="button" onClick={onClose}
-              className="flex-1 py-2.5 rounded-full border border-white/[0.08] text-cream/40 font-sans text-xs tracking-wider uppercase hover:text-cream/60 transition-all">
+              className="flex-1 btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
               Cancel
             </button>
             <button type="submit" disabled={saving}
-              className="flex-1 py-2.5 rounded-full bg-champagne/15 border border-champagne/25 text-champagne font-sans text-xs tracking-wider uppercase hover:bg-champagne/25 transition-all disabled:opacity-50">
+              className="flex-1 btn-editorial disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
               {saving ? 'Saving...' : 'Save'}
             </button>
           </div>
@@ -381,12 +384,15 @@ function AddFriendModal({ onClose, onAdded }: { onClose: () => void; onAdded: ()
 
   return createPortal(
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-navy/70 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-sm rounded-2xl overflow-hidden"
-        style={{ background: '#0e1e32', border: '1px solid rgba(255,255,255,0.08)' }}>
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
-          <h2 className="font-serif text-cream text-lg font-semibold">Add Friend</h2>
-          <button onClick={onClose} className="text-cream/30 hover:text-cream transition-colors p-1">
+      <div className="absolute inset-0 bg-ink/80 backdrop-blur-[8px]" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-sm overflow-hidden bg-ink border border-champagne/20 shadow-[0_8px_48px_rgba(0,0,0,0.5)]"
+        role="dialog" aria-modal="true" aria-label="Add friend">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-champagne/15">
+          <div>
+            <p className="eyebrow mb-1">The Register</p>
+            <h2 className="headline-editorial text-cream text-2xl">Add Member</h2>
+          </div>
+          <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -399,39 +405,40 @@ function AddFriendModal({ onClose, onAdded }: { onClose: () => void; onAdded: ()
             onChange={e => setQuery(e.target.value)}
             placeholder="Search by name…"
             autoFocus
-            className="w-full bg-white/[0.04] border border-white/[0.07] rounded-lg px-4 py-2.5 font-sans text-sm text-cream placeholder:text-cream/15 focus:outline-none focus:border-champagne/35 transition-all"
+            aria-label="Search members by name"
+            className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all"
           />
         </div>
         <div className="px-6 pb-5 min-h-[60px]">
           {searching && (
-            <p className="font-sans text-xs text-cream/25 mt-4 text-center">Searching…</p>
+            <p className="font-display italic text-cream/30 text-sm mt-4 text-center">Searching…</p>
           )}
           {!searching && query.trim().length >= 2 && results.length === 0 && (
-            <p className="font-sans text-xs text-cream/25 mt-4 text-center">No members found.</p>
+            <p className="font-display italic text-cream/30 text-sm mt-4 text-center">No members found.</p>
           )}
           {results.map(r => {
             const isSent = sentIds.has(r.id) || r.status === 'pending_sent';
             const isAccepted = r.status === 'accepted';
             const isPendingReceived = r.status === 'pending_received';
             return (
-              <div key={r.id} className="flex items-center gap-3 py-3 border-b border-white/[0.04] last:border-0">
+              <div key={r.id} className="flex items-center gap-3 py-3.5 border-b border-champagne/10 last:border-0">
                 <Avatar name={r.name} image={r.avatar_url} size={34} />
                 <div className="flex-1 min-w-0">
-                  <p className="font-sans text-sm text-cream/80 truncate">{r.name ?? 'Member'}</p>
+                  <p className="font-serif text-sm text-cream/85 truncate">{r.name ?? 'Member'}</p>
                   {msgs[r.id] && <p className="font-sans text-[10px] text-red-400/60">{msgs[r.id]}</p>}
                 </div>
                 {isAccepted ? (
-                  <span className="font-sans text-[10px] text-cream/30 tracking-widest uppercase">Friends</span>
+                  <span className="eyebrow-muted">Friends</span>
                 ) : isPendingReceived ? (
                   <button onClick={() => acceptRequest(r)}
-                    className="px-3 py-1.5 rounded-full bg-champagne text-navy font-sans text-xs font-semibold hover:bg-champagne/90 transition-all">
+                    className="font-sans text-[10px] font-semibold tracking-[0.2em] uppercase bg-champagne text-navy px-4 py-2 hover:bg-champagne-light transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                     Accept
                   </button>
                 ) : isSent ? (
-                  <span className="font-sans text-[10px] text-cream/30 tracking-widest uppercase">Sent</span>
+                  <span className="eyebrow-muted">Sent</span>
                 ) : (
                   <button onClick={() => sendRequest(r)}
-                    className="px-3 py-1.5 rounded-full bg-champagne/10 border border-champagne/20 text-champagne font-sans text-xs tracking-widest uppercase hover:bg-champagne/20 transition-all">
+                    className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne border border-champagne/30 px-4 py-2 hover:border-champagne hover:bg-champagne/5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                     Add
                   </button>
                 )}
@@ -546,20 +553,21 @@ function PlanDetailModal({ plan, friends, onClose }: {
 
   return createPortal(
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-navy/70 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-md rounded-2xl overflow-hidden flex flex-col max-h-[85vh]"
-        style={{ background: '#0e1e32', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="absolute inset-0 bg-ink/80 backdrop-blur-[8px]" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-md overflow-hidden flex flex-col max-h-[85vh] bg-ink border border-champagne/20 shadow-[0_8px_48px_rgba(0,0,0,0.5)]"
+        role="dialog" aria-modal="true" aria-label={plan.spot_name}>
 
         {/* Header */}
-        <div className="px-6 py-5 border-b border-white/[0.06] shrink-0">
-          <div className="flex items-start justify-between">
+        <div className="px-6 py-5 border-b border-champagne/15 shrink-0">
+          <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <h2 className="font-serif text-cream text-xl font-semibold leading-snug mb-1">{plan.spot_name}</h2>
+              <p className="eyebrow mb-2">An Engagement</p>
+              <h2 className="headline-editorial text-cream text-2xl sm:text-3xl leading-snug mb-1">{plan.spot_name}</h2>
               {plan.spot_neighborhood && (
-                <p className="font-sans text-xs text-cream/35">{plan.spot_neighborhood}</p>
+                <p className="font-sans text-xs text-cream/40 tracking-wide">{plan.spot_neighborhood}</p>
               )}
             </div>
-            <button onClick={onClose} className="text-cream/30 hover:text-cream transition-colors p-1 -mr-1 -mt-1">
+            <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 -mr-1 -mt-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm shrink-0">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
@@ -571,8 +579,8 @@ function PlanDetailModal({ plan, friends, onClose }: {
           {/* Details */}
           <div className="space-y-3">
             {plan.spot_category && (
-              <span className="inline-block font-sans text-[9px] tracking-[0.12em] uppercase px-3 py-1 rounded-full"
-                style={{ background: `${labelColor}15`, color: labelColor, border: `1px solid ${labelColor}25` }}>
+              <span className="inline-block font-sans text-[9px] tracking-[0.12em] uppercase px-3 py-1"
+                style={{ background: `${labelColor}15`, color: labelColor, border: `1px solid ${labelColor}30` }}>
                 {plan.spot_category}
               </span>
             )}
@@ -581,7 +589,7 @@ function PlanDetailModal({ plan, friends, onClose }: {
                 <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
                 <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
-              <span className="font-sans text-sm text-cream/70">{dateStr}</span>
+              <span className="font-sans text-sm text-cream/75">{dateStr}</span>
             </div>
             {plan.plan_time && (
               <div className="flex items-center gap-3">
@@ -589,29 +597,28 @@ function PlanDetailModal({ plan, friends, onClose }: {
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
                   <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
-                <span className="font-sans text-sm text-cream/70">{formatTime(plan.plan_time)}</span>
+                <span className="font-sans text-sm text-cream/75">{formatTime(plan.plan_time)}</span>
               </div>
             )}
             {plan.spot_description && (
-              <p className="font-sans text-xs text-cream/30 leading-relaxed">{plan.spot_description}</p>
+              <p className="font-sans text-xs text-cream/40 leading-relaxed">{plan.spot_description}</p>
             )}
             {plan.notes && (
-              <p className="font-sans text-xs text-cream/25 italic">{plan.notes}</p>
+              <p className="font-display italic text-sm text-cream/40">{plan.notes}</p>
             )}
           </div>
 
           {/* Invite Friends section */}
           {friends.length > 0 && (
             <div>
-              <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/25 mb-3">Invite Friends</p>
+              <p className="eyebrow-muted mb-3">Invite Members</p>
               <div className="space-y-2">
                 {friends.map(f => (
-                  <div key={f.id} className="flex items-center gap-3 p-2.5 rounded-xl"
-                    style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div key={f.id} className="flex items-center gap-3 p-2.5 border border-champagne/10">
                     <Avatar name={f.name} image={f.avatar_url} size={30} />
-                    <p className="font-sans text-sm text-cream/60 flex-1 truncate">{f.name ?? f.email}</p>
+                    <p className="font-serif text-sm text-cream/65 flex-1 truncate">{f.name ?? f.email}</p>
                     {invitedFriends.has(f.id) ? (
-                      <span className="font-sans text-[10px] text-champagne/60 tracking-wide flex items-center gap-1">
+                      <span className="eyebrow-muted !text-champagne/60 flex items-center gap-1">
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
                           <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
@@ -619,7 +626,7 @@ function PlanDetailModal({ plan, friends, onClose }: {
                       </span>
                     ) : (
                       <button onClick={() => inviteFriend(f.id)} disabled={invitingFriend === f.id}
-                        className="px-3 py-1 rounded-full bg-champagne/10 border border-champagne/20 text-champagne font-sans text-[10px] tracking-wider uppercase hover:bg-champagne/20 transition-all disabled:opacity-50">
+                        className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne border border-champagne/30 px-3 py-1.5 hover:border-champagne hover:bg-champagne/5 transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                         {invitingFriend === f.id ? '…' : 'Invite'}
                       </button>
                     )}
@@ -631,9 +638,9 @@ function PlanDetailModal({ plan, friends, onClose }: {
           )}
 
           {/* Share link + Google Calendar */}
-          <div className="space-y-3 pt-2 border-t border-white/[0.05]">
+          <div className="space-y-3 pt-4 border-t border-champagne/10">
             <button onClick={handleCopyLink} disabled={loadingToken}
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-full bg-champagne/10 border border-champagne/20 text-champagne font-sans text-xs tracking-wider uppercase hover:bg-champagne/20 transition-all disabled:opacity-50">
+              className="w-full btn-editorial-ghost disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
                 <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -642,7 +649,7 @@ function PlanDetailModal({ plan, friends, onClose }: {
             </button>
 
             <a href={buildGoogleCalendarUrl()} target="_blank" rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-full border border-white/[0.08] text-cream/40 font-sans text-xs tracking-wider uppercase hover:text-cream/60 hover:border-white/[0.15] transition-all">
+              className="w-full inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-champagne/15 text-cream/45 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all hover:text-cream/70 hover:border-champagne/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
                 <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
                 <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -776,40 +783,43 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
   }
 
   return (
-    <div className="min-h-screen pt-nav"
-      style={{ background: 'linear-gradient(160deg, #070f1a 0%, #0a1628 60%, #060d18 100%)' }}>
+    <div className="min-h-screen pt-nav bg-ink text-cream">
       <div className="fixed inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 50% at 30% 20%, rgba(201,169,110,0.05) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(ellipse 70% 50% at 30% 20%, rgba(201,169,110,0.06) 0%, transparent 70%)' }} />
 
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-10">
 
-        {/* User header */}
-        <div className="flex items-start gap-4 mb-8 sm:mb-10">
-          <Avatar name={displayUser.name} image={displayUser.image} size={52} />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="font-serif text-cream text-xl sm:text-2xl font-semibold leading-tight">{displayUser.name ?? 'Member'}</h1>
-              <button onClick={() => setEditProfileOpen(true)}
-                className="text-cream/20 hover:text-champagne transition-colors p-1 rounded-full hover:bg-white/[0.05]"
-                title="Edit profile">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                  <path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+        {/* Member dossier header */}
+        <div className="mb-8 sm:mb-10">
+          <p className="eyebrow mb-5">Your Dossier</p>
+          <div className="flex items-start gap-5">
+            <Avatar name={displayUser.name} image={displayUser.image} size={64} />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-3 flex-wrap">
+                <h1 className="headline-editorial text-cream text-3xl sm:text-4xl">{displayUser.name ?? 'Member'}</h1>
+                <button onClick={() => setEditProfileOpen(true)}
+                  className="text-cream/30 hover:text-champagne transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm"
+                  aria-label="Edit profile" title="Edit profile">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                    <path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+              {username && (
+                <p className="font-sans text-champagne/55 text-xs tracking-[0.2em] mt-1">@{username}</p>
+              )}
+              {bio && (
+                <p className="font-display italic text-cream/50 text-base leading-relaxed mt-2 max-w-sm">{bio}</p>
+              )}
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button onClick={() => signOut({ callbackUrl: '/' })}
+                className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/30 border border-champagne/15 px-4 py-2.5 hover:text-champagne hover:border-champagne/40 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                Sign out
               </button>
             </div>
-            {username && (
-              <p className="font-sans text-champagne/50 text-xs tracking-wider">@{username}</p>
-            )}
-            {bio && (
-              <p className="font-sans text-cream/45 text-sm leading-relaxed mt-1.5 max-w-sm">{bio}</p>
-            )}
           </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <button onClick={() => signOut({ callbackUrl: '/' })}
-              className="px-3.5 py-2 rounded-full border border-white/[0.06] bg-white/[0.02] text-cream/25 hover:text-cream/50 font-sans text-xs tracking-wide transition-all duration-200">
-              Sign out
-            </button>
-          </div>
+          <div className="rule-champagne-dim mt-7" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
@@ -821,11 +831,11 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
             {/* Plans for selected date */}
             {selectedDate && (
               <div>
-                <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/25 mb-3">
+                <p className="eyebrow-muted mb-3">
                   {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                 </p>
                 {plansForSelectedDate.length === 0 ? (
-                  <p className="font-sans text-sm text-cream/20 italic">Nothing planned.</p>
+                  <p className="font-display italic text-cream/30 text-base">Nothing planned.</p>
                 ) : (
                   <div className="space-y-3">
                     {plansForSelectedDate.map(p => (
@@ -837,12 +847,12 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
             )}
 
             {/* Tabs */}
-            <div className="flex border-b border-white/[0.06]">
+            <div className="flex border-b border-champagne/15">
               {(['plans', 'settings'] as const).map(t => (
                 <button key={t} onClick={() => setActiveTab(t)}
                   className={clsx(
-                    'font-sans text-xs tracking-[0.12em] uppercase pb-3 mr-5 border-b-2 transition-all duration-200 capitalize',
-                    activeTab === t ? 'border-champagne text-champagne' : 'border-transparent text-cream/25 hover:text-cream/50'
+                    'font-sans text-[11px] tracking-[0.25em] uppercase pb-3 mr-7 border-b-2 transition-all duration-200 -mb-px focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm',
+                    activeTab === t ? 'border-champagne text-champagne' : 'border-transparent text-cream/30 hover:text-cream/60'
                   )}>
                   {t === 'plans' ? `Plans (${upcomingPlans.length})` : 'Settings'}
                 </button>
@@ -855,18 +865,17 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                 {/* Pending friend requests */}
                 {pending.length > 0 && (
                   <div className="space-y-2 pb-2">
-                    <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/25">Friend Requests</p>
+                    <p className="eyebrow-muted">Friend Requests</p>
                     {pending.map(p => (
-                      <div key={p.friendshipId} className="flex items-center gap-3 p-3 rounded-2xl"
-                        style={{ background: 'rgba(168,200,232,0.05)', border: '1px solid rgba(168,200,232,0.1)' }}>
+                      <div key={p.friendshipId} className="flex items-center gap-3 p-3 border border-champagne/15 bg-champagne/[0.04]">
                         <Avatar name={p.name} image={p.avatar_url} size={32} />
-                        <p className="flex-1 font-sans text-sm text-cream/70 truncate">{p.name ?? 'Someone'}</p>
+                        <p className="flex-1 font-serif text-sm text-cream/75 truncate">{p.name ?? 'Someone'}</p>
                         <button onClick={() => declineFriend(p.friendshipId)}
-                          className="px-3 py-1.5 rounded-full border border-white/[0.1] text-cream/30 font-sans text-xs tracking-widest uppercase hover:text-cream/50 transition-all">
+                          className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/35 border-b border-transparent hover:text-cream/60 hover:border-cream/30 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50">
                           Decline
                         </button>
                         <button onClick={() => acceptFriend(p.friendshipId)}
-                          className="px-3 py-1.5 rounded-full bg-champagne text-navy font-sans text-xs font-semibold hover:bg-champagne/90 transition-all">
+                          className="font-sans text-[10px] font-semibold tracking-[0.2em] uppercase bg-champagne text-navy px-4 py-2 hover:bg-champagne-light transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                           Accept
                         </button>
                       </div>
@@ -874,11 +883,10 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                   </div>
                 )}
                 {upcomingPlans.length === 0 ? (
-                  <div className="rounded-2xl p-8 text-center"
-                    style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                    <p className="font-serif text-cream/25 text-lg mb-2">No plans yet</p>
-                    <p className="font-sans text-cream/15 text-xs mb-4">Browse a city and tap &ldquo;LARP here together&rdquo; to save.</p>
-                    <Link href="/" className="inline-block px-5 py-2 rounded-full bg-champagne/10 border border-champagne/20 text-champagne font-sans text-xs tracking-widest uppercase hover:bg-champagne/20 transition-all">
+                  <div className="border border-champagne/15 bg-navy/40 p-10 text-center">
+                    <p className="headline-editorial text-cream/35 text-3xl mb-3">No plans yet</p>
+                    <p className="font-sans text-cream/30 text-xs mb-6">Browse a city and tap &ldquo;LARP here together&rdquo; to save.</p>
+                    <Link href="/" className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                       Browse Cities
                     </Link>
                   </div>
@@ -892,27 +900,28 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
             {activeTab === 'settings' && (
               <div className="space-y-8">
                 <div>
-                  <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/30 mb-4">Edit Profile</p>
-                  <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <p className="font-sans text-sm text-cream/50 mb-3">Update your name, avatar, and privacy settings.</p>
+                  <p className="eyebrow-muted mb-4">Edit Profile</p>
+                  <div className="border border-champagne/15 bg-navy/40 p-5">
+                    <p className="font-sans text-sm text-cream/55 mb-4">Update your name, avatar, and privacy settings.</p>
                     <button onClick={() => setEditProfileOpen(true)}
-                      className="px-5 py-2 rounded-full bg-champagne/15 border border-champagne/25 text-champagne font-sans text-xs tracking-widest uppercase hover:bg-champagne/25 transition-all">
+                      className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                       Edit Profile
                     </button>
                   </div>
                 </div>
 
                 <div>
-                  <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/30 mb-4">Privacy</p>
-                  <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <p className="eyebrow-muted mb-4">Privacy</p>
+                  <div className="border border-champagne/15 bg-navy/40 p-5">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-sans text-sm text-cream/70 mb-0.5">Show email address</p>
-                        <p className="font-sans text-xs text-cream/25 leading-relaxed">
+                        <p className="font-sans text-sm text-cream/75 mb-0.5">Show email address</p>
+                        <p className="font-sans text-xs text-cream/35 leading-relaxed">
                           When off, your email is hidden — useful while streaming or sharing your screen.
                         </p>
                       </div>
                       <button
+                        aria-pressed={showEmail} aria-label="Show email address"
                         onClick={() => {
                           const newVal = !showEmail;
                           setShowEmail(newVal);
@@ -923,8 +932,8 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                           });
                         }}
                         className={clsx(
-                          'relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 shrink-0 ml-4',
-                          showEmail ? 'bg-champagne' : 'bg-white/10'
+                          'relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 shrink-0 ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink',
+                          showEmail ? 'bg-champagne' : 'bg-cream/15'
                         )}
                       >
                         <span className={clsx(
@@ -960,26 +969,26 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                 ? Math.min(100, ((seasonXP - current.threshold) / (next.threshold - current.threshold)) * 100)
                 : 100;
               return (
-                <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div className="border border-champagne/15 bg-navy/40 p-5">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/25">LARP Level</p>
+                    <p className="eyebrow-muted">LARP Level</p>
                     <span className="font-sans text-[10px] font-semibold tabular-nums" style={{ color: current.color }}>{seasonXP} XP</span>
                   </div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-sans text-xs font-semibold" style={{ color: current.color }}>{current.name}</span>
-                    {next && <span className="font-sans text-[10px] text-cream/25">{next.name}</span>}
+                    <span className="font-display text-base" style={{ color: current.color }}>{current.name}</span>
+                    {next && <span className="font-sans text-[10px] text-cream/30 tracking-wider">{next.name}</span>}
                   </div>
-                  <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
-                    <div className="h-full rounded-full transition-all duration-700"
+                  <div className="h-1.5 overflow-hidden" style={{ background: 'rgba(201,169,110,0.1)' }}>
+                    <div className="h-full transition-all duration-700"
                       style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${current.color}99, ${current.color})`, boxShadow: `0 0 8px ${current.color}55` }} />
                   </div>
                   {next && (
-                    <p className="font-sans text-[10px] text-cream/20 mt-2 text-right tabular-nums">
+                    <p className="font-sans text-[10px] text-cream/30 mt-2 text-right tabular-nums">
                       {next.threshold - seasonXP} XP to {next.name}
                     </p>
                   )}
                   {!next && (
-                    <p className="font-sans text-[10px] mt-2 text-center" style={{ color: current.color }}>Max Tier Reached</p>
+                    <p className="font-sans text-[10px] tracking-[0.2em] uppercase mt-2 text-center" style={{ color: current.color }}>Max Tier Reached</p>
                   )}
                 </div>
               );
@@ -987,22 +996,19 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
 
             <button
               onClick={() => setAddFriendOpen(true)}
-              className="w-full flex items-center justify-center gap-2 rounded-2xl py-3 font-sans text-xs tracking-widest uppercase transition-colors"
-              style={{ background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', color: 'rgba(201,169,110,0.7)' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(201,169,110,0.13)'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(201,169,110,0.08)'; }}
+              className="btn-editorial-ghost w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                 <circle cx="9" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.5" />
                 <path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 <path d="M19 8v6M22 11h-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
-              Add Friends
+              Add Members
             </button>
 
-            <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.05)' }}>
-              <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/25 mb-4">Stats</p>
-              <div className="space-y-4">
+            <div className="border border-champagne/15 bg-navy/40 p-5">
+              <p className="eyebrow-muted mb-5">Stats</p>
+              <div className="space-y-5">
                 {[
                   { value: plans.length, label: 'Total Plans', onClick: undefined },
                   { value: followingCount, label: 'Following', onClick: () => setFollowModal('following') },
@@ -1011,35 +1017,34 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                 ].map(({ value, label, onClick }, i, arr) => (
                   <div key={label}>
                     {onClick ? (
-                      <button onClick={onClick} className="text-left group w-full">
-                        <p className="font-serif text-champagne text-3xl font-semibold leading-none group-hover:text-champagne/70 transition-colors">{value}</p>
-                        <p className="font-sans text-[10px] tracking-widest uppercase text-cream/25 mt-1 group-hover:text-cream/40 transition-colors underline underline-offset-2 decoration-cream/10">{label}</p>
+                      <button onClick={onClick} className="text-left group w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
+                        <p className="font-display text-champagne text-3xl leading-none group-hover:text-champagne-light transition-colors">{value}</p>
+                        <p className="eyebrow-muted mt-1.5 group-hover:text-champagne/70 transition-colors">{label}</p>
                       </button>
                     ) : (
                       <>
-                        <p className="font-serif text-champagne text-3xl font-semibold leading-none">{value}</p>
-                        <p className="font-sans text-[10px] tracking-widest uppercase text-cream/25 mt-1">{label}</p>
+                        <p className="font-display text-champagne text-3xl leading-none">{value}</p>
+                        <p className="eyebrow-muted mt-1.5">{label}</p>
                       </>
                     )}
-                    {i < arr.length - 1 && <div className="h-px bg-white/[0.05] mt-4" />}
+                    {i < arr.length - 1 && <div className="rule-champagne-dim mt-5" />}
                   </div>
                 ))}
               </div>
             </div>
 
             {upcomingPlans[0] && (
-              <div className="rounded-2xl p-5 cursor-pointer hover:bg-white/[0.04] transition-colors" onClick={() => setSelectedPlan(upcomingPlans[0])}
-                style={{ background: 'rgba(201,169,110,0.05)', border: '1px solid rgba(201,169,110,0.1)' }}>
-                <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne/40 mb-3">Next LARP</p>
-                <p className="font-serif text-cream text-base font-semibold leading-snug mb-1">{upcomingPlans[0].spot_name}</p>
+              <button className="w-full text-left border border-champagne/15 bg-champagne/[0.04] p-5 cursor-pointer hover:bg-champagne/[0.07] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink" onClick={() => setSelectedPlan(upcomingPlans[0])}>
+                <p className="eyebrow mb-3">Next LARP</p>
+                <p className="font-display text-cream text-xl leading-snug mb-1">{upcomingPlans[0].spot_name}</p>
                 {upcomingPlans[0].spot_neighborhood && (
-                  <p className="font-sans text-xs text-cream/35 mb-2">{upcomingPlans[0].spot_neighborhood}</p>
+                  <p className="font-sans text-xs text-cream/40 mb-2 tracking-wide">{upcomingPlans[0].spot_neighborhood}</p>
                 )}
-                <p className="font-sans text-xs text-champagne/50">
+                <p className="font-sans text-xs text-champagne/55 tracking-wide">
                   {new Date(upcomingPlans[0].plan_date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
                   {upcomingPlans[0].plan_time && ` · ${formatTime(upcomingPlans[0].plan_time)}`}
                 </p>
-              </div>
+              </button>
             )}
           </div>
         </div>
@@ -1092,27 +1097,26 @@ function PlanCard({ plan, onDelete, deleting, onClick }: { plan: Plan; onDelete:
   }
 
   return (
-    <div className="rounded-2xl p-5 flex items-start gap-4 group cursor-pointer hover:bg-white/[0.04] transition-colors"
-      style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.06)' }}
+    <div className="border border-champagne/15 bg-navy/40 p-5 flex items-start gap-4 group cursor-pointer hover:bg-white/[0.03] transition-colors"
       onClick={onClick}>
       <div className="shrink-0 text-center" style={{ minWidth: 38 }}>
-        <p className="font-sans text-[9px] tracking-widest uppercase" style={{ color: labelColor }}>
+        <p className="font-sans text-[9px] tracking-[0.2em] uppercase" style={{ color: labelColor }}>
           {new Date(plan.plan_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}
         </p>
-        <p className="font-serif text-cream text-2xl font-semibold leading-none">
+        <p className="font-display text-cream text-2xl leading-none">
           {new Date(plan.plan_date + 'T00:00:00').getDate()}
         </p>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="font-serif text-cream text-base font-semibold leading-snug mb-0.5">{plan.spot_name}</p>
+        <p className="font-display text-cream text-lg leading-snug mb-0.5">{plan.spot_name}</p>
         {plan.spot_neighborhood && (
-          <p className="font-sans text-xs mb-1.5" style={{ color: labelColor, opacity: 0.6 }}>{plan.spot_neighborhood}</p>
+          <p className="font-sans text-xs mb-1.5 tracking-wide" style={{ color: labelColor, opacity: 0.6 }}>{plan.spot_neighborhood}</p>
         )}
         <div className="flex items-center gap-2.5 flex-wrap">
-          {plan.plan_time && <span className="font-sans text-[10px] text-cream/25">{formatTime(plan.plan_time)}</span>}
+          {plan.plan_time && <span className="font-sans text-[10px] text-cream/30 tracking-wide">{formatTime(plan.plan_time)}</span>}
           {plan.spot_category && (
-            <span className="font-sans text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full"
-              style={{ background: `${labelColor}12`, color: labelColor }}>
+            <span className="font-sans text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 border"
+              style={{ background: `${labelColor}12`, color: labelColor, borderColor: `${labelColor}30` }}>
               {plan.spot_category}
             </span>
           )}

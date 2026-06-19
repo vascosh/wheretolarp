@@ -123,16 +123,17 @@ function CategoryIcon({ category, className }: { category: string; className?: s
 // ── Skeleton Card ──────────────────────────────────────────────────
 function SkeletonCard() {
   return (
-    <div className="rounded-2xl p-5 animate-pulse" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+    <div className="p-5 sm:p-6 animate-pulse" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,169,110,0.12)' }}>
       <div className="flex items-start gap-4">
-        <div className="w-10 h-10 rounded-xl bg-white/[0.06]" />
+        <div className="w-7 sm:w-9 h-6 bg-white/[0.05]" />
+        <div className="w-10 h-10 bg-white/[0.06]" />
         <div className="flex-1 space-y-3">
-          <div className="h-4 w-32 rounded bg-white/[0.06]" />
-          <div className="h-3 w-48 rounded bg-white/[0.04]" />
+          <div className="h-4 w-32 bg-white/[0.06]" />
+          <div className="h-3 w-48 bg-white/[0.04]" />
         </div>
-        <div className="h-6 w-16 rounded-full bg-white/[0.06]" />
+        <div className="h-6 w-14 bg-white/[0.06]" />
       </div>
-      <div className="mt-4 h-2 rounded-full bg-white/[0.04]" />
+      <div className="mt-4 h-1 bg-white/[0.04]" />
     </div>
   );
 }
@@ -313,19 +314,22 @@ function QuizModal({
 
   return (
     <div className="fixed inset-0 z-[80] flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-ink/75 backdrop-blur-sm" />
       <div
-        className="relative w-full max-w-lg rounded-3xl p-5 sm:p-8 shadow-2xl"
+        className="relative w-full max-w-lg p-5 sm:p-8 shadow-2xl overflow-hidden"
         style={{
-          background: '#0a1628',
-          border: '1px solid rgba(201,169,110,0.15)',
+          background: '#060D18',
+          border: '1px solid rgba(201,169,110,0.2)',
         }}
         onClick={(e) => e.stopPropagation()}
       >
+        <div className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent)' }} />
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-cream/30 hover:text-cream/60 transition-colors"
+          aria-label="Close quiz"
+          className="absolute top-4 right-4 text-cream/30 hover:text-champagne transition-colors"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -333,22 +337,22 @@ function QuizModal({
         </button>
 
         {/* Quiz icon */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-7">
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{ background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.15)' }}
+            className="w-10 h-10 flex items-center justify-center"
+            style={{ background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.18)' }}
           >
             <QuizIcon className="text-[#C9A96E]" />
           </div>
           <div>
-            <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#C9A96E]/60">Daily Quiz</p>
-            <p className="font-sans text-xs text-cream/30">{challenge.points} XP · one attempt only</p>
+            <p className="eyebrow text-[10px] text-[#C9A96E]/70">Daily Quiz</p>
+            <p className="font-sans text-xs text-cream/35 mt-0.5">{challenge.points} XP · one attempt only</p>
           </div>
         </div>
 
         {/* Already attempted warning */}
         {previouslyAttempted && (
-          <div className="mb-6 px-4 py-3 rounded-xl flex items-start gap-2.5"
+          <div className="mb-6 px-4 py-3 flex items-start gap-2.5"
             style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-red-400/70 shrink-0 mt-0.5">
               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
@@ -361,7 +365,7 @@ function QuizModal({
         )}
 
         {/* Question */}
-        <h3 className="font-serif text-xl text-cream/90 mb-8 leading-relaxed">
+        <h3 className="headline-editorial text-cream text-2xl sm:text-3xl mb-8 leading-snug">
           {challenge.quiz_question}
         </h3>
 
@@ -372,12 +376,12 @@ function QuizModal({
               key={idx}
               onClick={() => handleSelect(option)}
               disabled={!!selected}
-              className={`w-full text-left px-5 py-4 rounded-2xl font-sans text-sm transition-all duration-300 ${getOptionTextClass(option)} ${
+              className={`w-full text-left px-5 py-4 font-sans text-sm transition-all duration-300 ${getOptionTextClass(option)} ${
                 !selected ? 'hover:bg-white/[0.06] cursor-pointer' : 'cursor-default'
               }`}
               style={getOptionStyle(option)}
             >
-              <span className="text-cream/20 mr-3 font-mono text-xs">
+              <span className="numeral text-champagne/40 mr-3 text-xs">
                 {String.fromCharCode(65 + idx)}
               </span>
               {option}
@@ -387,9 +391,9 @@ function QuizModal({
 
         {/* Result message */}
         {result && (
-          <div className="mt-6 text-center">
+          <div className="mt-7 text-center">
             <p
-              className={`font-serif text-lg ${
+              className={`font-display italic text-xl ${
                 result.correct ? 'text-green-400' : 'text-red-400'
               }`}
             >
@@ -429,11 +433,13 @@ const PLAN_SOMETHING_CITIES = [
 
 function ChallengeCard({
   challenge,
+  index,
   onQuizClick,
   onClaim,
   onSubmitSpot,
 }: {
   challenge: Challenge;
+  index: number;
   onQuizClick: (c: Challenge) => void;
   onClaim: (c: Challenge) => void;
   onSubmitSpot: (c: Challenge) => void;
@@ -448,32 +454,34 @@ function ChallengeCard({
 
   return (
     <div
-      className={`rounded-2xl p-5 transition-all duration-300 ${
-        isCompleted ? 'opacity-70' : ''
+      className={`p-5 sm:p-6 transition-all duration-300 ${
+        isCompleted ? 'opacity-75' : ''
       }`}
       style={{
         background: isCompleted
           ? 'rgba(201,169,110,0.04)'
-          : 'rgba(255,255,255,0.03)',
+          : 'rgba(255,255,255,0.02)',
         border: isCompleted
-          ? '1px solid rgba(201,169,110,0.15)'
-          : '1px solid rgba(255,255,255,0.06)',
-        boxShadow: isCompleted
-          ? '0 0 20px rgba(201,169,110,0.05)'
-          : 'none',
+          ? '1px solid rgba(201,169,110,0.22)'
+          : '1px solid rgba(201,169,110,0.12)',
       }}
     >
       <div className="flex items-start gap-4">
+        {/* Catalogue numeral */}
+        <span className="numeral text-xl sm:text-2xl leading-none shrink-0 w-7 sm:w-9 text-right mt-1 tabular-nums">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
         {/* Category icon */}
         <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+          className="w-10 h-10 flex items-center justify-center shrink-0 mt-0.5"
           style={{
             background: isCompleted
               ? 'rgba(201,169,110,0.12)'
-              : 'rgba(255,255,255,0.04)',
+              : 'rgba(255,255,255,0.03)',
             border: isCompleted
               ? '1px solid rgba(201,169,110,0.2)'
-              : '1px solid rgba(255,255,255,0.06)',
+              : '1px solid rgba(201,169,110,0.12)',
           }}
         >
           {isCompleted ? (
@@ -481,28 +489,28 @@ function ChallengeCard({
           ) : (
             <CategoryIcon
               category={challenge.category}
-              className="text-cream/40"
+              className="text-champagne/50"
             />
           )}
         </div>
 
         {/* Text */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <h3 className="font-serif text-sm text-cream/90 truncate">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="headline-editorial text-cream text-lg sm:text-xl truncate">
               {challenge.title}
             </h3>
             {isCompleted && (
-              <span className="font-sans text-[9px] tracking-[0.15em] uppercase text-[#C9A96E]/60 shrink-0">
+              <span className="eyebrow text-[9px] text-[#C9A96E]/60 shrink-0">
                 Completed
               </span>
             )}
           </div>
-          <p className="font-sans text-xs text-cream/35 mt-0.5 line-clamp-1">
+          <p className="font-sans text-xs sm:text-sm text-cream/40 mt-1 line-clamp-1">
             {challenge.description}
           </p>
           {!isQuiz && challenge.target_count > 1 && (
-            <p className="font-sans text-xs text-cream/50 mt-1 tabular-nums">
+            <p className="numeral text-xs mt-1.5 tabular-nums">
               {challenge.user_progress} / {challenge.target_count}
             </p>
           )}
@@ -511,15 +519,15 @@ function ChallengeCard({
         {/* Points badge */}
         <div className="flex items-center gap-1 shrink-0">
           <span
-            className="inline-flex items-center gap-1 font-sans text-xs font-semibold px-3 py-1 rounded-full"
+            className="inline-flex items-center gap-1.5 font-display text-sm px-3 py-1"
             style={{
               background: isCompleted
                 ? 'rgba(201,169,110,0.12)'
                 : 'rgba(201,169,110,0.08)',
-              color: isCompleted ? '#C9A96E' : 'rgba(201,169,110,0.7)',
+              color: isCompleted ? '#C9A96E' : 'rgba(201,169,110,0.8)',
               border: isCompleted
                 ? '1px solid rgba(201,169,110,0.25)'
-                : '1px solid rgba(201,169,110,0.1)',
+                : '1px solid rgba(201,169,110,0.15)',
             }}
           >
             <StarIcon className="w-3 h-3" />
@@ -535,31 +543,20 @@ function ChallengeCard({
             /* Claimable — user performed the action, just needs to claim */
             <button
               onClick={() => onClaim(challenge)}
-              className="w-full py-2.5 rounded-xl font-sans text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:-translate-y-px animate-pulse"
-              style={{
-                background: 'linear-gradient(135deg, rgba(201,169,110,0.25), rgba(201,169,110,0.12))',
-                border: '1px solid rgba(201,169,110,0.45)',
-                color: '#C9A96E',
-                boxShadow: '0 0 16px rgba(201,169,110,0.15)',
-              }}
+              className="btn-editorial w-full animate-pulse"
             >
-              ✦ Claim {challenge.points} XP
+              <span aria-hidden>✦</span> Claim {challenge.points} XP
             </button>
           ) : isQuiz ? (
             <>
               {challenge.quiz_question && (
-                <p className="font-serif text-sm text-cream/70 leading-relaxed mb-3 italic">
+                <p className="font-display italic text-sm sm:text-base text-cream/65 leading-relaxed mb-4">
                   &ldquo;{challenge.quiz_question}&rdquo;
                 </p>
               )}
               <button
                 onClick={() => onQuizClick(challenge)}
-                className="w-full py-2.5 rounded-xl font-sans text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:-translate-y-px"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.08))',
-                  border: '1px solid rgba(201,169,110,0.2)',
-                  color: '#C9A96E',
-                }}
+                className="btn-editorial-ghost w-full"
               >
                 Answer
               </button>
@@ -567,8 +564,8 @@ function ChallengeCard({
           ) : (
             <>
               {/* Progress bar */}
-              <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                <div className="h-full rounded-full transition-all duration-500"
+              <div className="h-1 overflow-hidden mb-4" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                <div className="h-full transition-all duration-500"
                   style={{ width: `${progressPct}%`, background: 'linear-gradient(90deg, #C9A96E, #b8944d)' }} />
               </div>
               {/* Redirect button(s) */}
@@ -578,12 +575,7 @@ function ChallengeCard({
                     <Link
                       key={href}
                       href={href}
-                      className="flex-1 py-2.5 text-center rounded-xl font-sans text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:-translate-y-px"
-                      style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1px solid rgba(255,255,255,0.08)',
-                        color: 'rgba(245,240,232,0.45)',
-                      }}
+                      className="flex-1 py-3 text-center font-sans text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-cream/45 border border-champagne/15 hover:border-champagne/40 hover:text-champagne transition-all duration-300"
                     >
                       {label}
                     </Link>
@@ -592,26 +584,16 @@ function ChallengeCard({
               ) : (challenge.title === 'Spot Hunter' || challenge.title === 'Curator') ? (
                 <button
                   onClick={() => onSubmitSpot(challenge)}
-                  className="block w-full py-2.5 text-center rounded-xl font-sans text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:-translate-y-px"
-                  style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    color: 'rgba(245,240,232,0.45)',
-                  }}
+                  className="link-underline"
                 >
-                  Submit a Spot →
+                  Submit a Spot <span aria-hidden>→</span>
                 </button>
               ) : CHALLENGE_REDIRECTS[challenge.title] ? (
                 <Link
                   href={CHALLENGE_REDIRECTS[challenge.title].href}
-                  className="block w-full py-2.5 text-center rounded-xl font-sans text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:-translate-y-px"
-                  style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    color: 'rgba(245,240,232,0.45)',
-                  }}
+                  className="link-underline"
                 >
-                  {CHALLENGE_REDIRECTS[challenge.title].label}
+                  {CHALLENGE_REDIRECTS[challenge.title].label.replace(/\s*→\s*$/, '')} <span aria-hidden>→</span>
                 </Link>
               ) : null}
             </>
@@ -623,14 +605,14 @@ function ChallengeCard({
       {isCompleted && (
         <div className="mt-4">
           <div
-            className="h-1.5 rounded-full overflow-hidden"
+            className="h-1 overflow-hidden"
             style={{ background: 'rgba(255,255,255,0.04)' }}
           >
             <div
-              className="h-full rounded-full"
+              className="h-full"
               style={{
                 width: '100%',
-                background: 'linear-gradient(90deg, rgba(201,169,110,0.4), rgba(201,169,110,0.2))',
+                background: 'linear-gradient(90deg, rgba(201,169,110,0.5), rgba(201,169,110,0.25))',
               }}
             />
           </div>
@@ -731,28 +713,22 @@ export default function ChallengesClient() {
   // Not authenticated
   if (status === 'unauthenticated') {
     return (
-      <div
-        className="min-h-screen flex items-center justify-center"
-        style={{
-          background: '#0a1628',
-        }}
-      >
-        <div className="text-center px-6">
-          <h1 className="font-serif text-2xl text-cream/90 mb-3">
-            Sign in to access Challenges
-          </h1>
-          <p className="font-sans text-sm text-cream/40 mb-6">
-            Complete daily, weekly, and monthly challenges to earn XP and climb the ranks.
+      <div className="min-h-screen flex items-center justify-center bg-ink text-cream px-6">
+        <div className="text-center max-w-md">
+          <p className="eyebrow mb-6 flex items-center justify-center gap-4">
+            <span className="inline-block h-px w-10 bg-champagne/50" />
+            Members Only
+            <span className="inline-block h-px w-10 bg-champagne/50" />
           </p>
-          <Link
-            href="/"
-            className="inline-block font-sans text-xs tracking-[0.15em] uppercase px-6 py-3 rounded-full transition-all"
-            style={{
-              background: 'linear-gradient(135deg, #C9A96E, #b8944d)',
-              color: '#0a1628',
-            }}
-          >
-            Go Home
+          <h1 className="headline-editorial text-cream text-4xl sm:text-5xl mb-5">
+            The <span className="italic text-champagne">Catalogue</span> awaits.
+          </h1>
+          <p className="font-sans text-sm text-cream/45 leading-relaxed mb-8">
+            Sign in to complete daily, weekly, and monthly quests — earn XP and
+            climb the ranked register.
+          </p>
+          <Link href="/" className="btn-editorial">
+            Go Home <span aria-hidden>→</span>
           </Link>
         </div>
       </div>
@@ -760,12 +736,9 @@ export default function ChallengesClient() {
   }
 
   return (
-    <div
-      className="min-h-screen pb-20"
-      style={{
-        background: '#0a1628',
-      }}
-    >
+    <div className="min-h-screen pb-20 bg-ink text-cream">
+      <div className="fixed inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 70% 35% at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 60%)' }} />
       {/* Confetti & points animations */}
       {showConfetti && <Confetti />}
       {pointsPopup !== null && <PointsPopup points={pointsPopup} />}
@@ -780,36 +753,29 @@ export default function ChallengesClient() {
       )}
 
       {/* ── Season Header ───────────────────────────────────────── */}
-      <div className="pb-8 px-4 sm:px-6" style={{ paddingTop: 'calc(6rem + env(safe-area-inset-top))' }}>
+      <div className="relative pb-10 px-4 sm:px-6" style={{ paddingTop: 'calc(6rem + env(safe-area-inset-top))' }}>
         <div className="max-w-2xl mx-auto text-center">
           {/* Season label */}
-          <p
-            className="font-sans text-[10px] tracking-[0.3em] uppercase mb-2"
-            style={{ color: 'rgba(201,169,110,0.5)' }}
-          >
-            Season 1
+          <p className="eyebrow mb-5 flex items-center justify-center gap-4">
+            <span className="inline-block h-px w-10 bg-champagne/50" />
+            The Catalogue · Season 1
+            <span className="inline-block h-px w-10 bg-champagne/50" />
           </p>
 
           {/* Month heading */}
           {loading ? (
-            <div className="h-10 w-48 mx-auto rounded bg-white/[0.04] animate-pulse mb-4" />
+            <div className="h-12 w-56 mx-auto rounded bg-white/[0.04] animate-pulse mb-4" />
           ) : (
-            <h1
-              className="font-serif text-4xl sm:text-5xl font-bold mb-3"
-              style={{
-                color: '#C9A96E',
-                textShadow: '0 0 40px rgba(201,169,110,0.3), 0 0 80px rgba(201,169,110,0.1)',
-              }}
-            >
+            <h1 className="headline-editorial text-champagne text-5xl sm:text-7xl mb-4">
               {data?.monthLabel ?? 'Challenges'}
             </h1>
           )}
 
           {/* Countdown */}
           {!loading && data && (
-            <p className="font-sans text-xs text-cream/30 mb-6">
+            <p className="font-display italic text-cream/40 text-base sm:text-lg mb-7">
               Resets in{' '}
-              <span className="text-cream/50 font-medium tabular-nums">
+              <span className="text-champagne not-italic tabular-nums">
                 {data.daysRemaining}
               </span>{' '}
               {data.daysRemaining === 1 ? 'day' : 'days'}
@@ -819,15 +785,15 @@ export default function ChallengesClient() {
           {/* Season XP */}
           {!loading && data && (
             <div className="max-w-sm mx-auto">
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-cream/30">
+              <div className="flex items-center justify-between mb-3">
+                <span className="eyebrow text-[10px] text-cream/35">
                   {currentTier.name}
                 </span>
-                <span className="font-sans text-sm font-semibold tabular-nums" style={{ color: '#C9A96E' }}>
+                <span className="font-display text-base tabular-nums" style={{ color: '#C9A96E' }}>
                   {data.seasonXP} XP
                 </span>
                 {nextTier && (
-                  <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-cream/30">
+                  <span className="eyebrow text-[10px] text-cream/35">
                     {nextTier.name}
                   </span>
                 )}
@@ -856,13 +822,10 @@ export default function ChallengesClient() {
       </div>
 
       {/* ── Tab Bar ─────────────────────────────────────────────── */}
-      <div className="px-4 sm:px-6 mb-6">
+      <div className="px-4 sm:px-6 mb-8">
         <div className="max-w-2xl mx-auto">
-          <div
-            className="inline-flex w-full rounded-2xl p-1"
-            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}
-          >
-            {(['daily', 'weekly', 'monthly'] as Tab[]).map((t) => {
+          <div className="flex w-full border-y border-champagne/15">
+            {(['daily', 'weekly', 'monthly'] as Tab[]).map((t, i) => {
               const isActive = tab === t;
               const count = data?.challenges.filter((c) => c.frequency === t).length ?? 0;
               const completedCount = data?.challenges.filter(
@@ -873,30 +836,25 @@ export default function ChallengesClient() {
                 <button
                   key={t}
                   onClick={() => setTab(t)}
-                  className={`flex-1 py-2.5 rounded-xl font-sans text-xs tracking-[0.1em] uppercase transition-all duration-200 relative ${
-                    isActive
-                      ? 'font-semibold'
-                      : 'text-cream/30 hover:text-cream/50'
+                  aria-pressed={isActive}
+                  className={`relative flex-1 py-4 font-sans text-[11px] tracking-[0.25em] uppercase transition-colors duration-300 ${
+                    i > 0 ? 'border-l border-champagne/15' : ''
+                  } ${
+                    isActive ? 'text-champagne' : 'text-cream/35 hover:text-cream/60'
                   }`}
-                  style={
-                    isActive
-                      ? {
-                          background: 'rgba(201,169,110,0.1)',
-                          color: '#C9A96E',
-                          border: '1px solid rgba(201,169,110,0.15)',
-                        }
-                      : { border: '1px solid transparent' }
-                  }
                 >
                   {t}
                   {count > 0 && (
                     <span
-                      className="ml-1.5 font-mono text-[9px]"
-                      style={{ color: isActive ? 'rgba(201,169,110,0.5)' : 'rgba(245,240,232,0.15)' }}
+                      className="ml-2 numeral text-[9px] tabular-nums"
+                      style={{ color: isActive ? 'rgba(201,169,110,0.6)' : 'rgba(245,240,232,0.2)' }}
                     >
                       {completedCount}/{count}
                     </span>
                   )}
+                  <span className={`absolute left-0 -bottom-px h-px w-full bg-champagne origin-center transition-transform duration-500 ${
+                    isActive ? 'scale-x-100' : 'scale-x-0'
+                  }`} />
                 </button>
               );
             })}
@@ -915,24 +873,20 @@ export default function ChallengesClient() {
               <SkeletonCard />
             </>
           ) : filtered.length === 0 ? (
-            <div className="text-center py-16">
-              <div
-                className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
-                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="text-cream/15">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <p className="font-serif text-sm text-cream/30">
-                No challenges available
+            <div className="text-center py-20 border-y border-champagne/15">
+              <p className="font-display italic text-cream/30 text-2xl mb-2">
+                The catalogue is empty
+              </p>
+              <p className="font-sans text-cream/30 text-xs tracking-wide">
+                No challenges available for this period.
               </p>
             </div>
           ) : (
-            filtered.map((challenge) => (
+            filtered.map((challenge, i) => (
               <ChallengeCard
                 key={challenge.id}
                 challenge={challenge}
+                index={i}
                 onQuizClick={setQuizChallenge}
                 onClaim={handleClaim}
                 onSubmitSpot={setSubmitSpotChallenge}
@@ -944,12 +898,11 @@ export default function ChallengesClient() {
 
       {/* ── XP Summary Footer ───────────────────────────────────── */}
       {!loading && data && (
-        <div className="px-4 sm:px-6 mt-10">
+        <div className="px-4 sm:px-6 mt-12">
           <div className="max-w-2xl mx-auto">
-            <div
-              className="rounded-2xl p-5 flex items-center justify-around"
-              style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}
-            >
+            <p className="eyebrow-muted mb-4 text-champagne/35">The Tally</p>
+            <div className="rule-champagne-dim mb-6" />
+            <div className="flex items-center justify-around">
               {(['daily', 'weekly', 'monthly'] as const).map((freq) => {
                 const freqChallenges = data.challenges.filter((c) => c.frequency === freq);
                 const earned = freqChallenges
@@ -958,14 +911,14 @@ export default function ChallengesClient() {
                 const total = freqChallenges.reduce((sum, c) => sum + c.points, 0);
                 return (
                   <div key={freq} className="text-center">
-                    <p className="font-sans text-[9px] tracking-[0.2em] uppercase text-cream/20 mb-1">
+                    <p className="eyebrow text-[9px] text-cream/30 mb-2">
                       {freq}
                     </p>
-                    <p className="font-sans text-sm font-semibold tabular-nums" style={{ color: '#C9A96E' }}>
+                    <p className="font-display text-2xl sm:text-3xl tabular-nums leading-none" style={{ color: '#C9A96E' }}>
                       {earned}
-                      <span className="text-cream/15 font-normal">/{total}</span>
+                      <span className="text-cream/20">/{total}</span>
                     </p>
-                    <p className="font-sans text-[9px] text-cream/15 mt-0.5">XP</p>
+                    <p className="eyebrow text-[9px] text-cream/20 mt-2">XP</p>
                   </div>
                 );
               })}

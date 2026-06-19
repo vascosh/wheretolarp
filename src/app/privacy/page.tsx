@@ -13,15 +13,17 @@ export default function PrivacyPage() {
   return (
     <div className="bg-cream min-h-screen pt-nav">
       {/* Header */}
-      <div className="bg-navy border-b border-champagne/10">
-        <div className="max-w-3xl mx-auto px-6 py-14 sm:py-16">
-          <p className="font-sans text-champagne/60 text-[10px] tracking-[0.4em] uppercase mb-4">
-            Legal
+      <div className="bg-ink border-b border-champagne/20">
+        <div className="rule-champagne-dim" />
+        <div className="max-w-3xl mx-auto px-6 py-16 sm:py-20">
+          <p className="eyebrow mb-5 flex items-center gap-3">
+            <span className="inline-block h-px w-8 bg-champagne/50" />
+            In Confidence
           </p>
-          <h1 className="font-serif text-cream text-display-md sm:text-display-lg font-semibold">
-            Privacy Policy
+          <h1 className="headline-editorial text-cream text-5xl sm:text-7xl">
+            Privacy <span className="italic text-champagne">policy</span>.
           </h1>
-          <p className="font-sans text-cream/40 text-xs mt-4 tracking-wide">
+          <p className="font-sans text-cream/40 text-xs mt-6 tracking-[0.15em] uppercase">
             Last updated: {LAST_UPDATED}
           </p>
         </div>

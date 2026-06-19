@@ -214,17 +214,17 @@ export default function MapClient({ cities }: MapClientProps) {
               onClick={() => router.push(`/city/${city.slug}`)}
             >
               {/* Country */}
-              <p className="font-sans text-champagne/50 text-[10px] tracking-[0.3em] uppercase mb-1">
+              <p className="font-sans text-champagne/60 text-[10px] tracking-[0.35em] uppercase mb-2">
                 {city.country}
               </p>
 
               {/* City name */}
-              <h3 className="font-serif text-cream text-2xl font-semibold leading-tight mb-3 capitalize">
+              <h3 className="headline-editorial text-cream text-3xl leading-[0.95] mb-3 capitalize">
                 {city.name}
               </h3>
 
               {/* Divider */}
-              <div className="w-full h-px bg-champagne/30 mb-3" />
+              <div className="w-full h-px bg-champagne/25 mb-3" />
 
               {/* Stats row */}
               <div className="flex items-center gap-3 mb-4">
@@ -250,22 +250,14 @@ export default function MapClient({ cities }: MapClientProps) {
 
               {/* Explore button */}
               <button
-                className="w-full py-2 px-4 font-sans text-xs tracking-[0.2em] uppercase text-navy bg-champagne/90 hover:bg-champagne transition-colors duration-200 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase text-navy bg-champagne hover:bg-champagne-light transition-colors duration-300 cursor-pointer flex items-center justify-center gap-2"
                 onClick={(e) => {
                   e.stopPropagation();
                   router.push(`/city/${city.slug}`);
                 }}
               >
                 Explore
-                <svg width="14" height="8" viewBox="0 0 14 8" fill="none">
-                  <path
-                    d="M1 4H13M13 4L9.5 1M13 4L9.5 7"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <span aria-hidden>→</span>
               </button>
             </div>
           </div>
@@ -285,10 +277,10 @@ export default function MapClient({ cities }: MapClientProps) {
             onClick={() => router.push(`/city/${city.slug}`)}
           >
             <div className="text-left">
-              <p className="font-sans text-champagne/50 text-[9px] tracking-[0.25em] uppercase">
+              <p className="font-sans text-champagne/60 text-[9px] tracking-[0.3em] uppercase mb-0.5">
                 {city.country}
               </p>
-              <p className="font-serif text-cream text-lg font-semibold capitalize">
+              <p className="headline-editorial text-cream text-2xl capitalize">
                 {city.name}
               </p>
             </div>
@@ -325,7 +317,7 @@ export default function MapClient({ cities }: MapClientProps) {
 
       {/* Bottom note */}
       <div className="absolute bottom-0 inset-x-0 hidden md:block text-center py-3 z-20">
-        <p className="font-sans text-cream/20 text-xs tracking-wider italic">
+        <p className="font-display italic text-cream/25 text-sm">
           More cities coming soon — because the aspirational life is global.
         </p>
       </div>

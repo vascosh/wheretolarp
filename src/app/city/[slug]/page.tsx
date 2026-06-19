@@ -46,13 +46,11 @@ export default async function CityPage({ params }: CityPageProps) {
     if (!cityName) notFound();
 
     return (
-      <div className="min-h-screen bg-navy flex items-center justify-center p-8">
+      <div className="min-h-screen bg-ink flex items-center justify-center p-8">
         <div className="max-w-lg text-center">
-          <p className="font-sans text-champagne text-xs tracking-[0.3em] uppercase mb-4">
-            Database Setup Required
-          </p>
-          <h1 className="font-serif text-cream text-3xl font-semibold mb-6">{cityName}</h1>
-          <div className="h-px bg-champagne/20 mb-6" />
+          <p className="eyebrow mb-5">Database Setup Required</p>
+          <h1 className="headline-editorial text-cream text-5xl sm:text-6xl mb-6">{cityName}</h1>
+          <div className="rule-champagne-dim mb-6" />
           <p className="font-sans text-cream/60 text-sm leading-relaxed mb-6">
             The database tables haven&apos;t been created yet. Run the SQL files in the{' '}
             <a

@@ -62,9 +62,9 @@ export default function FriendPlansSection({ plans, firstName }: { plans: Plan[]
 
   if (plans.length === 0) {
     return (
-      <div className="rounded-2xl p-6 text-center"
-        style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-        <p className="font-sans text-xs text-cream/20 tracking-wide">No plans yet</p>
+      <div className="p-6 text-center border border-champagne/15"
+        style={{ background: 'rgba(255,255,255,0.02)' }}>
+        <p className="font-display italic text-cream/30 text-sm">No plans yet</p>
       </div>
     );
   }
@@ -72,16 +72,16 @@ export default function FriendPlansSection({ plans, firstName }: { plans: Plan[]
   return (
     <div className="space-y-4">
       {/* Calendar */}
-      <div className="rounded-2xl p-5 select-none"
-        style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
+      <div className="p-5 select-none border border-champagne/15"
+        style={{ background: 'rgba(255,255,255,0.03)' }}>
         <div className="flex items-center justify-between mb-5">
-          <button onClick={prev} className="w-8 h-8 flex items-center justify-center rounded-full text-cream/40 hover:text-cream hover:bg-white/[0.06] transition-all">
+          <button onClick={prev} className="w-8 h-8 flex items-center justify-center text-cream/40 hover:text-champagne hover:bg-white/[0.06] transition-all">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
-          <h3 className="font-serif text-cream text-base font-semibold">
-            {MONTHS[viewMonth]} <span className="text-cream/35 font-normal text-sm">{viewYear}</span>
+          <h3 className="font-display text-cream text-lg">
+            {MONTHS[viewMonth]} <span className="numeral text-sm">{viewYear}</span>
           </h3>
-          <button onClick={next} className="w-8 h-8 flex items-center justify-center rounded-full text-cream/40 hover:text-cream hover:bg-white/[0.06] transition-all">
+          <button onClick={next} className="w-8 h-8 flex items-center justify-center text-cream/40 hover:text-champagne hover:bg-white/[0.06] transition-all">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
         </div>
@@ -138,23 +138,23 @@ export default function FriendPlansSection({ plans, firstName }: { plans: Plan[]
       {/* Plans list */}
       {visiblePlans.length > 0 ? (
         <div className="space-y-2">
-          <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/25 px-1">
+          <p className="eyebrow-muted text-cream/30 px-1">
             {selectedDate ? formatDate(selectedDate) : `Upcoming · ${firstName}`}
           </p>
           {visiblePlans.map(plan => {
             const color = plan.spot_category ? (CATEGORY_COLORS[plan.spot_category] ?? '#C9A96E') : '#C9A96E';
             return (
-              <div key={plan.id} className="flex items-start gap-3 p-4 rounded-xl"
-                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <div className="w-1 self-stretch rounded-full shrink-0 mt-0.5" style={{ background: color, opacity: 0.7 }} />
+              <div key={plan.id} className="flex items-start gap-3 p-4 border border-champagne/12"
+                style={{ background: 'rgba(255,255,255,0.03)' }}>
+                <div className="w-1 self-stretch shrink-0 mt-0.5" style={{ background: color, opacity: 0.7 }} />
                 <div className="flex-1 min-w-0">
-                  <p className="font-sans text-sm text-cream/80 font-medium truncate">{plan.spot_name}</p>
+                  <p className="font-display text-cream/85 text-base truncate">{plan.spot_name}</p>
                   <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                     {plan.spot_neighborhood && (
                       <span className="font-sans text-[11px] text-cream/30">{plan.spot_neighborhood}</span>
                     )}
                     {plan.spot_category && (
-                      <span className="font-sans text-[10px] px-2 py-0.5 rounded-full"
+                      <span className="font-sans text-[9px] tracking-[0.15em] uppercase px-2 py-0.5"
                         style={{ background: `${color}15`, color: `${color}cc`, border: `1px solid ${color}25` }}>
                         {plan.spot_category}
                       </span>

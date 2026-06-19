@@ -68,22 +68,22 @@ export default function ProfileStats({ userId, initialStats, isOwnProfile = fals
 
   return (
     <>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-6">
         {tier !== 'none' && <TierBadge tier={tier} size="md" />}
 
-        <div className="flex items-center justify-center gap-6 sm:gap-8">
+        <div className="flex items-stretch justify-center w-full max-w-xs">
           {statItems.map(({ value, label, onClick }, i) => (
-            <div key={label} className="flex items-center gap-6 sm:gap-8">
-              {i > 0 && <div className="w-px h-8 bg-white/[0.06]" />}
+            <div key={label} className="flex items-stretch flex-1">
+              {i > 0 && <div className="w-px self-stretch bg-champagne/15" />}
               {onClick ? (
-                <button onClick={onClick} className="text-center group">
-                  <p className="font-serif text-champagne text-2xl font-semibold leading-none group-hover:text-champagne/80 transition-colors">{value}</p>
-                  <p className="font-sans text-[10px] text-cream/25 tracking-widest uppercase mt-1 group-hover:text-cream/40 transition-colors underline underline-offset-2 decoration-cream/10">{label}</p>
+                <button onClick={onClick} className="flex-1 text-center group px-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink rounded-sm">
+                  <p className="font-display text-champagne text-3xl leading-none numeral !text-champagne group-hover:text-champagne-light transition-colors">{value}</p>
+                  <p className="eyebrow-muted mt-2 group-hover:text-champagne/70 transition-colors">{label}</p>
                 </button>
               ) : (
-                <div className="text-center">
-                  <p className="font-serif text-champagne text-2xl font-semibold leading-none">{value}</p>
-                  <p className="font-sans text-[10px] text-cream/25 tracking-widest uppercase mt-1">{label}</p>
+                <div className="flex-1 text-center px-2">
+                  <p className="font-display text-champagne text-3xl leading-none">{value}</p>
+                  <p className="eyebrow-muted mt-2">{label}</p>
                 </div>
               )}
             </div>
@@ -94,10 +94,10 @@ export default function ProfileStats({ userId, initialStats, isOwnProfile = fals
           <button
             onClick={toggleFollow}
             disabled={followLoading}
-            className={`px-5 py-2 rounded-full font-sans text-xs tracking-widest uppercase transition-all disabled:opacity-50 ${
+            className={`transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink ${
               following
-                ? 'bg-white/[0.06] border border-white/[0.12] text-cream/50 hover:bg-white/[0.10] hover:text-cream/70'
-                : 'bg-champagne/10 border border-champagne/20 text-champagne hover:bg-champagne/20'
+                ? 'btn-editorial-ghost'
+                : 'btn-editorial'
             }`}
           >
             {followLoading ? '…' : following ? 'Following' : 'Follow'}

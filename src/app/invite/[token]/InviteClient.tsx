@@ -70,18 +70,21 @@ export default function InviteClient({ token, plan, inviter, status, isLoggedIn,
         style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 30%, rgba(201,169,110,0.06) 0%, transparent 70%)' }} />
 
       <div className="relative w-full max-w-md">
-        <div className="rounded-2xl overflow-hidden"
-          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', backdropFilter: 'blur(24px)' }}>
+        <div className="overflow-hidden animate-scale-in"
+          style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(201,169,110,0.22)', backdropFilter: 'blur(24px)' }}>
+          <div className="rule-champagne-dim" />
 
           {/* Header */}
-          <div className="px-8 pt-10 pb-6 text-center border-b border-white/[0.06]">
-            <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-champagne/60 mb-4">
-              You&apos;ve been invited
+          <div className="px-8 pt-10 pb-7 text-center border-b border-champagne/15">
+            <p className="eyebrow mb-5 flex items-center justify-center gap-3">
+              <span className="inline-block h-px w-8 bg-champagne/50" />
+              You&apos;re invited
+              <span className="inline-block h-px w-8 bg-champagne/50" />
             </p>
-            <h1 className="font-serif text-cream text-3xl font-semibold leading-tight mb-3">
+            <h1 className="headline-editorial text-cream text-3xl sm:text-4xl mb-4">
               {plan.spot_name}
             </h1>
-            <p className="font-sans text-cream/35 text-sm">
+            <p className="font-display italic text-champagne/60 text-base">
               by {inviter.name}
             </p>
           </div>
@@ -133,44 +136,43 @@ export default function InviteClient({ token, plan, inviter, status, isLoggedIn,
           {/* Actions */}
           <div className="px-8 pb-8 pt-2">
             {accepted ? (
-              <div className="text-center space-y-4">
-                <div className="w-14 h-14 rounded-full bg-champagne/15 flex items-center justify-center mx-auto">
+              <div className="text-center space-y-5">
+                <div className="w-14 h-14 rounded-full border border-champagne/40 bg-champagne/10 flex items-center justify-center mx-auto">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-champagne">
                     <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
                 <div>
-                  <p className="font-serif text-cream text-lg mb-1">You&apos;re in!</p>
+                  <p className="headline-editorial text-cream text-2xl mb-2">You&apos;re <span className="italic text-champagne">in</span>.</p>
                   <p className="font-sans text-cream/40 text-xs">This plan has been added to your calendar.</p>
                 </div>
-                <Link href="/profile"
-                  className="inline-block px-6 py-2.5 rounded-full bg-champagne text-navy font-sans text-xs font-semibold tracking-wider uppercase hover:bg-champagne/90 transition-all">
+                <Link href="/profile" className="btn-editorial">
                   View My Profile
                 </Link>
               </div>
             ) : isOwnInvite ? (
-              <p className="font-sans text-sm text-cream/40 text-center">This is your own invite link. Share it with friends!</p>
+              <p className="font-sans text-sm text-cream/45 text-center leading-relaxed">This is your own invite link. Share it with friends.</p>
             ) : isLoggedIn ? (
               <div className="space-y-3">
                 <button onClick={handleAccept} disabled={accepting}
-                  className="w-full py-3 rounded-full bg-champagne text-navy font-sans text-xs font-semibold tracking-[0.15em] uppercase hover:bg-champagne/90 transition-all disabled:opacity-50">
-                  {accepting ? 'Joining...' : 'Accept & Join'}
+                  className="btn-editorial w-full disabled:opacity-50">
+                  {accepting ? 'Joining…' : 'Accept & Join'}
                 </button>
                 {error && <p className="font-sans text-xs text-red-400/70 text-center">{error}</p>}
               </div>
             ) : (
               <div className="space-y-3">
-                <p className="font-sans text-xs text-cream/40 text-center mb-4">
+                <p className="font-sans text-xs text-cream/45 text-center mb-4 leading-relaxed">
                   You need an account to accept this invite.
                 </p>
                 <Link
                   href={`/auth/signup?callbackUrl=${encodeURIComponent(`/invite/${token}`)}`}
-                  className="block w-full py-3 rounded-full bg-champagne text-navy font-sans text-xs font-semibold tracking-[0.15em] uppercase text-center hover:bg-champagne/90 transition-all">
+                  className="btn-editorial w-full">
                   Create Account
                 </Link>
                 <Link
                   href={`/auth/signin?callbackUrl=${encodeURIComponent(`/invite/${token}`)}`}
-                  className="block w-full py-3 rounded-full border border-white/[0.1] text-cream/50 font-sans text-xs tracking-[0.15em] uppercase text-center hover:text-cream/80 hover:border-white/[0.2] transition-all">
+                  className="btn-editorial-ghost w-full">
                   Sign In
                 </Link>
               </div>

@@ -50,38 +50,46 @@ function SignInForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: ()
   }
 
   return (
-    <div className="px-6 pb-6 space-y-4">
+    <div className="px-6 pb-7 space-y-5">
       <button
         onClick={handleGoogle}
-        className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-full border border-white/10 bg-white/[0.04] text-cream/80 font-sans text-xs tracking-wide hover:bg-white/[0.08] hover:border-white/20 transition-all duration-200"
+        className="w-full flex items-center justify-center gap-2.5 py-3 px-4 border border-champagne/25 bg-white/[0.03] text-cream/85 font-sans text-[11px] tracking-[0.18em] uppercase hover:bg-champagne/[0.06] hover:border-champagne/50 transition-all duration-300"
       >
         <GoogleIcon />
         Continue with Google
       </button>
 
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-px bg-white/[0.07]" />
-        <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-cream/20">or</span>
-        <div className="flex-1 h-px bg-white/[0.07]" />
+        <div className="flex-1 h-px bg-champagne/15" />
+        <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-cream/30">or</span>
+        <div className="flex-1 h-px bg-champagne/15" />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <p className="font-sans text-xs text-red-400/80 bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-lg">{error}</p>
+          <p className="font-sans text-xs text-red-400/80 bg-red-500/10 border border-red-500/25 px-3 py-2.5">{error}</p>
         )}
-        <input
-          type="email" value={email} onChange={e => setEmail(e.target.value)} required
-          placeholder="Email"
-          className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-3.5 py-2.5 font-sans text-sm text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne/40 transition-all"
-        />
-        <input
-          type="password" value={password} onChange={e => setPassword(e.target.value)} required
-          placeholder="Password"
-          className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-3.5 py-2.5 font-sans text-sm text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne/40 transition-all"
-        />
+        <div>
+          <label htmlFor="authmodal-signin-email" className="block eyebrow-muted text-cream/45 mb-2">Email</label>
+          <input
+            id="authmodal-signin-email"
+            type="email" value={email} onChange={e => setEmail(e.target.value)} required
+            placeholder="your@email.com"
+            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+          />
+        </div>
+        <div>
+          <label htmlFor="authmodal-signin-password" className="block eyebrow-muted text-cream/45 mb-2">Password</label>
+          <input
+            id="authmodal-signin-password"
+            type="password" value={password} onChange={e => setPassword(e.target.value)} required
+            placeholder="••••••••"
+            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+          />
+        </div>
         <button
           type="submit" disabled={loading}
-          className="w-full py-2.5 rounded-full bg-champagne text-navy font-sans font-semibold text-xs tracking-[0.2em] uppercase hover:bg-champagne/90 transition-all disabled:opacity-50"
+          className="btn-editorial w-full disabled:opacity-50"
         >
           {loading ? 'Signing in…' : 'Sign In'}
         </button>
@@ -126,43 +134,55 @@ function SignUpForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: ()
   }
 
   return (
-    <div className="px-6 pb-6 space-y-4">
+    <div className="px-6 pb-7 space-y-5">
       <button
         onClick={handleGoogle}
-        className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-full border border-white/10 bg-white/[0.04] text-cream/80 font-sans text-xs tracking-wide hover:bg-white/[0.08] hover:border-white/20 transition-all duration-200"
+        className="w-full flex items-center justify-center gap-2.5 py-3 px-4 border border-champagne/25 bg-white/[0.03] text-cream/85 font-sans text-[11px] tracking-[0.18em] uppercase hover:bg-champagne/[0.06] hover:border-champagne/50 transition-all duration-300"
       >
         <GoogleIcon />
         Sign up with Google
       </button>
 
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-px bg-white/[0.07]" />
-        <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-cream/20">or</span>
-        <div className="flex-1 h-px bg-white/[0.07]" />
+        <div className="flex-1 h-px bg-champagne/15" />
+        <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-cream/30">or</span>
+        <div className="flex-1 h-px bg-champagne/15" />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <p className="font-sans text-xs text-red-400/80 bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-lg">{error}</p>
+          <p className="font-sans text-xs text-red-400/80 bg-red-500/10 border border-red-500/25 px-3 py-2.5">{error}</p>
         )}
-        <input
-          type="text" value={name} onChange={e => setName(e.target.value)} required
-          placeholder="Your name"
-          className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-3.5 py-2.5 font-sans text-sm text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne/40 transition-all"
-        />
-        <input
-          type="email" value={email} onChange={e => setEmail(e.target.value)} required
-          placeholder="Email"
-          className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-3.5 py-2.5 font-sans text-sm text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne/40 transition-all"
-        />
-        <input
-          type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={8}
-          placeholder="Password (min. 8 chars)"
-          className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-3.5 py-2.5 font-sans text-sm text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne/40 transition-all"
-        />
+        <div>
+          <label htmlFor="authmodal-signup-name" className="block eyebrow-muted text-cream/45 mb-2">Name</label>
+          <input
+            id="authmodal-signup-name"
+            type="text" value={name} onChange={e => setName(e.target.value)} required
+            placeholder="Your name"
+            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+          />
+        </div>
+        <div>
+          <label htmlFor="authmodal-signup-email" className="block eyebrow-muted text-cream/45 mb-2">Email</label>
+          <input
+            id="authmodal-signup-email"
+            type="email" value={email} onChange={e => setEmail(e.target.value)} required
+            placeholder="your@email.com"
+            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+          />
+        </div>
+        <div>
+          <label htmlFor="authmodal-signup-password" className="block eyebrow-muted text-cream/45 mb-2">Password</label>
+          <input
+            id="authmodal-signup-password"
+            type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={8}
+            placeholder="Min. 8 characters"
+            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+          />
+        </div>
         <button
           type="submit" disabled={loading}
-          className="w-full py-2.5 rounded-full bg-champagne text-navy font-sans font-semibold text-xs tracking-[0.2em] uppercase hover:bg-champagne/90 transition-all disabled:opacity-50"
+          className="btn-editorial w-full disabled:opacity-50"
         >
           {loading ? 'Creating account…' : 'Create Account'}
         </button>
@@ -190,42 +210,66 @@ export default function AuthModal({ onClose, onSuccess, defaultTab = 'signin' }:
 
   return createPortal(
     <div className="fixed inset-0 z-[500] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-navy/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-ink/80 backdrop-blur-sm" onClick={onClose} />
       <div
-        className="relative z-10 w-full max-w-sm rounded-2xl overflow-hidden shadow-modal"
-        style={{ background: 'rgba(8,16,28,0.98)', border: '1px solid rgba(255,255,255,0.08)' }}
+        className="relative z-10 w-full max-w-sm overflow-hidden shadow-modal animate-scale-in"
+        style={{ background: 'rgba(6,13,24,0.98)', border: '1px solid rgba(201,169,110,0.22)' }}
       >
+        <div className="rule-champagne-dim" />
+
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-5 pb-5">
-          <div className="flex gap-1 p-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.05)' }}>
+        <div className="px-6 pt-6">
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="eyebrow mb-2">Members Only</p>
+              <h2 className="headline-editorial text-cream text-3xl">
+                {tab === 'signin' ? (
+                  <>Welcome <span className="italic text-champagne">back</span>.</>
+                ) : (
+                  <>Request <span className="italic text-champagne">entry</span>.</>
+                )}
+              </h2>
+            </div>
+            <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 -mr-1 -mt-1">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </button>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-7 mt-6">
             <button
               onClick={() => setTab('signin')}
               className={clsx(
-                'px-4 py-1.5 rounded-full font-sans text-xs tracking-[0.12em] uppercase transition-all duration-200',
-                tab === 'signin' ? 'bg-champagne text-navy font-semibold' : 'text-cream/40 hover:text-cream/70'
+                'relative pb-3 font-sans text-[11px] tracking-[0.22em] uppercase transition-colors duration-300',
+                tab === 'signin' ? 'text-champagne' : 'text-cream/40 hover:text-cream/70'
               )}
             >
               Sign In
+              <span className={clsx(
+                'absolute left-0 -bottom-px h-px w-full bg-champagne origin-left transition-transform duration-500',
+                tab === 'signin' ? 'scale-x-100' : 'scale-x-0'
+              )} />
             </button>
             <button
               onClick={() => setTab('signup')}
               className={clsx(
-                'px-4 py-1.5 rounded-full font-sans text-xs tracking-[0.12em] uppercase transition-all duration-200',
-                tab === 'signup' ? 'bg-champagne text-navy font-semibold' : 'text-cream/40 hover:text-cream/70'
+                'relative pb-3 font-sans text-[11px] tracking-[0.22em] uppercase transition-colors duration-300',
+                tab === 'signup' ? 'text-champagne' : 'text-cream/40 hover:text-cream/70'
               )}
             >
               Create Account
+              <span className={clsx(
+                'absolute left-0 -bottom-px h-px w-full bg-champagne origin-left transition-transform duration-500',
+                tab === 'signup' ? 'scale-x-100' : 'scale-x-0'
+              )} />
             </button>
           </div>
-          <button onClick={onClose} className="text-cream/25 hover:text-cream/60 transition-colors p-1 rounded-full -mr-1">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
-          </button>
         </div>
 
         {/* Divider */}
-        <div className="h-px mx-6 bg-white/[0.06] mb-4" />
+        <div className="rule-champagne-dim mb-5" />
 
         {tab === 'signin'
           ? <SignInForm onSuccess={onSuccess} onClose={onClose} />

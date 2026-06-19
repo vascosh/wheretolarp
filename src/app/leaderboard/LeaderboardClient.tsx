@@ -42,8 +42,12 @@ function Avatar({ name, image, size = 38 }: { name?: string | null; image?: stri
 
 function RankBadge({ rank }: { rank: number }) {
   return (
-    <div className="w-8 h-8 shrink-0 flex items-center justify-center">
-      <span className="font-sans text-sm text-cream/40">{rank}</span>
+    <div className="w-9 sm:w-12 shrink-0 flex items-baseline justify-end">
+      <span className={`numeral leading-none tabular-nums ${
+        rank === 1 ? 'text-champagne text-2xl sm:text-3xl' : 'text-base sm:text-xl'
+      }`}>
+        {String(rank).padStart(2, '0')}
+      </span>
     </div>
   );
 }
@@ -120,19 +124,18 @@ function CheckoutForm({ clientSecret, onSuccess, onClose }: { clientSecret: stri
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="p-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,169,110,0.15)' }}>
         <PaymentElement options={{ layout: 'tabs' }} />
       </div>
       {error && (
         <p className="font-sans text-xs text-red-400 text-center">{error}</p>
       )}
       <button type="submit" disabled={!stripe || loading}
-        className="w-full py-3 rounded-full font-sans text-xs tracking-widest uppercase transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        style={{ background: 'rgba(201,169,110,0.15)', border: '1px solid rgba(201,169,110,0.4)', color: '#C9A96E' }}>
+        className="btn-editorial w-full disabled:opacity-50 disabled:cursor-not-allowed">
         {loading ? 'Processing…' : 'Pay $9.99'}
       </button>
       <button type="button" onClick={onClose}
-        className="w-full py-2.5 rounded-full border border-white/[0.07] text-cream/25 font-sans text-xs tracking-widest uppercase hover:text-cream/45 transition-all">
+        className="w-full py-3 border border-champagne/15 text-cream/30 font-sans text-[11px] tracking-[0.25em] uppercase hover:text-cream/55 hover:border-champagne/30 transition-all">
         Cancel
       </button>
     </form>
@@ -165,29 +168,30 @@ function PinModal({ onClose, onPinned }: { onClose: () => void; onPinned: () => 
 
   return (
     <div className="fixed inset-0 z-[500] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-navy/70 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-sm rounded-2xl overflow-hidden"
-        style={{ background: '#0e1e32', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="absolute inset-0 bg-ink/75 backdrop-blur-[8px]" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-sm overflow-hidden"
+        style={{ background: '#060D18', border: '1px solid rgba(201,169,110,0.2)' }}>
         <div className="absolute top-0 left-0 right-0 h-px"
           style={{ background: 'linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent)' }} />
-        <div className="px-4 sm:px-6 py-6 sm:py-8">
+        <div className="px-5 sm:px-7 py-7 sm:py-9">
           <div className="text-center mb-6">
-            <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+            <div className="w-14 h-14 flex items-center justify-center mx-auto mb-5"
               style={{ background: 'rgba(201,169,110,0.12)', border: '1px solid rgba(201,169,110,0.25)' }}>
               <CrownIcon className="text-champagne" />
             </div>
-            <h2 className="font-serif text-cream text-xl font-semibold mb-2">Larp the #1 Spot</h2>
-            <p className="font-sans text-cream/35 text-sm leading-relaxed">
-              Pin yourself at the top of the LARP leaderboard for 1 hour.
+            <p className="eyebrow mb-3 text-champagne/60">The Pinned Seat</p>
+            <h2 className="headline-editorial text-cream text-3xl mb-3">Claim the <span className="italic text-champagne">#1</span> seat</h2>
+            <p className="font-sans text-cream/40 text-sm leading-relaxed">
+              Pin yourself at the top of the register for one hour.
             </p>
-            <p className="font-serif text-champagne text-4xl font-semibold mt-4 mb-0.5"><span className="text-2xl align-top mt-1 inline-block">$</span>9.99</p>
-            <p className="font-sans text-[10px] text-cream/20 tracking-widest uppercase">per hour</p>
+            <p className="font-display text-champagne text-5xl mt-5 mb-1"><span className="text-2xl align-top inline-block">$</span>9.99</p>
+            <p className="eyebrow text-[10px] text-cream/25">per hour</p>
           </div>
 
           {success ? (
             <div className="text-center py-4">
-              <p className="font-serif text-champagne text-lg font-semibold">You&apos;re #1 👑</p>
-              <p className="font-sans text-cream/35 text-xs mt-1">Your pin is live for the next hour.</p>
+              <p className="font-display italic text-champagne text-xl">You&apos;re #1 👑</p>
+              <p className="font-sans text-cream/40 text-xs mt-1.5">Your pin is live for the next hour.</p>
             </div>
           ) : clientSecret ? (
             <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'night', variables: { colorPrimary: '#C9A96E', borderRadius: '12px' } } }}>
@@ -196,12 +200,11 @@ function PinModal({ onClose, onPinned }: { onClose: () => void; onPinned: () => 
           ) : (
             <div className="space-y-3">
               <button onClick={handleStartPayment}
-                className="w-full py-3 rounded-full font-sans text-xs tracking-widest uppercase transition-all hover:scale-[1.02]"
-                style={{ background: 'rgba(201,169,110,0.15)', border: '1px solid rgba(201,169,110,0.4)', color: '#C9A96E' }}>
+                className="btn-editorial w-full">
                 Purchase · $9.99
               </button>
               <button onClick={onClose}
-                className="w-full py-2.5 rounded-full border border-white/[0.07] text-cream/25 font-sans text-xs tracking-widest uppercase hover:text-cream/45 transition-all">
+                className="w-full py-3 border border-champagne/15 text-cream/30 font-sans text-[11px] tracking-[0.25em] uppercase hover:text-cream/55 hover:border-champagne/30 transition-all">
                 Close
               </button>
             </div>
@@ -306,42 +309,54 @@ export default function LeaderboardClient() {
   const myEntry = session?.user?.id ? entries.find(e => e.id === session.user.id) ?? null : null;
 
   return (
-    <div className="min-h-screen pt-nav bg-navy">
+    <div className="min-h-screen pt-nav bg-ink text-cream">
       <div className="fixed inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 70% 35% at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 60%)' }} />
 
-      <div className="relative max-w-2xl mx-auto px-4 sm:px-6 py-14">
+      <div className="relative max-w-2xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
 
         {/* Header */}
-        <div className="text-center mb-10">
-          <p className="font-sans text-[10px] tracking-[0.35em] uppercase text-champagne/35 mb-3">Competition</p>
-          <h1 className="font-serif text-cream text-4xl font-semibold mb-3">The Leaderboard</h1>
-          <p className="font-sans text-cream/25 text-sm">Compete. Climb. LARP your way to the top.</p>
-        </div>
+        <header className="mb-12">
+          <p className="eyebrow mb-6 flex items-center gap-4">
+            <span className="inline-block h-px w-10 bg-champagne/50" />
+            The Standings · Updated Live
+          </p>
+          <h1 className="headline-editorial text-cream text-5xl sm:text-7xl mb-5">
+            The <span className="italic text-champagne">Register</span>.
+          </h1>
+          <p className="font-sans text-cream/45 text-sm sm:text-base leading-relaxed max-w-md">
+            Who is topping the city this week. Compete, climb, and LARP your way
+            to the top of the ranked register.
+          </p>
+        </header>
 
         {/* Tier legend */}
-        <div className="flex items-center justify-center gap-2 flex-wrap mb-8">
-          {(['bronze', 'silver', 'gold', 'platinum', 'diamond'] as const).map(t => (
-            <TierBadge key={t} tier={t} size="sm" />
-          ))}
+        <div className="mb-10">
+          <p className="eyebrow-muted mb-4 text-champagne/35">The Tiers</p>
+          <div className="rule-champagne-dim mb-5" />
+          <div className="flex items-center gap-2 flex-wrap">
+            {(['bronze', 'silver', 'gold', 'platinum', 'diamond'] as const).map(t => (
+              <TierBadge key={t} tier={t} size="sm" />
+            ))}
+          </div>
         </div>
 
         {/* #1 spot — active pin or CTA */}
         {pinnedEntry ? (
-          <div className="rounded-2xl p-5 mb-5 relative overflow-hidden"
+          <div className="p-5 sm:p-6 mb-8 relative overflow-hidden"
             style={{ background: 'rgba(201,169,110,0.07)', border: '1px solid rgba(201,169,110,0.22)' }}>
             <div className="absolute top-0 left-0 right-0 h-px"
               style={{ background: 'linear-gradient(90deg, transparent, rgba(201,169,110,0.55), transparent)' }} />
+            <p className="eyebrow mb-4 flex items-center gap-2">
+              <CrownIcon className="text-champagne" /> The Pinned Seat
+            </p>
             <div className="flex items-center gap-4">
-              <div className="flex flex-col items-center gap-1 shrink-0">
-                <CrownIcon className="text-champagne" />
-                <span className="font-sans text-[8px] text-champagne/40 tracking-[0.2em] uppercase">#1</span>
-              </div>
+              <span className="numeral text-champagne text-3xl sm:text-4xl leading-none shrink-0 w-9 sm:w-12 text-right">01</span>
               <Avatar name={pinnedEntry.name} image={pinnedEntry.avatar_url} size={44} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <Link href={`/u/${pinnedEntry.id}`}
-                    className="font-serif text-cream text-base font-semibold hover:text-champagne transition-colors">
+                    className="headline-editorial text-cream text-2xl sm:text-3xl hover:text-champagne transition-colors">
                     {pinnedEntry.name ?? 'Member'}
                   </Link>
                   {session?.user?.id && session.user.id !== pinnedEntry.id && (
@@ -361,44 +376,45 @@ export default function LeaderboardClient() {
                   )}
                 </div>
                 {pinnedEntry.username && (
-                  <p className="font-sans text-cream/30 text-xs">@{pinnedEntry.username}</p>
+                  <p className="font-sans text-cream/30 text-xs mt-0.5">@{pinnedEntry.username}</p>
                 )}
-                <div className="flex items-center gap-2 mt-1.5">
-                  <span className="font-sans text-[9px] tracking-[0.2em] uppercase font-semibold" style={{ color: '#C9A96E' }}>Top Larper</span>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="eyebrow text-[9px]" style={{ color: '#C9A96E' }}>Top Larper</span>
                 </div>
               </div>
               <div className="text-right shrink-0">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full"
                   style={{ background: 'rgba(201,169,110,0.10)', border: '1px solid rgba(201,169,110,0.18)' }}>
                   <div className="w-1.5 h-1.5 rounded-full bg-champagne/50 animate-pulse" />
-                  <span className="font-sans text-[10px] text-champagne/50">
+                  <span className="font-sans text-[10px] text-champagne/50 tabular-nums">
                     <Countdown expiresAt={pinnedEntry.pin_expires_at!} />
                   </span>
                 </div>
-                <p className="font-sans text-[9px] text-cream/15 mt-1 tracking-widest uppercase">Pinned</p>
+                <p className="eyebrow text-[9px] text-cream/15 mt-1.5">Pinned</p>
               </div>
             </div>
           </div>
         ) : (
           <button onClick={() => setPinModal(true)}
-            className="w-full rounded-2xl p-5 mb-5 text-left relative overflow-hidden group transition-all duration-200 hover:scale-[1.005]"
-            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            className="w-full p-5 sm:p-6 mb-8 text-left relative overflow-hidden group transition-all duration-300 hover:bg-white/[0.03]"
+            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,169,110,0.18)' }}>
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
               style={{ background: 'radial-gradient(ellipse 70% 70% at 50% 0%, rgba(201,169,110,0.05) 0%, transparent 70%)' }} />
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
-                style={{ background: 'rgba(201,169,110,0.09)', border: '1px solid rgba(201,169,110,0.18)' }}>
-                <CrownIcon className="text-champagne/55" />
-              </div>
-              <div className="flex-1">
-                <p className="font-serif text-cream text-base font-semibold">Larp the #1 Spot</p>
-                <p className="font-sans text-cream/50 text-xs mt-0.5">
-                  Pin yourself at the top for 1 hour
+            <p className="eyebrow mb-4 flex items-center gap-2 text-champagne/60">
+              <CrownIcon className="text-champagne/60" /> The Pinned Seat · Vacant
+            </p>
+            <div className="relative flex items-center gap-4">
+              <div className="flex-1 min-w-0">
+                <p className="headline-editorial text-cream text-2xl sm:text-3xl group-hover:text-champagne transition-colors">
+                  Claim the <span className="italic text-champagne">#1</span> seat
+                </p>
+                <p className="font-sans text-cream/45 text-xs sm:text-sm mt-1.5">
+                  Pin yourself at the top of the register for one hour.
                 </p>
               </div>
               <div className="text-right shrink-0">
-                <p className="font-serif text-champagne text-xl font-semibold"><span className="text-sm align-top mt-0.5 inline-block">$</span>9.99</p>
-                <p className="font-sans text-[9px] text-cream/40 tracking-widest uppercase">per hour</p>
+                <p className="font-display text-champagne text-2xl sm:text-3xl"><span className="text-base align-top inline-block">$</span>9.99</p>
+                <p className="eyebrow text-[9px] text-cream/40">per hour</p>
               </div>
             </div>
           </button>
@@ -416,9 +432,10 @@ export default function LeaderboardClient() {
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search for a larper…"
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl font-sans text-sm text-cream placeholder:text-cream/20 focus:outline-none transition-all"
-              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+              placeholder="Search the register…"
+              aria-label="Search the register for a larper"
+              className="w-full pl-10 pr-4 py-3 font-sans text-sm text-cream placeholder:text-cream/25 tracking-wide focus:outline-none focus:border-champagne/40 transition-all"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,169,110,0.18)' }}
             />
             {searching && (
               <div className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 border border-champagne/20 border-t-champagne/60 rounded-full animate-spin" />
@@ -426,21 +443,21 @@ export default function LeaderboardClient() {
           </div>
 
           {searchResults.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1 rounded-xl overflow-hidden z-20 shadow-modal"
-              style={{ background: '#0e1e32', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <div className="absolute top-full left-0 right-0 mt-1 overflow-hidden z-20 shadow-modal"
+              style={{ background: '#060D18', border: '1px solid rgba(201,169,110,0.18)' }}>
               {searchResults.map(r => (
                 <Link key={r.id} href={`/u/${r.id}`}
                   onClick={() => { setSearchQuery(''); setSearchResults([]); }}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.04] transition-colors border-b border-white/[0.04] last:border-0">
-                  <span className="font-sans text-xs text-cream/30 w-7 text-right shrink-0">#{r.rank}</span>
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-champagne/[0.05] transition-colors border-b border-champagne/[0.08] last:border-0">
+                  <span className="numeral text-xs w-7 text-right shrink-0 tabular-nums">{String(r.rank).padStart(2, '0')}</span>
                   <Avatar name={r.name} image={r.avatar_url} size={30} />
                   <div className="flex-1 min-w-0">
-                    <p className="font-sans text-sm text-cream/80 truncate">{r.name ?? 'Member'}</p>
+                    <p className="font-serif text-sm text-cream/85 truncate">{r.name ?? 'Member'}</p>
                     {r.username && <p className="font-sans text-[11px] text-cream/30">@{r.username}</p>}
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="font-serif text-champagne text-sm font-semibold">{r.score}</p>
-                    <p className="font-sans text-[9px] text-cream/20 uppercase tracking-wider">pts</p>
+                    <p className="font-display text-champagne text-base">{r.score}</p>
+                    <p className="eyebrow text-[8px] text-cream/20">pts</p>
                   </div>
                   {r.tier !== 'none' && <TierBadge tier={r.tier} size="sm" />}
                 </Link>
@@ -449,88 +466,98 @@ export default function LeaderboardClient() {
           )}
 
           {searchQuery.trim().length >= 2 && !searching && searchResults.length === 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1 rounded-xl px-4 py-4 text-center z-20"
-              style={{ background: '#0e1e32', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <p className="font-sans text-xs text-cream/25">No larpers found</p>
+            <div className="absolute top-full left-0 right-0 mt-1 px-4 py-4 text-center z-20"
+              style={{ background: '#060D18', border: '1px solid rgba(201,169,110,0.18)' }}>
+              <p className="font-display italic text-cream/35 text-sm">No larpers found</p>
             </div>
           )}
         </div>
 
-        {/* Leaderboard table */}
-        <div className="rounded-2xl overflow-hidden mb-5"
-          style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+        {/* Leaderboard register */}
+        <div className="mb-8">
+          {/* column header */}
+          <div className="flex items-center gap-2.5 sm:gap-4 px-1 pb-3">
+            <span className="eyebrow text-[9px] text-cream/30 w-9 sm:w-12 text-right">Rank</span>
+            <span className="eyebrow text-[9px] text-cream/30 flex-1 pl-[46px]">Larper</span>
+            <span className="eyebrow text-[9px] text-cream/30">Score</span>
+          </div>
+          <div className="rule-champagne mb-1" />
+
           {loading ? (
             <div className="flex items-center justify-center py-16">
               <div className="w-6 h-6 rounded-full border border-champagne/20 border-t-champagne/60 animate-spin" />
             </div>
           ) : entries.length === 0 ? (
-            <div className="py-16 text-center">
-              <p className="font-serif text-cream/20 text-xl mb-2">No players yet</p>
-              <p className="font-sans text-cream/12 text-xs">Complete challenges to earn XP and enter the rankings</p>
+            <div className="py-20 text-center border-b border-champagne/15">
+              <p className="font-display italic text-cream/30 text-2xl mb-3">The register is empty</p>
+              <p className="font-sans text-cream/30 text-xs tracking-wide">Complete challenges to earn XP and enter the rankings.</p>
             </div>
           ) : (
-            entries.map((entry, i) => {
-              const isMe = session?.user?.id === entry.id;
-              return (
-                <div key={`${entry.id}-${entry.rank}`}
-                  className={`flex items-center gap-2.5 sm:gap-4 px-3 sm:px-5 py-3.5 sm:py-4 transition-colors ${
-                    isMe ? 'bg-champagne/[0.055]' : 'hover:bg-white/[0.02]'
-                  } ${i < entries.length - 1 ? 'border-b border-white/[0.04]' : ''}`}>
-                  <RankBadge rank={entry.rank} />
-                  <Link href={`/u/${entry.id}`} className="shrink-0">
-                    <Avatar name={entry.name} image={entry.avatar_url} size={34} />
-                  </Link>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Link href={`/u/${entry.id}`}
-                        className="font-serif text-cream/90 text-sm font-semibold hover:text-champagne transition-colors truncate max-w-[130px] sm:max-w-none">
-                        {entry.name ?? 'Member'}
-                      </Link>
-                      {isMe && (
-                        <span className="font-sans text-[8px] text-champagne/40 tracking-[0.2em] uppercase">You</span>
+            <ul>
+              {entries.map((entry) => {
+                const isMe = session?.user?.id === entry.id;
+                return (
+                  <li key={`${entry.id}-${entry.rank}`}
+                    className={`flex items-center gap-2.5 sm:gap-4 px-1 sm:px-2 py-4 sm:py-5 border-b border-champagne/15 transition-colors ${
+                      isMe ? 'bg-champagne/[0.06]' : 'hover:bg-white/[0.02]'
+                    }`}>
+                    <RankBadge rank={entry.rank} />
+                    <Link href={`/u/${entry.id}`} className="shrink-0">
+                      <Avatar name={entry.name} image={entry.avatar_url} size={38} />
+                    </Link>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Link href={`/u/${entry.id}`}
+                          className="headline-editorial text-cream text-lg sm:text-2xl hover:text-champagne transition-colors truncate max-w-[140px] sm:max-w-none">
+                          {entry.name ?? 'Member'}
+                        </Link>
+                        {isMe && (
+                          <span className="eyebrow text-[8px] text-champagne/50">You</span>
+                        )}
+                        {entry.tier !== 'none' && <TierBadge tier={entry.tier} size="sm" />}
+                      </div>
+                      {entry.username && (
+                        <p className="font-sans text-cream/25 text-[11px] mt-0.5">@{entry.username}</p>
                       )}
-                      {entry.tier !== 'none' && <TierBadge tier={entry.tier} size="sm" />}
                     </div>
-                    {entry.username && (
-                      <p className="font-sans text-cream/25 text-[11px]">@{entry.username}</p>
-                    )}
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className="font-serif text-champagne text-lg sm:text-xl font-semibold leading-none">{entry.score}</p>
-                    <p className="font-sans text-[9px] text-cream/18 tracking-widest uppercase mt-0.5 hidden sm:block">pts</p>
-                  </div>
-                </div>
-              );
-            })
+                    <div className="text-right shrink-0">
+                      <p className="font-display text-champagne text-xl sm:text-2xl leading-none">{entry.score}</p>
+                      <p className="eyebrow text-[8px] text-cream/20 mt-1 hidden sm:block">pts</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           )}
         </div>
 
         {/* Not in top 100 nudge */}
         {!loading && myEntry === null && session?.user?.id && (
-          <div className="rounded-xl px-5 py-3 text-center mb-5"
-            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-            <p className="font-sans text-xs text-cream/25">
-              You&apos;re not in the top 100 yet. Complete challenges to earn XP and climb the board.
+          <div className="px-5 py-4 text-center mb-8"
+            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,169,110,0.15)' }}>
+            <p className="font-display italic text-cream/45 text-sm">
+              You&apos;re not in the top 100 yet — complete challenges to climb the register.
             </p>
           </div>
         )}
 
         {/* Tier guide */}
-        <div className="rounded-2xl p-5"
-          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-          <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne/50 mb-1">How It Works</p>
-          <p className="font-sans text-xs text-cream/55 leading-relaxed mb-5">
-            Your score = XP earned from completing challenges. Tiers unlock as you grow, and a badge appears on your profile.
+        <div className="p-5 sm:p-6"
+          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,169,110,0.15)' }}>
+          <p className="eyebrow mb-3 text-champagne/60">How It Works</p>
+          <p className="font-sans text-xs sm:text-sm text-cream/55 leading-relaxed mb-6">
+            Your score is the XP earned from completing challenges. Tiers unlock as you grow, and a badge appears on your profile.
           </p>
-          <div className="space-y-2.5">
+          <div className="rule-champagne-dim mb-5" />
+          <div className="space-y-4">
             {TIER_GUIDE.map(({ tier, min, max }) => {
               const meta = TIER_META[tier];
               return (
                 <div key={tier} className="flex items-center gap-3">
                   <TierBadge tier={tier} size="sm" showLabel={false} />
-                  <span className="font-sans text-xs capitalize" style={{ color: meta.color }}>{meta.label}</span>
+                  <span className="font-display text-base capitalize" style={{ color: meta.color }}>{meta.label}</span>
                   <div className="flex-1 h-px" style={{ background: `linear-gradient(90deg, ${meta.border}, transparent)` }} />
-                  <span className="font-sans text-[10px] text-cream/20 tabular-nums">
+                  <span className="numeral text-[11px] tabular-nums">
                     {max ? `${min} – ${max} pts` : `${min}+ pts`}
                   </span>
                 </div>
@@ -539,8 +566,9 @@ export default function LeaderboardClient() {
           </div>
         </div>
 
-        <div className="text-center mt-8">
-          <Link href="/" className="font-sans text-xs text-cream/15 hover:text-cream/35 tracking-widest uppercase transition-colors">
+        <div className="mt-12">
+          <div className="rule-champagne-dim mb-5" />
+          <Link href="/" className="eyebrow text-cream/25 hover:text-champagne transition-colors">
             Where To LARP
           </Link>
         </div>

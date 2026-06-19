@@ -29,8 +29,8 @@ export default function FilterBar({
   totalCount,
 }: FilterBarProps) {
   return (
-    <div className="sticky top-16 z-20 bg-cream/95 backdrop-blur-sm border-b border-champagne/15 px-4 py-3">
-      <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-0.5">
+    <div className="sticky top-16 z-20 bg-cream/95 backdrop-blur-md border-b border-champagne/15 px-4 py-3">
+      <div className="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto scrollbar-hide pb-0.5">
         {/* All pill */}
         <button
           onClick={() => onCategoryChange('All')}

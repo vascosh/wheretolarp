@@ -97,66 +97,60 @@ function CityCard({ city }: { city: CityData }) {
 
       {/* Content */}
       <div className="relative z-10 p-8 sm:p-10">
-        {/* City name */}
-        <h2 className="font-serif text-cream text-4xl sm:text-5xl font-semibold leading-none mb-2 capitalize">
-          {city.name}
-        </h2>
-
-        {/* Country label */}
+        {/* Country eyebrow */}
         <p
-          className="font-sans text-sm tracking-[0.15em] uppercase mb-4 font-medium"
+          className="font-sans text-[10px] tracking-[0.35em] uppercase mb-4"
           style={{ color: theme.label }}
         >
           {city.country}
         </p>
 
+        {/* City name */}
+        <h2 className="headline-editorial text-cream text-5xl sm:text-6xl leading-[0.92] mb-4 capitalize group-hover:text-champagne transition-colors duration-500">
+          {city.name}
+        </h2>
+
         {/* Divider */}
-        <div className="w-8 h-px bg-champagne/30 mb-4" />
+        <div className="w-10 h-px bg-champagne/30 mb-5" />
 
         {/* Tagline */}
-        <p className="font-sans text-cream/45 text-xs sm:text-sm leading-relaxed mb-7 italic max-w-[220px]">
+        <p className="font-display italic text-cream/50 text-sm sm:text-base leading-relaxed mb-8 max-w-[240px]">
           {city.tagline}
         </p>
 
         {/* Stats */}
-        <div className="flex items-center gap-5 mb-8">
+        <div className="flex items-baseline gap-6 mb-9">
           {city.events > 0 && (
-            <div>
-              <p className="font-serif leading-none mb-1" style={{ color: theme.label, fontSize: '1.5rem', fontWeight: 600 }}>
-                {city.events}
-              </p>
-              <p className="font-sans text-cream/35 text-[9px] tracking-widest uppercase">Events</p>
+            <div className="flex items-baseline gap-2">
+              <span className="font-display text-2xl leading-none" style={{ color: theme.label }}>{city.events}</span>
+              <span className="font-sans text-cream/35 text-[9px] tracking-[0.25em] uppercase">Events</span>
             </div>
           )}
           {city.events > 0 && city.spaces > 0 && (
-            <div className="w-px h-7 bg-champagne/15" />
+            <div className="w-px h-5 bg-champagne/15 self-center" />
           )}
           {city.spaces > 0 && (
-            <div>
-              <p className="font-serif leading-none mb-1" style={{ color: theme.label, fontSize: '1.5rem', fontWeight: 600 }}>
-                {city.spaces}
-              </p>
-              <p className="font-sans text-cream/35 text-[9px] tracking-widest uppercase">Spaces</p>
+            <div className="flex items-baseline gap-2">
+              <span className="font-display text-2xl leading-none" style={{ color: theme.label }}>{city.spaces}</span>
+              <span className="font-sans text-cream/35 text-[9px] tracking-[0.25em] uppercase">Spaces</span>
             </div>
           )}
           {city.events === 0 && city.spaces === 0 && (
-            <p className="font-sans text-cream/25 text-xs italic">Coming soon</p>
+            <p className="font-display italic text-cream/25 text-sm">Coming soon</p>
           )}
         </div>
 
         {/* CTA */}
         <span
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-sans text-xs tracking-[0.2em] uppercase transition-all duration-200"
+          className="inline-flex items-center gap-2 px-6 py-3 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all duration-300"
           style={{
             color: theme.label,
-            border: `1px solid ${theme.label}40`,
+            border: `1px solid ${theme.label}55`,
             background: `${theme.label}10`,
           }}
         >
           Explore
-          <svg width="14" height="8" viewBox="0 0 14 8" fill="none">
-            <path d="M1 4H13M13 4L9.5 1M13 4L9.5 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
         </span>
       </div>
 

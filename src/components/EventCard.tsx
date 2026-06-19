@@ -98,23 +98,21 @@ function EventDetailModal({ event, onClose }: { event: Event; onClose: () => voi
   return createPortal(
     <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6">
       <div className="absolute inset-0 bg-navy/75 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-lg rounded-2xl overflow-hidden shadow-modal animate-modal-enter flex flex-col max-h-[90vh]"
-        style={{ background: '#0e1e32' }}>
+      <div className="relative z-10 w-full max-w-lg overflow-hidden shadow-modal animate-modal-enter flex flex-col max-h-[90vh] border border-champagne/20"
+        style={{ background: '#060D18' }}>
 
-        {/* Gradient header */}
-        <div className={clsx('relative bg-gradient-to-br px-7 py-7 shrink-0', colors.gradient)}>
+        {/* Editorial header */}
+        <div className="relative bg-ink px-7 py-8 shrink-0 border-b border-champagne/15">
+          <span className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-champagne to-transparent" />
           <button onClick={onClose}
-            className="absolute top-4 right-4 text-cream/30 hover:text-cream transition-colors p-1 rounded-full">
+            className="absolute top-4 right-4 text-cream/30 hover:text-champagne transition-colors p-1">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           </button>
-          <span className={clsx('inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-sans font-semibold tracking-[0.15em] uppercase mb-3', colors.text)}
-            style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
-            {event.category}
-          </span>
-          <h2 className="font-serif text-cream text-2xl font-semibold leading-snug pr-8">{event.title}</h2>
-          <p className={clsx('font-sans text-xs mt-1.5 opacity-70', colors.text)}>{event.venue_name}{event.neighborhood ? ` · ${event.neighborhood}` : ''}</p>
+          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-champagne/70 mb-3">{event.category}</p>
+          <h2 className="headline-editorial text-cream text-3xl sm:text-4xl pr-8">{event.title}</h2>
+          <p className="font-display italic text-cream/55 text-sm mt-2">{event.venue_name}{event.neighborhood ? ` · ${event.neighborhood}` : ''}</p>
         </div>
 
         {/* Body */}
@@ -203,7 +201,7 @@ function EventDetailModal({ event, onClose }: { event: Event; onClose: () => voi
   );
 }
 
-export default function EventCard({ event }: { event: Event }) {
+export default function EventCard({ event, index, accent = '#C9A96E' }: { event: Event; index?: number; accent?: string }) {
   const { month, day, weekday } = parseDateParts(event.event_date);
   const colors = CATEGORY_COLORS[event.category] ?? DEFAULT_COLORS;
   const [detailOpen, setDetailOpen] = useState(false);
@@ -215,39 +213,36 @@ export default function EventCard({ event }: { event: Event }) {
     <>
       <div
         onClick={() => setDetailOpen(true)}
-        className="rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer group flex flex-col bg-white hover:-translate-y-1"
+        className="relative overflow-hidden transition-all duration-500 cursor-pointer group flex flex-col bg-cream border border-champagne/20 hover:border-champagne/50 hover:shadow-[0_8px_40px_rgba(10,22,40,0.08)]"
       >
-        {/* Gradient header panel */}
-        <div
-          className={clsx('relative bg-gradient-to-br px-4 sm:px-6 py-5 sm:py-6 flex items-end justify-between', colors.gradient)}
-          style={{ minHeight: '130px' }}
-        >
-          <div className="relative z-10">
-            <p className={clsx('font-sans text-[10px] tracking-[0.25em] uppercase leading-none mb-1.5 opacity-70', colors.text)}>
-              {month}
-            </p>
-            <p className="font-serif text-cream text-[40px] sm:text-[56px] font-semibold leading-none -tracking-[0.02em]">
-              {day}
-            </p>
-          </div>
+        {/* top hairline accent (city colour) */}
+        <span className="absolute top-0 left-0 h-px w-full" style={{ background: `linear-gradient(90deg, ${accent}, transparent 70%)` }} />
 
-          <span
-            className={clsx('absolute top-3 right-3 sm:top-5 sm:right-5 inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-sans font-semibold tracking-[0.12em] uppercase backdrop-blur-sm', colors.text)}
-            style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
-          >
+        {/* Editorial date masthead */}
+        <div className="relative px-5 sm:px-6 pt-6 pb-5 flex items-start justify-between">
+          <div className="flex items-baseline gap-3">
+            <span className="font-display leading-none text-[52px] sm:text-[64px] -tracking-[0.02em]" style={{ color: accent }}>
+              {day}
+            </span>
+            <div className="pb-1.5">
+              <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-charcoal/45 leading-none mb-1">{month}</p>
+              <p className="font-display italic text-charcoal/50 text-sm leading-none">{weekday}</p>
+            </div>
+          </div>
+          <span className="font-sans text-[9px] tracking-[0.2em] uppercase text-charcoal/45 border border-champagne/25 px-2.5 py-1">
             {event.category}
           </span>
-
-          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
         </div>
 
+        <div className="rule-champagne-dim mx-5 sm:mx-6" />
+
         {/* Content */}
-        <div className="p-4 sm:p-6 flex-1 flex flex-col">
-          <h3 className="font-serif text-navy text-xl font-semibold leading-snug mb-2 group-hover:text-champagne-dark transition-colors duration-300">
+        <div className="px-5 sm:px-6 py-5 flex-1 flex flex-col">
+          <h3 className="font-display text-navy text-2xl sm:text-3xl leading-[1.05] mb-2 group-hover:text-champagne-dark transition-colors duration-300">
             {event.title}
           </h3>
 
-          <p className="font-sans text-[11px] text-muted tracking-[0.12em] uppercase mb-2">
+          <p className="font-sans text-[11px] text-charcoal/50 tracking-[0.15em] uppercase mb-3">
             {event.venue_name}{event.neighborhood ? ` · ${event.neighborhood}` : ''}
           </p>
 
@@ -267,24 +262,21 @@ export default function EventCard({ event }: { event: Event }) {
             </p>
           )}
 
-          <div className="flex items-center justify-between pt-4 border-t border-cream-dark mt-auto">
+          <div className="flex items-center justify-between pt-4 border-t border-champagne/15 mt-auto">
             <div className="flex items-center gap-3">
               {event.price_range && (
                 <span className="font-sans text-xs text-muted font-medium">{event.price_range}</span>
               )}
               <VibeDifficulty level={event.vibe_difficulty} />
             </div>
-            <span className="font-sans text-[10px] text-champagne/60 tracking-widest uppercase flex items-center gap-1">
-              View details
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M3 1L7 5L3 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+            <span className="link-underline">
+              View details <span aria-hidden>→</span>
             </span>
           </div>
         </div>
 
         {/* LARP Together */}
-        <div className="px-4 sm:px-6 pb-4 sm:pb-5 border-t border-cream-dark" onClick={e => e.stopPropagation()}>
+        <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-champagne/15" onClick={e => e.stopPropagation()}>
           <LARPTogether
             name={event.title}
             neighborhood={event.neighborhood}

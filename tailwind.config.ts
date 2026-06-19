@@ -9,6 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
+        // Characterful display serif (Fontshare Gambetta) — used large + with restraint
+        display: ['var(--font-gambetta)', 'var(--font-playfair)', 'Georgia', 'serif'],
         serif: ['var(--font-playfair)', 'Georgia', 'serif'],
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
@@ -19,6 +21,8 @@ const config: Config = {
         navy: '#0A1628',
         'navy-light': '#142240',
         'navy-mid': '#1E3052',
+        // Deeper near-black ink for full-bleed editorial sections
+        ink: '#060D18',
         cream: '#FAF7F2',
         'cream-dark': '#F0EBE3',
         charcoal: '#2C2C2C',
@@ -26,6 +30,7 @@ const config: Config = {
         muted: '#888888',
       },
       fontSize: {
+        'editorial': ['clamp(3.5rem, 13vw, 11rem)', { lineHeight: '0.92', letterSpacing: '-0.03em' }],
         'display-xl': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
         'display-lg': ['3.5rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
         'display-md': ['2.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],

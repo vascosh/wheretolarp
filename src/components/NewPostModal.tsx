@@ -121,15 +121,15 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
       className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-3 sm:p-6"
       style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
     >
-      <div className="absolute inset-0 bg-navy/85 backdrop-blur-sm" onClick={handleClose} />
-      <div className="relative z-10 w-full max-w-lg max-h-[92vh] rounded-2xl border border-champagne/15 bg-navy flex flex-col overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
+      <div className="absolute inset-0 bg-ink/85 backdrop-blur-sm" onClick={handleClose} />
+      <div className="relative z-10 w-full max-w-lg max-h-[92vh] rounded-sm border border-champagne/20 bg-ink flex flex-col overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.6)] animate-scale-in">
         {/* Header */}
-        <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06] flex items-center justify-between shrink-0">
+        <div className="px-5 sm:px-6 py-4 border-b border-champagne/15 flex items-center justify-between shrink-0">
           <div>
-            <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-1">New Post</p>
-            <h3 className="font-serif text-cream text-lg font-semibold">Craziest LARP</h3>
+            <p className="eyebrow mb-1.5">New Entry</p>
+            <h3 className="headline-editorial text-cream text-2xl">File a <span className="italic text-champagne">LARP</span></h3>
           </div>
-          <button onClick={handleClose} className="text-cream/40 hover:text-cream p-1">
+          <button onClick={handleClose} aria-label="Close" className="text-cream/40 hover:text-champagne p-1 transition-colors">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
               <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -139,19 +139,19 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
         {/* Body */}
         <div className="overflow-y-auto flex-1 px-5 sm:px-6 py-5 space-y-4">
           {error && (
-            <div className="text-[12px] text-red-400/80 bg-red-500/[0.08] border border-red-500/20 rounded-md px-3 py-2">
+            <div className="text-[12px] text-red-400/80 bg-red-500/[0.08] border border-red-500/20 rounded-sm px-3 py-2">
               {error}
             </div>
           )}
 
           {/* Media picker */}
           <div>
-            <p className="font-sans text-cream/50 text-[10px] tracking-[0.2em] uppercase mb-2">Photo or video</p>
+            <p className="eyebrow mb-2.5">Photo or Video</p>
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              className={`relative w-full rounded-xl overflow-hidden border border-dashed transition-colors aspect-[4/5] flex items-center justify-center bg-black/30 ${
-                preview ? 'border-champagne/30' : 'border-white/[0.15] hover:border-champagne/40 hover:bg-white/[0.02]'
+              className={`relative w-full rounded-sm overflow-hidden border border-dashed transition-colors aspect-[4/5] flex items-center justify-center bg-black/30 ${
+                preview ? 'border-champagne/40' : 'border-champagne/20 hover:border-champagne/50 hover:bg-white/[0.02]'
               }`}
             >
               {preview && mediaType === 'image' && (
@@ -189,19 +189,19 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
 
           {/* Caption */}
           <div>
-            <p className="font-sans text-cream/50 text-[10px] tracking-[0.2em] uppercase mb-2">Caption</p>
+            <p className="eyebrow mb-2.5">Caption</p>
             <textarea
               value={caption}
               onChange={(e) => setCaption(e.target.value.slice(0, 2200))}
               placeholder="What were you LARPing as?"
               rows={3}
-              className="w-full bg-white/[0.04] border border-white/[0.1] rounded-md px-3 py-2 text-sm text-cream font-sans focus:outline-none focus:border-champagne/60 focus:bg-white/[0.06] transition-colors placeholder:text-cream/30 resize-none"
+              className="w-full bg-white/[0.04] border border-champagne/15 rounded-sm px-3 py-2 text-sm text-cream font-sans focus:outline-none focus:border-champagne/60 focus:bg-white/[0.06] transition-colors placeholder:text-cream/30 resize-none"
             />
           </div>
 
           {/* Location autocomplete (real places via Google Places) */}
           <div>
-            <p className="font-sans text-cream/50 text-[10px] tracking-[0.2em] uppercase mb-2">Location</p>
+            <p className="eyebrow mb-2.5">Location</p>
             <LocationAutocomplete
               value={locationName}
               onChange={(v) => { setLocationName(v); if (place && v !== place.description) setPlace(null); }}
@@ -221,11 +221,11 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
 
           {/* City */}
           <div>
-            <p className="font-sans text-cream/50 text-[10px] tracking-[0.2em] uppercase mb-2">City</p>
+            <p className="eyebrow mb-2.5">City</p>
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full bg-white/[0.04] border border-white/[0.1] rounded-md px-3 py-2 text-sm text-cream font-sans focus:outline-none focus:border-champagne/60 transition-colors"
+              className="w-full bg-white/[0.04] border border-champagne/15 rounded-sm px-3 py-2 text-sm text-cream font-sans focus:outline-none focus:border-champagne/60 transition-colors"
             >
               {CITIES.map((c) => <option key={c.slug || 'none'} value={c.slug}>{c.label}</option>)}
             </select>
@@ -233,18 +233,18 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
         </div>
 
         {/* Footer */}
-        <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06] flex items-center justify-end gap-2 shrink-0">
+        <div className="px-5 sm:px-6 py-4 border-t border-champagne/15 flex items-center justify-end gap-3 shrink-0">
           <button
             onClick={handleClose}
             disabled={isPosting}
-            className="px-4 py-2 rounded-full border border-white/[0.1] text-cream/40 font-sans text-xs tracking-wider uppercase hover:text-cream/70 hover:border-white/[0.2] transition-all disabled:opacity-40"
+            className="px-5 py-3 border border-champagne/25 text-cream/50 font-sans text-[11px] tracking-[0.25em] uppercase hover:text-champagne hover:border-champagne/50 transition-all disabled:opacity-40"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
             disabled={isPosting || !file}
-            className="px-5 py-2 rounded-full bg-champagne text-navy font-sans text-xs tracking-[0.15em] uppercase font-semibold hover:bg-champagne-dark transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-editorial !px-6 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isPosting ? (progress < 100 ? `Uploading ${progress}%` : 'Posting…') : 'Post'}
           </button>

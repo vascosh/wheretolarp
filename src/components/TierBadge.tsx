@@ -62,17 +62,16 @@ export default function TierBadge({ tier, size = 'md', showLabel = true }: Props
   const meta = TIER_META[tier];
 
   const iconPx  = size === 'sm' ? 11 : size === 'md' ? 14 : 18;
-  const textCls = size === 'sm' ? 'text-[9px]' : size === 'md' ? 'text-[10px]' : 'text-xs';
-  const padCls  = size === 'sm' ? 'px-2 py-0.5 gap-1' : size === 'md' ? 'px-2.5 py-1 gap-1.5' : 'px-3 py-1.5 gap-2';
+  const textCls = size === 'sm' ? 'text-[9px]' : size === 'md' ? 'text-[10px]' : 'text-[11px]';
+  const padCls  = size === 'sm' ? 'px-2 py-0.5 gap-1.5' : size === 'md' ? 'px-2.5 py-1 gap-2' : 'px-3.5 py-1.5 gap-2.5';
 
   return (
     <span
-      className={`inline-flex items-center rounded-full font-sans tracking-widest uppercase font-medium ${padCls} ${textCls}`}
+      className={`inline-flex items-center font-sans tracking-[0.25em] uppercase font-medium ${padCls} ${textCls}`}
       style={{
         color: meta.color,
         background: meta.bg,
         border: `1px solid ${meta.border}`,
-        boxShadow: `0 0 8px ${meta.glow}`,
       }}
     >
       <TierIcon tier={tier} px={iconPx} />

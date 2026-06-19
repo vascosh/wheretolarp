@@ -48,11 +48,13 @@ function ReportModal({ targetName, onClose, onSubmit }: {
   return (
     <div className="fixed inset-0 z-[500] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-navy/70 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-md rounded-2xl overflow-hidden"
-        style={{ background: '#0e1e32', border: '1px solid rgba(255,255,255,0.08)' }}>
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
-          <h2 className="font-serif text-cream text-lg font-semibold">Report User</h2>
-          <button onClick={onClose} className="text-cream/30 hover:text-cream transition-colors p-1 rounded-full">
+      <div className="relative z-10 w-full max-w-md overflow-hidden bg-ink border border-champagne/20">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-champagne/15">
+          <div>
+            <p className="eyebrow mb-1">Member Conduct</p>
+            <h2 className="headline-editorial text-cream text-2xl">Report</h2>
+          </div>
+          <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -60,70 +62,71 @@ function ReportModal({ targetName, onClose, onSubmit }: {
         </div>
 
         {done ? (
-          <div className="px-6 py-10 text-center">
-            <div className="w-12 h-12 rounded-full bg-champagne/10 flex items-center justify-center mx-auto mb-4">
+          <div className="px-6 py-12 text-center">
+            <div className="w-12 h-12 rounded-full border border-champagne/30 bg-champagne/10 flex items-center justify-center mx-auto mb-5">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-champagne">
                 <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <p className="font-serif text-cream text-lg mb-1">Report submitted</p>
-            <p className="font-sans text-cream/40 text-sm mb-6">
+            <h3 className="headline-editorial text-cream text-2xl mb-2">Report submitted</h3>
+            <p className="font-sans text-cream/45 text-sm mb-8 max-w-xs mx-auto leading-relaxed">
               Thank you. We&apos;ll review this report and take action if needed.
             </p>
             <button onClick={onClose}
-              className="px-6 py-2.5 rounded-full bg-champagne/10 border border-champagne/20 text-champagne font-sans text-xs tracking-widest uppercase hover:bg-champagne/20 transition-all">
+              className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
               Close
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="px-6 py-6 space-y-5">
+          <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
             <div>
-              <p className="font-sans text-xs text-cream/40 mb-3">
-                Reporting <span className="text-cream/60 font-medium">{targetName ?? 'this user'}</span>
+              <p className="font-sans text-xs text-cream/45 mb-4 leading-relaxed">
+                Reporting <span className="font-display italic text-cream/75">{targetName ?? 'this member'}</span>
               </p>
               <div className="space-y-2">
                 {REPORT_REASONS.map(r => (
                   <label key={r.value}
                     className={clsx(
-                      'flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all',
+                      'flex items-center gap-3 px-4 py-3 cursor-pointer transition-all border',
                       reason === r.value
-                        ? 'bg-champagne/10 border border-champagne/25'
-                        : 'border border-white/[0.06] hover:border-white/[0.12]'
+                        ? 'bg-champagne/[0.07] border-champagne/30'
+                        : 'border-champagne/10 hover:border-champagne/25'
                     )}>
                     <input type="radio" name="reason" value={r.value}
                       checked={reason === r.value} onChange={() => setReason(r.value)}
-                      className="hidden" />
+                      className="sr-only" />
                     <div className={clsx('w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all',
-                      reason === r.value ? 'border-champagne' : 'border-white/20')}>
+                      reason === r.value ? 'border-champagne' : 'border-cream/20')}>
                       {reason === r.value && <div className="w-2 h-2 rounded-full bg-champagne" />}
                     </div>
-                    <span className="font-sans text-sm text-cream/70">{r.label}</span>
+                    <span className="font-sans text-sm text-cream/75">{r.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-cream/30 mb-2">
+              <label htmlFor="report-details" className="eyebrow-muted block mb-2">
                 Additional details (optional)
               </label>
               <textarea
+                id="report-details"
                 value={details}
                 onChange={e => setDetails(e.target.value)}
                 rows={3}
                 maxLength={500}
                 placeholder="Describe what happened…"
-                className="w-full bg-white/[0.03] border border-white/[0.07] rounded-xl px-3.5 py-2.5 font-sans text-sm text-cream placeholder:text-cream/15 focus:outline-none focus:border-champagne/30 transition-all resize-none"
+                className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all resize-none"
               />
             </div>
 
-            <div className="flex gap-3 pt-1">
+            <div className="flex gap-4 pt-1">
               <button type="button" onClick={onClose}
-                className="flex-1 py-2.5 rounded-full border border-white/[0.08] text-cream/40 font-sans text-xs tracking-wider uppercase hover:text-cream/60 transition-all">
+                className="flex-1 btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                 Cancel
               </button>
               <button type="submit" disabled={!reason || submitting}
-                className="flex-1 py-2.5 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 font-sans text-xs tracking-wider uppercase hover:bg-red-500/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                className="flex-1 inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-red-500/40 text-red-400 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all hover:border-red-500 hover:bg-red-500/10 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                 {submitting ? 'Submitting…' : 'Submit Report'}
               </button>
             </div>
@@ -196,10 +199,10 @@ export default function UserActions({ targetId, targetName, showMessage = false 
 
   return (
     <>
-      <div className="flex items-center gap-2 mt-6 justify-center">
+      <div className="flex items-center gap-3 mt-6 justify-center">
         {showMessage && (
           <button onClick={handleMessage} disabled={messaging}
-            className="flex items-center gap-2 px-5 py-2 rounded-full bg-champagne/10 border border-champagne/20 text-champagne font-sans text-xs tracking-widest uppercase hover:bg-champagne/20 transition-all disabled:opacity-60">
+            className="btn-editorial-ghost disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
@@ -209,8 +212,8 @@ export default function UserActions({ targetId, targetName, showMessage = false 
 
         <div className="relative" ref={menuRef}>
           <button onClick={() => setMenuOpen(o => !o)}
-            className="p-2 rounded-full border border-white/[0.08] text-cream/30 hover:text-cream/60 hover:border-white/[0.15] transition-all"
-            title="More actions">
+            className="p-2.5 border border-champagne/20 text-cream/40 hover:text-champagne hover:border-champagne/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+            aria-label="More actions" title="More actions">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="5" r="1.5" fill="currentColor"/>
               <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
@@ -219,22 +222,21 @@ export default function UserActions({ targetId, targetName, showMessage = false 
           </button>
 
           {menuOpen && (
-            <div className="absolute right-0 top-full mt-2 w-44 rounded-xl overflow-hidden z-50"
-              style={{ background: '#0a1628', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+            <div className="absolute right-0 top-full mt-2 w-48 overflow-hidden z-50 bg-ink border border-champagne/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
               <button onClick={() => { setMenuOpen(false); setReportOpen(true); }}
-                className="w-full flex items-center gap-2.5 px-4 py-3 font-sans text-xs text-cream/60 hover:text-cream hover:bg-white/[0.06] transition-all text-left">
+                className="w-full flex items-center gap-2.5 px-4 py-3 font-sans text-[11px] tracking-[0.15em] uppercase text-cream/60 hover:text-champagne hover:bg-champagne/[0.06] transition-all text-left">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                   <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   <line x1="4" y1="22" x2="4" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
-                Report user
+                Report member
               </button>
-              <div className="h-px bg-white/[0.05]" />
+              <div className="h-px bg-champagne/10" />
               <button onClick={toggleBlock} disabled={blocking}
                 className={clsx(
-                  'w-full flex items-center gap-2.5 px-4 py-3 font-sans text-xs transition-all text-left',
+                  'w-full flex items-center gap-2.5 px-4 py-3 font-sans text-[11px] tracking-[0.15em] uppercase transition-all text-left',
                   blocked
-                    ? 'text-cream/50 hover:text-cream hover:bg-white/[0.06]'
+                    ? 'text-cream/50 hover:text-champagne hover:bg-champagne/[0.06]'
                     : 'text-red-400/70 hover:text-red-400 hover:bg-red-500/[0.06]',
                   blocking && 'opacity-50'
                 )}>
@@ -242,7 +244,7 @@ export default function UserActions({ targetId, targetName, showMessage = false 
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
                   <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
-                {blocked ? 'Unblock user' : 'Block user'}
+                {blocked ? 'Unblock member' : 'Block member'}
               </button>
             </div>
           )}

@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import BentoLanding, { type BentoCity } from '@/components/BentoLanding';
+import EditorialLanding, { type LandingCity } from '@/components/EditorialLanding';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,7 +47,7 @@ export default async function HomePage() {
     );
   }
 
-  const cities: BentoCity[] = SLUG_ORDER.map((slug) => {
+  const cities: LandingCity[] = SLUG_ORDER.map((slug) => {
     const cityData = citiesData?.find((c) => c.slug === slug);
     const meta = CITY_META[slug] ?? { country: '', tagline: '' };
     const counts = countMap[slug] ?? { spaces: 0, events: 0 };
@@ -61,5 +61,15 @@ export default async function HomePage() {
     };
   });
 
-  return <BentoLanding cities={cities} />;
+  // Real spot names for the scrolling marquee (deduped, capped for a tidy loop).
+  const { data: locationRows } = await supabase
+    .from('locations')
+    .select('name')
+    .eq('is_approved', true)
+    .limit(60);
+  const locationNames = Array.from(
+    new Set((locationRows ?? []).map((r) => r.name).filter(Boolean))
+  ).slice(0, 18);
+
+  return <EditorialLanding cities={cities} locationNames={locationNames} />;
 }

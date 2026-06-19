@@ -111,15 +111,15 @@ export default function SharePostModal({ postId, postCaption, authorName, onClos
       className="fixed inset-0 z-[300] flex items-end sm:items-center justify-center p-3 sm:p-6"
       style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
     >
-      <div className="absolute inset-0 bg-navy/85 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-sm max-h-[80vh] rounded-3xl border border-champagne/15 bg-navy flex flex-col overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
+      <div className="absolute inset-0 bg-ink/85 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-sm max-h-[80vh] rounded-sm border border-champagne/20 bg-ink flex flex-col overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.6)] animate-scale-in">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between shrink-0">
+        <div className="px-5 py-4 border-b border-champagne/15 flex items-center justify-between shrink-0">
           <div>
-            <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-0.5">Share</p>
-            <h3 className="font-serif text-cream text-base font-semibold">Send to a friend</h3>
+            <p className="eyebrow mb-1.5">Share</p>
+            <h3 className="headline-editorial text-cream text-xl">Send to a <span className="italic text-champagne">friend</span></h3>
           </div>
-          <button onClick={onClose} aria-label="Close" className="text-cream/40 hover:text-cream p-1">
+          <button onClick={onClose} aria-label="Close" className="text-cream/40 hover:text-champagne p-1 transition-colors">
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
               <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
@@ -132,8 +132,8 @@ export default function SharePostModal({ postId, postCaption, authorName, onClos
             <div className="p-6 text-center text-cream/30 text-sm">Loading friends…</div>
           ) : friends.length === 0 ? (
             <div className="p-6 text-center">
-              <p className="font-sans text-cream/50 text-sm mb-1">No friends yet.</p>
-              <p className="font-sans text-cream/25 text-xs">
+              <p className="eyebrow mb-2">No friends yet</p>
+              <p className="font-sans text-cream/30 text-xs">
                 Add some from someone&apos;s profile to share posts in-app.
               </p>
             </div>
@@ -151,20 +151,20 @@ export default function SharePostModal({ postId, postCaption, authorName, onClos
                     >
                       <Avatar name={f.name} image={f.avatar_url} size={36} />
                       <div className="flex-1 min-w-0">
-                        <p className="font-sans text-cream text-sm font-medium truncate">
+                        <p className="font-serif text-cream text-sm truncate">
                           {f.name ?? 'Friend'}
                         </p>
                       </div>
                       {isSent ? (
-                        <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-champagne font-semibold">
+                        <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne font-semibold">
                           Sent ✓
                         </span>
                       ) : isSending ? (
-                        <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-cream/40">
+                        <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/40">
                           Sending…
                         </span>
                       ) : (
-                        <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-cream/50 px-3 py-1 rounded-full border border-white/[0.12]">
+                        <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/50 px-3 py-1 border border-champagne/25">
                           Send
                         </span>
                       )}
@@ -177,10 +177,10 @@ export default function SharePostModal({ postId, postCaption, authorName, onClos
         </div>
 
         {/* External share footer */}
-        <div className="px-3 py-3 border-t border-white/[0.06] shrink-0">
+        <div className="px-3 py-3 border-t border-champagne/15 shrink-0">
           <button
             onClick={externalShare}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-full border border-champagne/30 text-champagne font-sans text-[10px] tracking-[0.2em] uppercase font-semibold hover:bg-champagne/[0.08] transition-all"
+            className="w-full flex items-center justify-center gap-2 py-3 border border-champagne/30 text-champagne font-sans text-[10px] tracking-[0.25em] uppercase font-semibold hover:bg-champagne/[0.08] hover:border-champagne/50 transition-all"
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>

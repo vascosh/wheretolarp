@@ -51,12 +51,12 @@ export default function AddFriendButton({
 
   if (status === 'accepted') {
     return (
-      <div className="flex items-center gap-3 justify-center mt-6">
-        <span className="font-sans text-xs text-cream/40 tracking-widest uppercase">Friends</span>
+      <div className="flex items-center gap-4 justify-center mt-6">
+        <span className="eyebrow-muted">In the Register</span>
         <button
           onClick={removeRequest}
           disabled={loading}
-          className="px-4 py-1.5 rounded-full border border-white/[0.08] text-cream/30 font-sans text-[10px] tracking-widest uppercase hover:border-red-500/30 hover:text-red-400/60 transition-all disabled:opacity-40"
+          className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/30 border-b border-transparent hover:text-red-400/70 hover:border-red-400/40 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
         >
           Remove
         </button>
@@ -66,12 +66,12 @@ export default function AddFriendButton({
 
   if (status === 'pending_sent') {
     return (
-      <div className="flex items-center gap-3 justify-center mt-6">
-        <span className="font-sans text-xs text-cream/30 tracking-widest uppercase">Request Sent</span>
+      <div className="flex items-center gap-4 justify-center mt-6">
+        <span className="eyebrow-muted">Request Sent</span>
         <button
           onClick={removeRequest}
           disabled={loading}
-          className="px-4 py-1.5 rounded-full border border-white/[0.08] text-cream/25 font-sans text-[10px] tracking-widest uppercase hover:text-cream/50 transition-all disabled:opacity-40"
+          className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/30 border-b border-transparent hover:text-cream/60 hover:border-cream/30 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
         >
           Cancel
         </button>
@@ -81,19 +81,19 @@ export default function AddFriendButton({
 
   if (status === 'pending_received') {
     return (
-      <div className="flex items-center gap-3 justify-center mt-6">
-        <span className="font-sans text-xs text-cream/40 tracking-widest uppercase">Wants to connect</span>
+      <div className="flex flex-wrap items-center gap-4 justify-center mt-6">
+        <span className="eyebrow-muted">Wishes to connect</span>
         <button
           onClick={acceptRequest}
           disabled={loading}
-          className="px-5 py-2 rounded-full bg-champagne/10 border border-champagne/20 text-champagne font-sans text-xs tracking-widest uppercase hover:bg-champagne/20 transition-all disabled:opacity-40"
+          className="btn-editorial disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
         >
           Accept
         </button>
         <button
           onClick={removeRequest}
           disabled={loading}
-          className="px-4 py-1.5 rounded-full border border-white/[0.08] text-cream/30 font-sans text-[10px] tracking-widest uppercase hover:text-cream/50 transition-all disabled:opacity-40"
+          className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/30 border-b border-transparent hover:text-cream/60 hover:border-cream/30 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
         >
           Decline
         </button>
@@ -106,9 +106,9 @@ export default function AddFriendButton({
       <button
         onClick={sendRequest}
         disabled={loading}
-        className="px-6 py-2 rounded-full bg-champagne/10 border border-champagne/20 text-champagne font-sans text-xs tracking-widest uppercase hover:bg-champagne/20 transition-all disabled:opacity-40"
+        className="btn-editorial-ghost disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
       >
-        {loading ? 'Sending…' : 'Add Friend'}
+        {loading ? 'Sending…' : 'Add to Register'}
       </button>
     </div>
   );

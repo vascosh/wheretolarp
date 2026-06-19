@@ -87,16 +87,21 @@ export default function FollowListModal({ type, userId, isOwnProfile, onClose, o
 
   return (
     <>
-      <div className="fixed inset-0 z-[500] bg-navy/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="fixed inset-0 z-[500] bg-ink/70 backdrop-blur-sm" onClick={onClose} />
       <div
-        className="fixed z-[501] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm rounded-2xl overflow-hidden shadow-modal"
-        style={{ background: '#0a1628', border: '1px solid rgba(255,255,255,0.08)' }}
+        className="fixed z-[501] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm overflow-hidden bg-ink border border-champagne/20 shadow-[0_8px_48px_rgba(0,0,0,0.5)]"
+        role="dialog"
+        aria-modal="true"
+        aria-label={type}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
-          <p className="font-serif text-cream/90 text-base font-semibold capitalize">{type}</p>
-          <button onClick={onClose} className="text-cream/30 hover:text-cream transition-colors p-1.5 rounded-full hover:bg-white/[0.06]">
+        <div className="px-5 py-4 border-b border-champagne/15 flex items-center justify-between">
+          <div>
+            <p className="eyebrow mb-1">The Register</p>
+            <h2 className="headline-editorial text-cream text-xl capitalize">{type}</h2>
+          </div>
+          <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -110,34 +115,34 @@ export default function FollowListModal({ type, userId, isOwnProfile, onClose, o
               <div className="w-5 h-5 border-2 border-champagne/20 border-t-champagne rounded-full animate-spin" />
             </div>
           ) : users.length === 0 ? (
-            <div className="py-12 text-center">
-              <p className="font-sans text-cream/20 text-sm">No {type} yet</p>
+            <div className="py-14 text-center">
+              <p className="font-display italic text-cream/30 text-lg">No {type} yet</p>
             </div>
           ) : (
             users.map(u => {
               const busy = processing.has(u.id);
               return (
-                <div key={u.id} className="px-5 py-3 flex items-center gap-3 border-b border-white/[0.04] last:border-0">
-                  <Link href={`/u/${u.id}`} onClick={onClose} className="shrink-0">
+                <div key={u.id} className="px-5 py-3.5 flex items-center gap-3 border-b border-champagne/10 last:border-0">
+                  <Link href={`/u/${u.id}`} onClick={onClose} className="shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-full">
                     <UserAvatar name={u.name} image={u.avatar_url} />
                   </Link>
-                  <Link href={`/u/${u.id}`} onClick={onClose} className="flex-1 min-w-0 hover:opacity-80 transition-opacity">
-                    <p className="font-sans text-sm text-cream/80 font-medium truncate">{u.name ?? 'Member'}</p>
-                    {u.username && <p className="font-sans text-[10px] text-cream/30 truncate">@{u.username}</p>}
+                  <Link href={`/u/${u.id}`} onClick={onClose} className="flex-1 min-w-0 hover:opacity-80 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
+                    <p className="font-serif text-sm text-cream/85 truncate">{u.name ?? 'Member'}</p>
+                    {u.username && <p className="font-sans text-[10px] tracking-wider text-champagne/40 truncate">@{u.username}</p>}
                   </Link>
                   {canManage && (
-                    <div className="flex items-center gap-1.5 shrink-0">
+                    <div className="flex items-center gap-3 shrink-0">
                       <button
                         onClick={() => type === 'followers' ? removeFollower(u.id) : unfollow(u.id)}
                         disabled={busy}
-                        className="px-2.5 py-1 rounded-full border border-white/[0.1] text-cream/35 font-sans text-[10px] tracking-wider uppercase hover:text-cream/60 hover:border-white/[0.2] transition-all disabled:opacity-40"
+                        className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/35 border-b border-transparent hover:text-cream/70 hover:border-cream/30 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50"
                       >
                         {type === 'followers' ? 'Remove' : 'Unfollow'}
                       </button>
                       <button
                         onClick={() => blockUser(u.id)}
                         disabled={busy}
-                        className="px-2.5 py-1 rounded-full border border-red-500/20 text-red-400/50 font-sans text-[10px] tracking-wider uppercase hover:text-red-400/80 hover:border-red-500/40 transition-all disabled:opacity-40"
+                        className="font-sans text-[10px] tracking-[0.2em] uppercase text-red-400/50 border-b border-transparent hover:text-red-400/85 hover:border-red-400/40 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50"
                       >
                         Block
                       </button>

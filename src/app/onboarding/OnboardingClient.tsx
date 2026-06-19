@@ -18,11 +18,11 @@ function Avatar({ name, image, size = 96 }: { name: string; image: string; size?
     return (
       <img src={image} alt={name} referrerPolicy="no-referrer"
         onError={() => setErr(true)}
-        className="rounded-full object-cover w-full h-full" />
+        className="rounded-full object-cover w-full h-full border border-champagne/30" />
     );
   }
   return (
-    <div className="rounded-full flex items-center justify-center font-sans font-semibold text-navy w-full h-full"
+    <div className="rounded-full flex items-center justify-center font-sans font-semibold text-navy w-full h-full border border-champagne/30"
       style={{ background: 'linear-gradient(135deg, #C9A96E, #b8944d)', fontSize: size * 0.32 }}>
       {initials}
     </div>
@@ -104,34 +104,36 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-16"
-      style={{ background: 'linear-gradient(160deg, #070f1a 0%, #0a1628 60%, #060d18 100%)' }}>
+    <div className="min-h-screen flex items-center justify-center px-4 py-16 bg-ink text-cream">
       <div className="fixed inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,169,110,0.08) 0%, transparent 70%)' }} />
 
       <div className="relative w-full max-w-sm">
-        {/* Logo */}
+        {/* Masthead */}
         <div className="text-center mb-10">
-          <p className="font-serif text-cream/40 text-sm tracking-[0.3em] uppercase mb-2">Where To LARP</p>
-          <h1 className="font-serif text-cream text-3xl font-semibold leading-tight">
-            {step === 1 ? 'Welcome.' : step === 2 ? 'Choose your handle.' : 'About you.'}
+          <p className="eyebrow mb-4 flex items-center justify-center gap-3">
+            <span className="inline-block h-px w-8 bg-champagne/40" />
+            Where To LARP
+            <span className="inline-block h-px w-8 bg-champagne/40" />
+          </p>
+          <h1 className="headline-editorial text-cream text-4xl sm:text-5xl">
+            {step === 1 ? 'Welcome.' : step === 2 ? <>Choose your <span className="italic text-champagne">handle</span>.</> : 'About you.'}
           </h1>
-          <p className="font-sans text-cream/30 text-sm mt-2">
-            {step === 1 ? 'Set up your profile to get started.' : step === 2 ? 'A unique username others can find you by.' : 'Tell the community a little about yourself.'}
+          <p className="font-display italic text-cream/45 text-base mt-3">
+            {step === 1 ? 'Set up your profile to get started.' : step === 2 ? 'A unique name others can find you by.' : 'Tell the community a little about yourself.'}
           </p>
         </div>
 
         {/* Step indicators */}
         <div className="flex items-center justify-center gap-2 mb-8">
           {[1, 2, 3].map(s => (
-            <div key={s} className={`h-1 rounded-full transition-all duration-300 ${
-              s === step ? 'w-6 bg-champagne' : s < step ? 'w-4 bg-champagne/40' : 'w-4 bg-white/[0.1]'
+            <div key={s} className={`h-px transition-all duration-300 ${
+              s === step ? 'w-8 bg-champagne' : s < step ? 'w-5 bg-champagne/50' : 'w-5 bg-champagne/15'
             }`} />
           ))}
         </div>
 
-        <div className="rounded-2xl px-6 py-7 space-y-5"
-          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="border border-champagne/15 bg-navy/40 px-6 py-7 space-y-5">
 
           {step === 1 && (
             <>
@@ -154,30 +156,31 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
                 </div>
                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} />
                 <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}
-                  className="font-sans text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors">
+                  className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/40 border-b border-transparent hover:text-champagne hover:border-champagne/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50">
                   {uploading ? 'Uploading…' : 'Change photo'}
                 </button>
               </div>
 
               {/* Display name */}
               <div>
-                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-cream/35 mb-2">
+                <label htmlFor="onboard-name" className="eyebrow-muted block mb-2">
                   Display Name <span className="text-champagne">*</span>
                 </label>
                 <input
+                  id="onboard-name"
                   type="text"
                   value={name}
                   onChange={e => setName(e.target.value)}
                   placeholder="Your name"
                   maxLength={60}
-                  className="w-full bg-white/[0.04] border border-white/[0.07] rounded-xl px-3.5 py-3 font-sans text-sm text-cream placeholder:text-cream/15 focus:outline-none focus:border-champagne/40 transition-all"
+                  className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all"
                 />
               </div>
 
               <button
                 onClick={() => { if (name.trim()) setStep(2); }}
                 disabled={!name.trim()}
-                className="w-full py-3 rounded-full bg-champagne text-navy font-sans font-semibold text-xs tracking-[0.15em] uppercase hover:bg-champagne/90 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                className="btn-editorial w-full disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
               >
                 Continue
               </button>
@@ -187,20 +190,21 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
           {step === 2 && (
             <>
               <div>
-                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-cream/35 mb-2">
-                  Username <span className="text-cream/20 font-normal normal-case tracking-normal">(optional)</span>
+                <label htmlFor="onboard-username" className="eyebrow-muted block mb-2">
+                  Username <span className="text-cream/25 font-normal normal-case tracking-normal">(optional)</span>
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-sans text-sm text-cream/30 pointer-events-none">@</span>
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 font-sans text-base text-champagne/50 pointer-events-none">@</span>
                   <input
+                    id="onboard-username"
                     type="text"
                     value={username}
                     onChange={e => setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g, '').slice(0, 20))}
                     placeholder="your_handle"
                     maxLength={20}
-                    className="w-full bg-white/[0.04] border border-white/[0.07] rounded-xl pl-8 pr-10 py-3 font-sans text-sm text-cream placeholder:text-cream/15 focus:outline-none focus:border-champagne/40 transition-all"
+                    className="w-full bg-transparent border-b border-champagne/25 pl-5 pr-9 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all"
                   />
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2">
                     {usernameStatus === 'checking' && (
                       <div className="w-3.5 h-3.5 border-2 border-champagne/20 border-t-champagne rounded-full animate-spin" />
                     )}
@@ -226,19 +230,19 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
                   <p className="font-sans text-[11px] text-champagne/50 mt-1.5">Available!</p>
                 )}
                 {!username && (
-                  <p className="font-sans text-[11px] text-cream/20 mt-1.5">You can set this later in Settings</p>
+                  <p className="font-sans text-[11px] text-cream/25 mt-1.5">You can set this later in Settings</p>
                 )}
               </div>
 
               <div className="flex gap-3 pt-1">
                 <button onClick={() => setStep(1)}
-                  className="flex-1 py-3 rounded-full border border-white/[0.08] text-cream/40 font-sans text-xs tracking-wider uppercase hover:text-cream/60 transition-all">
+                  className="btn-editorial-ghost flex-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy">
                   Back
                 </button>
                 <button
                   onClick={() => { if (usernameStatus !== 'taken' && usernameStatus !== 'checking') setStep(3); }}
                   disabled={usernameStatus === 'taken' || usernameStatus === 'checking'}
-                  className="flex-1 py-3 rounded-full bg-champagne text-navy font-sans font-semibold text-xs tracking-[0.15em] uppercase hover:bg-champagne/90 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="btn-editorial flex-1 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
                 >
                   Continue
                 </button>
@@ -249,30 +253,31 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
           {step === 3 && (
             <>
               <div>
-                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-cream/35 mb-2">
-                  Bio <span className="text-cream/20 font-normal normal-case tracking-normal">(optional)</span>
+                <label htmlFor="onboard-bio" className="eyebrow-muted block mb-2">
+                  Bio <span className="text-cream/25 font-normal normal-case tracking-normal">(optional)</span>
                 </label>
                 <textarea
+                  id="onboard-bio"
                   value={bio}
                   onChange={e => setBio(e.target.value.slice(0, 200))}
                   placeholder="Tell the LARP community something about yourself…"
                   rows={4}
-                  className="w-full bg-white/[0.04] border border-white/[0.07] rounded-xl px-3.5 py-3 font-sans text-sm text-cream placeholder:text-cream/15 focus:outline-none focus:border-champagne/40 transition-all resize-none"
+                  className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all resize-none"
                 />
-                <p className="font-sans text-[10px] text-cream/15 mt-1 text-right">{bio.length}/200</p>
+                <p className="font-sans text-[10px] text-cream/25 mt-1 text-right tabular-nums">{bio.length}/200</p>
               </div>
 
               {error && <p className="font-sans text-xs text-red-400/70">{error}</p>}
 
               <div className="flex gap-3 pt-1">
                 <button onClick={() => setStep(2)}
-                  className="flex-1 py-3 rounded-full border border-white/[0.08] text-cream/40 font-sans text-xs tracking-wider uppercase hover:text-cream/60 transition-all">
+                  className="btn-editorial-ghost flex-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy">
                   Back
                 </button>
                 <button
                   onClick={handleFinish}
                   disabled={saving}
-                  className="flex-1 py-3 rounded-full bg-champagne text-navy font-sans font-semibold text-xs tracking-[0.15em] uppercase hover:bg-champagne/90 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="btn-editorial flex-1 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
                 >
                   {saving ? 'Setting up…' : 'Enter'}
                 </button>
@@ -281,7 +286,7 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
           )}
         </div>
 
-        <p className="font-sans text-cream/15 text-[11px] text-center mt-6 leading-relaxed">
+        <p className="font-sans text-cream/25 text-[11px] tracking-wide text-center mt-6 leading-relaxed">
           You can change all of this later in Settings.
         </p>
       </div>

@@ -15,6 +15,7 @@ import { useSession } from 'next-auth/react';
 import NewPostModal from '@/components/NewPostModal';
 import FeedDMLauncher from '@/components/FeedDMLauncher';
 import SharePostModal from '@/components/SharePostModal';
+import Reveal from '@/components/Reveal';
 
 interface Author {
   id: string;
@@ -111,53 +112,61 @@ export default function FeedClient() {
   }
 
   return (
-    <div className="min-h-screen bg-navy pt-nav pb-12 pb-safe">
-      <div className="max-w-md mx-auto px-3 sm:px-4 pt-6 sm:pt-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6 sm:mb-8">
-          <div>
-            <p className="font-sans text-champagne text-[10px] tracking-[0.3em] uppercase mb-1">
-              The Feed
+    <div className="min-h-screen bg-ink pt-nav pb-12 pb-safe">
+      <div className="max-w-md mx-auto px-3 sm:px-4 pt-8 sm:pt-12">
+        {/* Editorial page header */}
+        <Reveal>
+          <header className="mb-8 sm:mb-10">
+            <p className="eyebrow mb-4 flex items-center gap-3">
+              <span className="inline-block h-px w-8 bg-champagne/50" />
+              The Edit · Daily Dispatch
             </p>
-            <h1 className="font-serif text-cream text-3xl sm:text-4xl font-semibold leading-tight">
-              Craziest <span className="text-champagne italic">LARPs</span>
-            </h1>
-          </div>
-          {session?.user?.id ? (
-            <button
-              onClick={() => setComposerOpen(true)}
-              className="btn-champagne whitespace-nowrap"
-            >
-              New Post
-            </button>
-          ) : (
-            <Link href="/auth/signin" className="btn-champagne whitespace-nowrap">
-              Sign in
-            </Link>
-          )}
-        </div>
+            <div className="flex items-end justify-between gap-4">
+              <h1 className="headline-editorial text-cream text-4xl sm:text-5xl">
+                The <span className="italic text-champagne">Feed</span>
+              </h1>
+              {session?.user?.id ? (
+                <button
+                  onClick={() => setComposerOpen(true)}
+                  className="btn-editorial whitespace-nowrap !px-5 !py-3 text-[10px]"
+                >
+                  New Post
+                </button>
+              ) : (
+                <Link href="/auth/signin" className="btn-editorial whitespace-nowrap !px-5 !py-3 text-[10px]">
+                  Sign in
+                </Link>
+              )}
+            </div>
+            <p className="font-display italic text-cream/45 text-sm sm:text-base mt-4 max-w-sm">
+              The craziest LARPs from your friends and the city — filed daily.
+            </p>
+            <div className="rule-champagne mt-6" />
+          </header>
+        </Reveal>
 
         {/* Feed */}
         {posts === null ? (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="rounded-2xl border border-champagne/10 bg-navy-light/40 aspect-[4/5] animate-pulse" />
+              <div key={i} className="border border-champagne/12 bg-navy/40 aspect-[4/5] animate-pulse" />
             ))}
           </div>
         ) : posts.length === 0 ? (
           <EmptyState onCompose={() => setComposerOpen(true)} signedIn={!!session?.user?.id} />
         ) : (
-          <ul className="space-y-4 sm:space-y-5">
-            {posts.map((p) => (
-              <li key={p.id}>
+          <ul className="space-y-7 sm:space-y-8">
+            {posts.map((p, i) => (
+              <Reveal as="li" key={p.id} delay={Math.min(i, 4) * 70}>
                 <PostCard
                   post={p}
                   onLike={() => toggleLike(p)}
                   onShare={() => setSharingPost(p)}
                   onDelete={() => deletePost(p)}
                   signedIn={!!session?.user?.id}
+                  index={i}
                 />
-              </li>
+              </Reveal>
             ))}
           </ul>
         )}
@@ -188,15 +197,18 @@ export default function FeedClient() {
   // ── helpers (inner so they close over context-free state shape) ──
   function EmptyState({ onCompose, signedIn }: { onCompose: () => void; signedIn: boolean }) {
     return (
-      <div className="rounded-2xl border border-champagne/15 bg-navy/60 shadow-[0_4px_32px_rgba(0,0,0,0.3)] p-8 sm:p-10 text-center">
-        <p className="font-serif text-cream text-xl mb-3">Quiet so far.</p>
-        <p className="font-sans text-cream/50 text-sm leading-relaxed mb-6 max-w-xs mx-auto">
-          When your friends post — or anyone with a public profile does — their LARPs show up here.
+      <div className="border border-champagne/15 bg-navy/60 p-9 sm:p-12 text-center">
+        <p className="eyebrow mb-5">Awaiting the first entry</p>
+        <p className="headline-editorial text-cream text-3xl sm:text-4xl mb-4">
+          Quiet <span className="italic text-champagne">so far</span>.
+        </p>
+        <p className="font-sans text-cream/45 text-sm leading-relaxed mb-8 max-w-xs mx-auto">
+          When your friends post — or anyone with a public profile does — their LARPs are filed here.
         </p>
         {signedIn ? (
-          <button onClick={onCompose} className="btn-champagne">Post the first one</button>
+          <button onClick={onCompose} className="btn-editorial">Post the first one</button>
         ) : (
-          <Link href="/auth/signin" className="btn-champagne">Sign in</Link>
+          <Link href="/auth/signin" className="btn-editorial">Sign in</Link>
         )}
       </div>
     );
@@ -206,25 +218,28 @@ export default function FeedClient() {
 /* ── PostCard (matches the bento card recipe: rounded, champagne/15 border, navy bg) ── */
 
 function PostCard({
-  post, onLike, onShare, onDelete, signedIn,
+  post, onLike, onShare, onDelete, signedIn, index,
 }: {
   post: FeedPost;
   onLike: () => void;
   onShare: () => void;
   onDelete: () => void;
   signedIn: boolean;
+  index: number;
 }) {
+  const entryNo = String(index + 1).padStart(2, '0');
   return (
-    <article className="rounded-2xl border border-champagne/15 bg-navy shadow-[0_4px_32px_rgba(0,0,0,0.3)] overflow-hidden">
+    <article className="group border border-champagne/15 bg-navy overflow-hidden transition-colors duration-500 hover:border-champagne/30">
       {/* Author row */}
-      <header className="px-4 sm:px-5 py-3 flex items-center gap-3">
-        <Link href={`/u/${post.author.username ?? post.author.id}`} className="flex items-center gap-3 min-w-0 flex-1 group">
+      <header className="px-4 sm:px-5 py-3.5 flex items-center gap-3 border-b border-champagne/12">
+        <span className="numeral text-[11px] shrink-0" aria-hidden>{entryNo}</span>
+        <Link href={`/u/${post.author.username ?? post.author.id}`} className="flex items-center gap-3 min-w-0 flex-1 group/author">
           <Avatar name={post.author.name} image={post.author.avatar_url} />
           <div className="min-w-0">
-            <p className="font-sans text-cream text-sm font-medium leading-tight truncate group-hover:text-champagne transition-colors">
+            <p className="font-serif text-cream text-sm leading-tight truncate group-hover/author:text-champagne transition-colors">
               {post.author.name ?? 'LARPer'}
             </p>
-            <p className="font-sans text-cream/35 text-[11px] truncate">
+            <p className="font-sans text-cream/35 text-[10px] tracking-[0.12em] uppercase truncate">
               {post.location_name ? post.location_name : (post.city_slug ? cityLabel(post.city_slug) : timeAgo(post.created_at))}
               {post.location_name && (
                 <> · <span className="text-cream/30">{timeAgo(post.created_at)}</span></>
@@ -233,7 +248,7 @@ function PostCard({
           </div>
         </Link>
         {post.is_friend && (
-          <span className="font-sans text-[9px] tracking-[0.2em] uppercase text-champagne/70 px-2 py-0.5 rounded-full border border-champagne/30 hidden sm:inline">
+          <span className="font-sans text-[9px] tracking-[0.25em] uppercase text-champagne/70 px-2.5 py-1 border border-champagne/30 hidden sm:inline">
             Friend
           </span>
         )}
@@ -268,7 +283,7 @@ function PostCard({
       </div>
 
       {/* Actions */}
-      <div className="px-4 sm:px-5 pt-3 flex items-center gap-4">
+      <div className="px-4 sm:px-5 pt-3.5 flex items-center gap-5">
         <button
           onClick={onLike}
           disabled={!signedIn}
@@ -296,10 +311,10 @@ function PostCard({
 
       {/* Caption */}
       {(post.caption || post.author.username) && (
-        <div className="px-4 sm:px-5 pt-2 pb-4 sm:pb-5">
+        <div className="px-4 sm:px-5 pt-3 pb-4 sm:pb-5">
           <p className="font-sans text-cream/80 text-sm leading-relaxed">
             {post.author.username && (
-              <span className="font-semibold text-cream mr-1.5">@{post.author.username}</span>
+              <span className="font-semibold text-champagne mr-1.5">@{post.author.username}</span>
             )}
             {post.caption}
           </p>

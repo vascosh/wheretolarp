@@ -11,7 +11,13 @@ interface LocationCardProps {
   location: Location;
   isSelected: boolean;
   onSelect: (id: string) => void;
+  /** Catalogue position — shown as a hanging numeral. */
+  index?: number;
+  /** City accent colour for contextual hairlines/labels. */
+  accent?: string;
 }
+
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
 
 const DEFAULT_THEME = { badge: 'bg-[#1a3a5c] text-[#a8c8e8]', header: 'from-[#0e2844] via-[#1a3a5c] to-[#0a1e38]', label: '#a8c8e8' };
 
@@ -60,23 +66,25 @@ function LocationDetailModal({ location, onClose }: { location: Location; onClos
   return createPortal(
     <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6">
       <div className="absolute inset-0 bg-navy/75 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-lg rounded-2xl overflow-hidden shadow-modal animate-modal-enter flex flex-col max-h-[90vh]"
-        style={{ background: '#0e1e32' }}>
+      <div className="relative z-10 w-full max-w-lg overflow-hidden shadow-modal animate-modal-enter flex flex-col max-h-[90vh] border border-champagne/20"
+        style={{ background: '#060D18' }}>
 
-        {/* Gradient header */}
-        <div className={clsx('relative bg-gradient-to-br px-7 py-7 shrink-0', theme.header)}>
+        {/* Editorial header */}
+        <div className="relative bg-ink px-7 py-8 shrink-0 border-b border-champagne/15">
+          <span className="absolute top-0 left-0 h-px w-full" style={{ background: `linear-gradient(90deg, ${theme.label}, transparent 70%)` }} />
           <button onClick={onClose}
-            className="absolute top-4 right-4 text-cream/30 hover:text-cream transition-colors p-1 rounded-full">
+            className="absolute top-4 right-4 text-cream/30 hover:text-champagne transition-colors p-1">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           </button>
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-sans font-semibold tracking-[0.15em] uppercase mb-3"
-            style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: theme.label }}>
+          <p className="font-sans text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: theme.label }}>
+            {location.neighborhood}
+          </p>
+          <h2 className="headline-editorial text-cream text-3xl sm:text-4xl pr-8">{location.name}</h2>
+          <span className="inline-block mt-4 font-sans text-[9px] tracking-[0.2em] uppercase text-cream/45 border border-champagne/25 px-2.5 py-1">
             {location.category}
           </span>
-          <h2 className="font-serif text-cream text-2xl font-semibold leading-snug pr-8">{location.name}</h2>
-          <p className="font-sans text-xs mt-1.5 opacity-60" style={{ color: theme.label }}>{location.neighborhood}</p>
         </div>
 
         {/* Body */}
@@ -132,61 +140,62 @@ function LocationDetailModal({ location, onClose }: { location: Location; onClos
   );
 }
 
-export default function LocationCard({ location, isSelected, onSelect }: LocationCardProps) {
+export default function LocationCard({ location, isSelected, onSelect, index, accent = '#C9A96E' }: LocationCardProps) {
   const [detailOpen, setDetailOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const theme = categoryColors[location.category] ?? DEFAULT_THEME;
 
   useEffect(() => { setMounted(true); }, []);
 
+  const numeral = typeof index === 'number' ? (ROMAN[index] ?? String(index + 1)) : null;
+
   return (
     <>
       <div
         onClick={() => setDetailOpen(true)}
         className={clsx(
-          'card-location border flex flex-col group hover:-translate-y-1',
+          'relative flex flex-col group cursor-pointer bg-cream transition-all duration-500 border',
           isSelected
-            ? 'border-champagne ring-1 ring-champagne shadow-card-hover'
-            : 'border-transparent hover:border-champagne/20'
+            ? 'border-champagne shadow-[0_8px_40px_rgba(10,22,40,0.10)]'
+            : 'border-champagne/20 hover:border-champagne/50 hover:shadow-[0_8px_40px_rgba(10,22,40,0.08)]'
         )}
       >
-        {/* Colored header block */}
-        <div className={clsx('relative bg-gradient-to-br px-5 py-5 flex items-end justify-between', theme.header)}
-          style={{ minHeight: '90px' }}>
-          <div className="relative z-10">
-            <p className="font-sans text-[10px] tracking-[0.2em] uppercase leading-none mb-2 opacity-60"
-              style={{ color: theme.label }}>
+        {/* top hairline accent (city colour) */}
+        <span className="absolute top-0 left-0 h-px w-full" style={{ background: `linear-gradient(90deg, ${accent}, transparent 70%)` }} />
+
+        {/* Header — eyebrow neighborhood, numeral, big serif name */}
+        <div className="px-5 sm:px-6 pt-6 pb-5">
+          <div className="flex items-start justify-between gap-3 mb-3">
+            <p className="font-sans text-[10px] tracking-[0.3em] uppercase" style={{ color: accent }}>
               {location.neighborhood}
             </p>
-            <h3 className="font-serif text-cream text-xl font-semibold leading-snug group-hover:text-champagne transition-colors duration-300">
-              {location.name}
-            </h3>
+            {numeral && <span className="numeral text-xs shrink-0">{numeral}</span>}
           </div>
-          <div className="absolute top-4 right-4 flex items-center gap-2">
-            <span className="category-badge text-[10px]"
-              style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: theme.label }}>
-              {location.category}
-            </span>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
+          <h3 className="font-display text-navy text-2xl sm:text-3xl leading-[1.05] group-hover:text-champagne-dark transition-colors duration-300">
+            {location.name}
+          </h3>
+          <span
+            className="inline-block mt-3 font-sans text-[9px] tracking-[0.2em] uppercase text-charcoal/45 border border-champagne/25 px-2.5 py-1"
+          >
+            {location.category}
+          </span>
         </div>
 
+        <div className="rule-champagne-dim mx-5 sm:mx-6" />
+
         {/* Content */}
-        <div className="p-4 flex-1">
-          <div className="flex items-center justify-between mb-2">
+        <div className="px-5 sm:px-6 py-5 flex-1">
+          <div className="flex items-center justify-between mb-3">
             <VibeDifficulty level={location.vibe_difficulty} />
             {location.address && (
               <p className="font-sans text-[10px] text-muted truncate max-w-[160px]">{location.address}</p>
             )}
           </div>
-          <p className="font-sans text-sm text-charcoal/80 leading-relaxed mb-3 line-clamp-3">
+          <p className="font-sans text-sm text-charcoal/75 leading-relaxed mb-4 line-clamp-3">
             {location.description}
           </p>
-          <span className="font-sans text-[10px] text-champagne/60 tracking-widest uppercase flex items-center gap-1">
-            View details
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <path d="M3 1L7 5L3 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+          <span className="link-underline">
+            View details <span aria-hidden>→</span>
           </span>
         </div>
 
@@ -196,7 +205,7 @@ export default function LocationCard({ location, isSelected, onSelect }: Locatio
         </div>
 
         {/* LARP Together */}
-        <div className="px-3 sm:px-4 pb-3 sm:pb-4" onClick={e => e.stopPropagation()}>
+        <div className="px-4 sm:px-5 pb-4 sm:pb-5" onClick={e => e.stopPropagation()}>
           <LARPTogether
             name={location.name}
             neighborhood={location.neighborhood}

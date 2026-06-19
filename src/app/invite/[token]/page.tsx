@@ -14,10 +14,13 @@ export default async function InvitePage({ params }: { params: { token: string }
 
   if (!invite) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #070f1a 0%, #0a1628 60%, #060d18 100%)' }}>
-        <div className="text-center">
-          <h1 className="font-serif text-cream text-3xl mb-3">Invite Not Found</h1>
-          <p className="font-sans text-cream/40 text-sm">This invite link may have expired or is invalid.</p>
+      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'linear-gradient(160deg, #070f1a 0%, #0a1628 60%, #060d18 100%)' }}>
+        <div className="text-center max-w-md">
+          <p className="eyebrow mb-5">Off the Register</p>
+          <h1 className="headline-editorial text-cream text-4xl sm:text-5xl mb-4">
+            Invite not <span className="italic text-champagne">found</span>.
+          </h1>
+          <p className="font-sans text-cream/40 text-sm leading-relaxed">This invite link may have expired or is invalid.</p>
         </div>
       </div>
     );
