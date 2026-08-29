@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * Feed: a single-column Instagram-style stream of LARP posts, styled to
- * match the bento landing (navy + champagne accents on cream text).
+ * The Society Papers: a single-column stream of LARP posts, styled to the
+ * Heritage Daylight system (parchment paper, forest ink, gold overlines).
  *
  * Visibility is server-enforced in /api/posts (own + friends + public).
  * Ranking is server-side too. The page itself just renders, likes, shares,
@@ -112,18 +112,18 @@ export default function FeedClient() {
   }
 
   return (
-    <div className="min-h-screen bg-ink pt-nav pb-12 pb-safe">
+    <div className="min-h-screen bg-parchment pt-nav pb-12 pb-safe">
       <div className="max-w-md mx-auto px-3 sm:px-4 pt-8 sm:pt-12">
         {/* Editorial page header */}
         <Reveal>
           <header className="mb-8 sm:mb-10">
             <p className="eyebrow mb-4 flex items-center gap-3">
-              <span className="inline-block h-px w-8 bg-champagne/50" />
-              The Edit · Daily Dispatch
+              <span className="inline-block h-px w-8 bg-gold/60" />
+              The Society Papers · Daily Dispatch
             </p>
             <div className="flex items-end justify-between gap-4">
-              <h1 className="headline-editorial text-cream text-4xl sm:text-5xl">
-                The <span className="italic text-champagne">Feed</span>
+              <h1 className="headline-editorial text-4xl sm:text-5xl">
+                The Society <span className="italic text-gold-dark">Papers</span>
               </h1>
               {session?.user?.id ? (
                 <button
@@ -138,7 +138,7 @@ export default function FeedClient() {
                 </Link>
               )}
             </div>
-            <p className="font-display italic text-cream/45 text-sm sm:text-base mt-4 max-w-sm">
+            <p className="font-display italic text-peat/50 text-sm sm:text-base mt-4 max-w-sm">
               The craziest LARPs from your friends and the city — filed daily.
             </p>
             <div className="rule-champagne mt-6" />
@@ -149,7 +149,7 @@ export default function FeedClient() {
         {posts === null ? (
           <div className="space-y-6">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="border border-champagne/12 bg-navy/40 aspect-[4/5] animate-pulse" />
+              <div key={i} className="card-paper aspect-[4/5] animate-pulse" />
             ))}
           </div>
         ) : posts.length === 0 ? (
@@ -197,16 +197,16 @@ export default function FeedClient() {
   // ── helpers (inner so they close over context-free state shape) ──
   function EmptyState({ onCompose, signedIn }: { onCompose: () => void; signedIn: boolean }) {
     return (
-      <div className="border border-champagne/15 bg-navy/60 p-9 sm:p-12 text-center">
+      <div className="card-paper p-9 sm:p-12 text-center">
         <p className="eyebrow mb-5">Awaiting the first entry</p>
-        <p className="headline-editorial text-cream text-3xl sm:text-4xl mb-4">
-          Quiet <span className="italic text-champagne">so far</span>.
+        <p className="headline-editorial text-3xl sm:text-4xl mb-4">
+          The register is <span className="italic text-gold-dark">blank</span>.
         </p>
-        <p className="font-sans text-cream/45 text-sm leading-relaxed mb-8 max-w-xs mx-auto">
-          When your friends post — or anyone with a public profile does — their LARPs are filed here.
+        <p className="font-sans text-peat/60 text-sm leading-relaxed mb-8 max-w-xs mx-auto">
+          When your friends post — or any member with a public profile does — their LARPs are filed here.
         </p>
         {signedIn ? (
-          <button onClick={onCompose} className="btn-editorial">Post the first one</button>
+          <button onClick={onCompose} className="btn-editorial">File the first entry</button>
         ) : (
           <Link href="/auth/signin" className="btn-editorial">Sign in</Link>
         )}
@@ -215,7 +215,7 @@ export default function FeedClient() {
   }
 }
 
-/* ── PostCard (matches the bento card recipe: rounded, champagne/15 border, navy bg) ── */
+/* ── PostCard (paper card recipe: rounded-[18px], peat/10 hairline, parchment-light) ── */
 
 function PostCard({
   post, onLike, onShare, onDelete, signedIn, index,
@@ -229,26 +229,26 @@ function PostCard({
 }) {
   const entryNo = String(index + 1).padStart(2, '0');
   return (
-    <article className="group border border-champagne/15 bg-navy overflow-hidden transition-colors duration-500 hover:border-champagne/30">
+    <article className="group card-paper overflow-hidden transition-shadow duration-500 hover:shadow-[0_10px_40px_rgba(27, 47, 222,0.12)]">
       {/* Author row */}
-      <header className="px-4 sm:px-5 py-3.5 flex items-center gap-3 border-b border-champagne/12">
+      <header className="px-4 sm:px-5 py-3.5 flex items-center gap-3 border-b border-peat/10">
         <span className="numeral text-[11px] shrink-0" aria-hidden>{entryNo}</span>
         <Link href={`/u/${post.author.username ?? post.author.id}`} className="flex items-center gap-3 min-w-0 flex-1 group/author">
           <Avatar name={post.author.name} image={post.author.avatar_url} />
           <div className="min-w-0">
-            <p className="font-serif text-cream text-sm leading-tight truncate group-hover/author:text-champagne transition-colors">
+            <p className="font-serif text-forest text-sm leading-tight truncate group-hover/author:text-gold-dark transition-colors">
               {post.author.name ?? 'LARPer'}
             </p>
-            <p className="font-sans text-cream/35 text-[10px] tracking-[0.12em] uppercase truncate">
+            <p className="font-sans text-gold-dark text-[10px] tracking-[0.2em] uppercase truncate">
               {post.location_name ? post.location_name : (post.city_slug ? cityLabel(post.city_slug) : timeAgo(post.created_at))}
               {post.location_name && (
-                <> · <span className="text-cream/30">{timeAgo(post.created_at)}</span></>
+                <> · <span className="text-gold-dark/70">{timeAgo(post.created_at)}</span></>
               )}
             </p>
           </div>
         </Link>
         {post.is_friend && (
-          <span className="font-sans text-[9px] tracking-[0.25em] uppercase text-champagne/70 px-2.5 py-1 border border-champagne/30 hidden sm:inline">
+          <span className="font-sans text-[9px] tracking-[0.25em] uppercase text-gold-dark px-2.5 py-1 border border-gold/40 hidden sm:inline">
             Friend
           </span>
         )}
@@ -256,7 +256,7 @@ function PostCard({
           <button
             onClick={onDelete}
             aria-label="Delete post"
-            className="text-cream/25 hover:text-red-400/80 transition-colors p-1"
+            className="text-peat/30 hover:text-burgundy transition-colors p-1"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
               <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
@@ -288,7 +288,7 @@ function PostCard({
           onClick={onLike}
           disabled={!signedIn}
           aria-label={post.liked ? 'Unlike' : 'Like'}
-          className={`flex items-center gap-1.5 transition-colors ${post.liked ? 'text-champagne' : 'text-cream/55 hover:text-cream'} disabled:opacity-40 disabled:cursor-not-allowed`}
+          className={`flex items-center gap-1.5 transition-colors ${post.liked ? 'text-gold-dark' : 'text-forest/70 hover:text-gold-dark'} disabled:opacity-40 disabled:cursor-not-allowed`}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill={post.liked ? 'currentColor' : 'none'}>
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
@@ -300,7 +300,7 @@ function PostCard({
         <button
           onClick={onShare}
           aria-label="Share"
-          className="flex items-center gap-1.5 text-cream/55 hover:text-cream transition-colors"
+          className="flex items-center gap-1.5 text-forest/70 hover:text-gold-dark transition-colors"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -312,9 +312,9 @@ function PostCard({
       {/* Caption */}
       {(post.caption || post.author.username) && (
         <div className="px-4 sm:px-5 pt-3 pb-4 sm:pb-5">
-          <p className="font-sans text-cream/80 text-sm leading-relaxed">
+          <p className="font-sans text-peat/80 text-sm leading-relaxed">
             {post.author.username && (
-              <span className="font-semibold text-champagne mr-1.5">@{post.author.username}</span>
+              <span className="font-semibold text-gold-dark mr-1.5">@{post.author.username}</span>
             )}
             {post.caption}
           </p>
@@ -340,15 +340,15 @@ function Avatar({ name, image, size = 36 }: { name: string | null; image: string
         src={image}
         alt={name ?? ''}
         referrerPolicy="no-referrer"
-        className="rounded-full object-cover border border-champagne/20 shrink-0"
+        className="rounded-full object-cover border border-gold/30 shrink-0"
         style={{ width: size, height: size }}
       />
     );
   }
   return (
     <div
-      className="rounded-full flex items-center justify-center font-sans font-semibold text-navy shrink-0"
-      style={{ width: size, height: size, background: 'linear-gradient(135deg, #C9A96E, #b8944d)', fontSize: size * 0.35 }}
+      className="rounded-full flex items-center justify-center font-sans font-semibold text-forest shrink-0"
+      style={{ width: size, height: size, background: 'linear-gradient(135deg, #4B5DF0, #1B2FDE)', fontSize: size * 0.35 }}
     >
       {initials}
     </div>

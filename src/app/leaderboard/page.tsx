@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import LeaderboardClient from './LeaderboardClient';
 
 export const metadata: Metadata = {
-  title: 'Leaderboard — Where To LARP',
+  title: 'The Standings — Where To LARP',
 };
 
 export default function LeaderboardPage() {

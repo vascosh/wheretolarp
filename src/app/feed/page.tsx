@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import FeedClient from './FeedClient';
 
 export const metadata: Metadata = {
-  title: 'Feed — Where To LARP',
-  description: 'The craziest LARPs from your friends and the city.',
+  title: 'The Society Papers — Where To LARP',
+  description: 'The Society Papers — LARPs filed daily by members and friends of the Society.',
 };
 
 export const dynamic = 'force-dynamic';

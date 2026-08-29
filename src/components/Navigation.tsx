@@ -24,7 +24,7 @@ function Avatar({ name, image, size = 28 }: { name?: string | null; image?: stri
   }
   return (
     <div className="rounded-full flex items-center justify-center font-sans font-semibold text-navy shrink-0"
-      style={{ width: size, height: size, background: 'linear-gradient(135deg, #C9A96E, #b8944d)', fontSize: size * 0.35 }}>
+      style={{ width: size, height: size, background: 'linear-gradient(135deg, #4B5DF0, #1B2FDE)', fontSize: size * 0.35 }}>
       {initials}
     </div>
   );
@@ -103,7 +103,7 @@ export default function Navigation() {
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-all duration-500 ${
-        scrolled ? 'bg-cream/92 border-champagne/25 shadow-[0_1px_24px_rgba(10,22,40,0.06)]' : 'bg-cream/70 border-champagne/10'
+        scrolled ? 'bg-cream/92 border-champagne/25 shadow-[0_1px_24px_rgba(16, 17, 20,0.06)]' : 'bg-cream/70 border-champagne/10'
       }`} style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -163,14 +163,14 @@ export default function Navigation() {
                     </button>
 
                     {userMenuOpen && (
-                      <div className="absolute right-0 top-full mt-3 w-52 overflow-hidden shadow-modal z-50 animate-scale-in"
-                        style={{ background: '#060D18', border: '1px solid rgba(201,169,110,0.18)' }}>
-                        <div className="px-4 py-3.5 border-b border-champagne/10">
+                      <div className="absolute right-0 top-full mt-3 w-52 overflow-hidden shadow-modal z-50 animate-scale-in rounded-[14px]"
+                        style={{ background: '#FFFFFF', border: '1px solid rgba(27, 47, 222,0.18)' }}>
+                        <div className="px-4 py-3.5 border-b border-forest/10">
                           <p className="eyebrow mb-1">Member</p>
-                          <p className="font-serif text-sm text-cream/90 truncate">{session.user.name ?? 'Member'}</p>
+                          <p className="font-serif text-sm text-forest truncate">{session.user.name ?? 'Member'}</p>
                         </div>
                         <Link href="/profile" onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-3 font-sans text-xs tracking-[0.1em] uppercase text-cream/65 hover:text-champagne hover:bg-champagne/[0.06] transition-all">
+                          className="flex items-center gap-2.5 px-4 py-3 font-sans text-xs tracking-[0.1em] uppercase text-peat/70 hover:text-forest hover:bg-forest/[0.05] transition-all">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                             <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/>
                             <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -178,7 +178,7 @@ export default function Navigation() {
                           My Profile
                         </Link>
                         <Link href="/settings" onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-3 font-sans text-xs tracking-[0.1em] uppercase text-cream/65 hover:text-champagne hover:bg-champagne/[0.06] transition-all">
+                          className="flex items-center gap-2.5 px-4 py-3 font-sans text-xs tracking-[0.1em] uppercase text-peat/70 hover:text-forest hover:bg-forest/[0.05] transition-all">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                             <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5"/>
                             <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -186,7 +186,7 @@ export default function Navigation() {
                           Settings
                         </Link>
                         <button onClick={() => { setUserMenuOpen(false); signOut({ callbackUrl: '/' }); }}
-                          className="w-full flex items-center gap-2.5 px-4 py-3 font-sans text-xs tracking-[0.1em] uppercase text-cream/35 hover:text-cream/70 hover:bg-champagne/[0.04] transition-all border-t border-champagne/10">
+                          className="w-full flex items-center gap-2.5 px-4 py-3 font-sans text-xs tracking-[0.1em] uppercase text-peat/45 hover:text-burgundy hover:bg-burgundy/[0.04] transition-all border-t border-forest/10">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                             <path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

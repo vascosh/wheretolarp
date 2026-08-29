@@ -34,7 +34,7 @@ export default function SignUpPage() {
     const data = await res.json();
 
     if (!res.ok) {
-      setError(data.error ?? 'Something went wrong.');
+      setError(data.error ?? 'The request did not go through. Try again.');
       setLoading(false);
       return;
     }
@@ -50,37 +50,33 @@ export default function SignUpPage() {
   }
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4 py-16"
-      style={{ background: 'linear-gradient(160deg, #070f1a 0%, #0a1628 50%, #050d16 100%)' }}
-    >
-      <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,169,110,0.06) 0%, transparent 70%)' }} />
-
+    <div className="min-h-screen flex items-center justify-center bg-parchment px-4 py-16 text-peat">
       <div className="relative w-full max-w-md">
+        {/* Masthead */}
         <div className="text-center mb-10">
           <p className="eyebrow mb-5 flex items-center justify-center gap-3">
-            <span className="inline-block h-px w-8 bg-champagne/50" />
-            By Invitation
-            <span className="inline-block h-px w-8 bg-champagne/50" />
+            <span className="inline-block h-px w-8 bg-gold/50" />
+            Membership · The Society
+            <span className="inline-block h-px w-8 bg-gold/50" />
           </p>
-          <Link href="/" className="headline-editorial text-cream text-4xl sm:text-5xl block hover:text-champagne transition-colors duration-300">
-            Request <span className="italic text-champagne">entry</span>.
+          <Link
+            href="/"
+            className="headline-editorial block text-4xl sm:text-5xl transition-colors duration-300 hover:text-forest-light"
+          >
+            Request <em className="italic text-gold-dark">entry</em>.
           </Link>
-          <p className="font-sans text-cream/40 text-sm mt-4 leading-relaxed">
+          <p className="mt-4 font-sans text-sm leading-relaxed text-peat/60">
             Create your place on the register.
           </p>
         </div>
 
-        <div
-          className="overflow-hidden"
-          style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(201,169,110,0.22)', backdropFilter: 'blur(20px)' }}
-        >
-          <div className="rule-champagne-dim" />
+        {/* Membership papers — framed certificate */}
+        <div className="plate-frame shadow-[0_2px_24px_rgba(16, 17, 20,0.07)]">
           <div className="p-8 sm:p-10">
             <button
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-champagne/25 bg-white/[0.03] text-cream font-sans text-[11px] tracking-[0.18em] uppercase hover:bg-champagne/[0.06] hover:border-champagne/50 transition-all duration-300 mb-7 disabled:opacity-50"
+              className="btn-editorial-ghost mb-7 w-full disabled:opacity-50"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -91,20 +87,20 @@ export default function SignUpPage() {
               Sign up with Google
             </button>
 
-            <div className="flex items-center gap-4 mb-7">
-              <div className="flex-1 h-px bg-champagne/15" />
-              <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-cream/30">or</span>
-              <div className="flex-1 h-px bg-champagne/15" />
+            <div className="mb-7 flex items-center gap-4">
+              <div className="h-px flex-1 bg-forest/15" />
+              <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-peat/40">or</span>
+              <div className="h-px flex-1 bg-forest/15" />
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
-                <div className="bg-red-500/10 border border-red-500/25 text-red-300 text-xs font-sans px-4 py-3">
+                <div className="border border-burgundy/30 bg-burgundy/5 px-4 py-3 font-sans text-xs text-burgundy">
                   {error}
                 </div>
               )}
               <div>
-                <label htmlFor="signup-name" className="block eyebrow-muted text-cream/45 mb-2.5">Name</label>
+                <label htmlFor="signup-name" className="eyebrow-muted mb-2.5 block">Name</label>
                 <input
                   id="signup-name"
                   type="text"
@@ -112,11 +108,11 @@ export default function SignUpPage() {
                   onChange={e => setName(e.target.value)}
                   required
                   placeholder="Your name"
-                  className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+                  className="w-full border border-forest/20 bg-parchment-light px-3.5 py-2.5 font-sans text-base text-peat placeholder:text-peat/35 transition-colors focus:border-forest focus:outline-none focus:ring-1 focus:ring-forest"
                 />
               </div>
               <div>
-                <label htmlFor="signup-email" className="block eyebrow-muted text-cream/45 mb-2.5">Email</label>
+                <label htmlFor="signup-email" className="eyebrow-muted mb-2.5 block">Email</label>
                 <input
                   id="signup-email"
                   type="email"
@@ -124,11 +120,11 @@ export default function SignUpPage() {
                   onChange={e => setEmail(e.target.value)}
                   required
                   placeholder="your@email.com"
-                  className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+                  className="w-full border border-forest/20 bg-parchment-light px-3.5 py-2.5 font-sans text-base text-peat placeholder:text-peat/35 transition-colors focus:border-forest focus:outline-none focus:ring-1 focus:ring-forest"
                 />
               </div>
               <div>
-                <label htmlFor="signup-password" className="block eyebrow-muted text-cream/45 mb-2.5">Password</label>
+                <label htmlFor="signup-password" className="eyebrow-muted mb-2.5 block">Password</label>
                 <input
                   id="signup-password"
                   type="password"
@@ -137,28 +133,32 @@ export default function SignUpPage() {
                   required
                   minLength={8}
                   placeholder="Min. 8 characters"
-                  className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+                  className="w-full border border-forest/20 bg-parchment-light px-3.5 py-2.5 font-sans text-base text-peat placeholder:text-peat/35 transition-colors focus:border-forest focus:outline-none focus:ring-1 focus:ring-forest"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-editorial w-full disabled:opacity-50 mt-2"
+                className="btn-editorial mt-2 w-full disabled:opacity-50"
               >
                 {loading ? 'Creating account…' : 'Create Account'}
               </button>
             </form>
 
-            <p className="text-center font-sans text-xs text-cream/35 mt-7">
+            <p className="mt-7 text-center font-sans text-xs text-peat/55">
               Already a member?{' '}
               <Link
                 href={`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`}
-                className="text-champagne hover:text-champagne-light transition-colors underline underline-offset-4 decoration-champagne/40">
+                className="text-gold-dark underline decoration-gold/50 underline-offset-4 transition-colors hover:text-forest">
                 Sign in
               </Link>
             </p>
           </div>
         </div>
+
+        <p className="mt-8 text-center font-display text-sm italic text-peat/40">
+          No actual wealth required.
+        </p>
       </div>
     </div>
   );

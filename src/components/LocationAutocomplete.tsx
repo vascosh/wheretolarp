@@ -1,7 +1,8 @@
 'use client';
 
 /**
- * Google Places autocomplete dropdown styled for the navy/champagne theme.
+ * Google Places autocomplete dropdown styled for the Heritage Daylight
+ * (parchment/forest/gold) theme.
  *
  * Uses the `AutocompleteService` to fetch predictions as the user types
  * (debounced 250ms) and `PlacesService.getDetails` to resolve the chosen
@@ -168,11 +169,11 @@ export default function LocationAutocomplete({
         onFocus={() => predictions.length > 0 && setOpen(true)}
         onKeyDown={onKey}
         placeholder={placeholder ?? 'Search a place'}
-        className="w-full bg-white/[0.04] border border-white/[0.1] rounded-md px-3 py-2 text-sm text-cream font-sans focus:outline-none focus:border-champagne/60 focus:bg-white/[0.06] transition-colors placeholder:text-cream/30"
+        className="w-full bg-parchment-dark/40 border border-peat/15 rounded-md px-3 py-2 text-sm text-peat font-sans focus:outline-none focus:border-gold focus:bg-parchment-dark/60 transition-colors placeholder:text-peat/40"
       />
       {open && predictions.length > 0 && (
         <ul
-          className="absolute z-30 left-0 right-0 mt-1 max-h-64 overflow-y-auto rounded-md border border-white/[0.12] bg-navy shadow-[0_8px_32px_rgba(0,0,0,0.5)] py-1"
+          className="absolute z-30 left-0 right-0 mt-1 max-h-64 overflow-y-auto rounded-md border border-peat/15 bg-parchment-light shadow-[0_8px_32px_rgba(16, 17, 20,0.18)] py-1"
           role="listbox"
         >
           {predictions.map((p, i) => {
@@ -187,16 +188,16 @@ export default function LocationAutocomplete({
                 onMouseDown={(e) => { e.preventDefault(); choose(p); }}
                 onMouseEnter={() => setActiveIndex(i)}
                 className={`px-3 py-2 cursor-pointer flex items-start gap-2 text-sm transition-colors ${
-                  active ? 'bg-white/[0.08]' : 'hover:bg-white/[0.05]'
+                  active ? 'bg-parchment-dark/60' : 'hover:bg-parchment-dark/40'
                 }`}
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0 text-champagne/70">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0 text-gold-dark">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" strokeWidth="1.5"/>
                   <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
                 </svg>
                 <div className="min-w-0">
-                  <p className="text-cream truncate">{main}</p>
-                  {secondary && <p className="text-cream/40 text-[11px] truncate">{secondary}</p>}
+                  <p className="text-peat truncate">{main}</p>
+                  {secondary && <p className="text-peat/50 text-[11px] truncate">{secondary}</p>}
                 </div>
               </li>
             );
@@ -204,7 +205,7 @@ export default function LocationAutocomplete({
         </ul>
       )}
       {error && (
-        <p className="text-[10px] text-red-400/70 mt-1">{error}</p>
+        <p className="text-[10px] text-burgundy/80 mt-1">{error}</p>
       )}
     </div>
   );

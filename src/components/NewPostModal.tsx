@@ -121,15 +121,15 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
       className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-3 sm:p-6"
       style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
     >
-      <div className="absolute inset-0 bg-ink/85 backdrop-blur-sm" onClick={handleClose} />
-      <div className="relative z-10 w-full max-w-lg max-h-[92vh] rounded-sm border border-champagne/20 bg-ink flex flex-col overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.6)] animate-scale-in">
+      <div className="absolute inset-0 bg-peat/50 backdrop-blur-sm" onClick={handleClose} />
+      <div className="relative z-10 w-full max-w-lg max-h-[92vh] card-paper flex flex-col overflow-hidden shadow-[0_24px_80px_rgba(16, 17, 20,0.25)] animate-scale-in">
         {/* Header */}
-        <div className="px-5 sm:px-6 py-4 border-b border-champagne/15 flex items-center justify-between shrink-0">
+        <div className="px-5 sm:px-6 py-4 border-b border-peat/10 flex items-center justify-between shrink-0">
           <div>
             <p className="eyebrow mb-1.5">New Entry</p>
-            <h3 className="headline-editorial text-cream text-2xl">File a <span className="italic text-champagne">LARP</span></h3>
+            <h3 className="headline-editorial text-2xl">File a <span className="italic text-gold-dark">LARP</span></h3>
           </div>
-          <button onClick={handleClose} aria-label="Close" className="text-cream/40 hover:text-champagne p-1 transition-colors">
+          <button onClick={handleClose} aria-label="Close" className="text-peat/40 hover:text-gold-dark p-1 transition-colors">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
               <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -139,7 +139,7 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
         {/* Body */}
         <div className="overflow-y-auto flex-1 px-5 sm:px-6 py-5 space-y-4">
           {error && (
-            <div className="text-[12px] text-red-400/80 bg-red-500/[0.08] border border-red-500/20 rounded-sm px-3 py-2">
+            <div className="text-[12px] text-burgundy bg-burgundy/[0.06] border border-burgundy/25 rounded-sm px-3 py-2">
               {error}
             </div>
           )}
@@ -150,8 +150,8 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              className={`relative w-full rounded-sm overflow-hidden border border-dashed transition-colors aspect-[4/5] flex items-center justify-center bg-black/30 ${
-                preview ? 'border-champagne/40' : 'border-champagne/20 hover:border-champagne/50 hover:bg-white/[0.02]'
+              className={`relative w-full rounded-sm overflow-hidden border border-dashed transition-colors aspect-[4/5] flex items-center justify-center bg-parchment-dark/50 ${
+                preview ? 'border-gold/50' : 'border-forest/25 hover:border-forest/50 hover:bg-parchment-dark/70'
               }`}
             >
               {preview && mediaType === 'image' && (
@@ -168,8 +168,8 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
               )}
               {!preview && (
                 <div className="text-center px-4">
-                  <p className="font-sans text-cream/70 text-sm">Click to choose a photo or video</p>
-                  <p className="font-sans text-cream/30 text-xs mt-1">JPG / PNG up to 8MB · MP4 / MOV up to 50MB</p>
+                  <p className="font-sans text-peat/70 text-sm">Click to choose a photo or video</p>
+                  <p className="font-sans text-peat/40 text-xs mt-1">JPG / PNG up to 8MB · MP4 / MOV up to 50MB</p>
                 </div>
               )}
             </button>
@@ -181,8 +181,8 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
               onChange={(e) => pickFile(e.target.files?.[0] ?? null)}
             />
             {isPosting && progress > 0 && (
-              <div className="mt-2 h-1 rounded-full bg-white/[0.06] overflow-hidden">
-                <div className="h-full bg-champagne transition-[width] duration-150" style={{ width: `${progress}%` }} />
+              <div className="mt-2 h-1 rounded-full bg-peat/10 overflow-hidden">
+                <div className="h-full bg-gold transition-[width] duration-150" style={{ width: `${progress}%` }} />
               </div>
             )}
           </div>
@@ -195,7 +195,7 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
               onChange={(e) => setCaption(e.target.value.slice(0, 2200))}
               placeholder="What were you LARPing as?"
               rows={3}
-              className="w-full bg-white/[0.04] border border-champagne/15 rounded-sm px-3 py-2 text-sm text-cream font-sans focus:outline-none focus:border-champagne/60 focus:bg-white/[0.06] transition-colors placeholder:text-cream/30 resize-none"
+              className="w-full bg-parchment-dark/40 border border-peat/15 rounded-sm px-3 py-2 text-sm text-peat font-sans focus:outline-none focus:border-gold focus:bg-parchment-dark/60 transition-colors placeholder:text-peat/40 resize-none"
             />
           </div>
 
@@ -209,11 +209,11 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
               placeholder="Search a place (e.g. Bemelmans Bar)"
             />
             {place && (
-              <p className="font-sans text-[11px] text-cream/40 mt-1 flex items-center gap-1.5">
-                <span className="text-champagne/70">●</span>
+              <p className="font-sans text-[11px] text-peat/55 mt-1 flex items-center gap-1.5">
+                <span className="text-gold-dark">●</span>
                 {place.secondaryText || place.mainText}
                 {typeof place.lat === 'number' && (
-                  <span className="text-cream/25 ml-1">· tagged</span>
+                  <span className="text-peat/35 ml-1">· tagged</span>
                 )}
               </p>
             )}
@@ -225,7 +225,7 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full bg-white/[0.04] border border-champagne/15 rounded-sm px-3 py-2 text-sm text-cream font-sans focus:outline-none focus:border-champagne/60 transition-colors"
+              className="w-full bg-parchment-dark/40 border border-peat/15 rounded-sm px-3 py-2 text-sm text-peat font-sans focus:outline-none focus:border-gold transition-colors"
             >
               {CITIES.map((c) => <option key={c.slug || 'none'} value={c.slug}>{c.label}</option>)}
             </select>
@@ -233,11 +233,11 @@ export default function NewPostModal({ isOpen, onClose, onCreated }: Props) {
         </div>
 
         {/* Footer */}
-        <div className="px-5 sm:px-6 py-4 border-t border-champagne/15 flex items-center justify-end gap-3 shrink-0">
+        <div className="px-5 sm:px-6 py-4 border-t border-peat/10 flex items-center justify-end gap-3 shrink-0">
           <button
             onClick={handleClose}
             disabled={isPosting}
-            className="px-5 py-3 border border-champagne/25 text-cream/50 font-sans text-[11px] tracking-[0.25em] uppercase hover:text-champagne hover:border-champagne/50 transition-all disabled:opacity-40"
+            className="px-5 py-3 border border-forest/25 text-forest/60 font-sans text-[11px] tracking-[0.25em] uppercase hover:text-forest hover:border-forest/60 transition-all disabled:opacity-40"
           >
             Cancel
           </button>

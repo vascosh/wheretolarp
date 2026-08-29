@@ -25,6 +25,9 @@ function GoogleIcon() {
   );
 }
 
+const INPUT_CLASS =
+  'w-full border border-forest/20 bg-parchment-light px-3.5 py-2.5 font-sans text-base text-peat placeholder:text-peat/35 transition-colors focus:border-forest focus:outline-none focus:ring-1 focus:ring-forest';
+
 function SignInForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: () => void }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,48 +46,48 @@ function SignInForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: ()
     const res = await signIn('credentials', { email, password, redirect: false });
     setLoading(false);
     if (res?.error) {
-      setError('Invalid email or password.');
+      setError('Those credentials are not on file. Check and re-enter.');
     } else {
       onSuccess();
     }
   }
 
   return (
-    <div className="px-6 pb-7 space-y-5">
+    <div className="space-y-5 px-6 pb-7">
       <button
         onClick={handleGoogle}
-        className="w-full flex items-center justify-center gap-2.5 py-3 px-4 border border-champagne/25 bg-white/[0.03] text-cream/85 font-sans text-[11px] tracking-[0.18em] uppercase hover:bg-champagne/[0.06] hover:border-champagne/50 transition-all duration-300"
+        className="btn-editorial-ghost w-full"
       >
         <GoogleIcon />
         Continue with Google
       </button>
 
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-px bg-champagne/15" />
-        <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-cream/30">or</span>
-        <div className="flex-1 h-px bg-champagne/15" />
+        <div className="h-px flex-1 bg-forest/15" />
+        <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-peat/40">or</span>
+        <div className="h-px flex-1 bg-forest/15" />
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <p className="font-sans text-xs text-red-400/80 bg-red-500/10 border border-red-500/25 px-3 py-2.5">{error}</p>
+          <p className="border border-burgundy/30 bg-burgundy/5 px-3 py-2.5 font-sans text-xs text-burgundy">{error}</p>
         )}
         <div>
-          <label htmlFor="authmodal-signin-email" className="block eyebrow-muted text-cream/45 mb-2">Email</label>
+          <label htmlFor="authmodal-signin-email" className="eyebrow-muted mb-2 block">Email</label>
           <input
             id="authmodal-signin-email"
             type="email" value={email} onChange={e => setEmail(e.target.value)} required
             placeholder="your@email.com"
-            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+            className={INPUT_CLASS}
           />
         </div>
         <div>
-          <label htmlFor="authmodal-signin-password" className="block eyebrow-muted text-cream/45 mb-2">Password</label>
+          <label htmlFor="authmodal-signin-password" className="eyebrow-muted mb-2 block">Password</label>
           <input
             id="authmodal-signin-password"
             type="password" value={password} onChange={e => setPassword(e.target.value)} required
             placeholder="••••••••"
-            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+            className={INPUT_CLASS}
           />
         </div>
         <button
@@ -122,7 +125,7 @@ function SignUpForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: ()
     const data = await res.json();
 
     if (!res.ok) {
-      setError(data.error ?? 'Something went wrong.');
+      setError(data.error ?? 'The request did not go through. Try again.');
       setLoading(false);
       return;
     }
@@ -130,54 +133,54 @@ function SignUpForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: ()
     const signInRes = await signIn('credentials', { email, password, redirect: false });
     setLoading(false);
     if (!signInRes?.error) onSuccess();
-    else setError('Account created but sign-in failed. Try signing in.');
+    else setError('The account exists, but sign-in failed. Use the Sign In tab.');
   }
 
   return (
-    <div className="px-6 pb-7 space-y-5">
+    <div className="space-y-5 px-6 pb-7">
       <button
         onClick={handleGoogle}
-        className="w-full flex items-center justify-center gap-2.5 py-3 px-4 border border-champagne/25 bg-white/[0.03] text-cream/85 font-sans text-[11px] tracking-[0.18em] uppercase hover:bg-champagne/[0.06] hover:border-champagne/50 transition-all duration-300"
+        className="btn-editorial-ghost w-full"
       >
         <GoogleIcon />
         Sign up with Google
       </button>
 
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-px bg-champagne/15" />
-        <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-cream/30">or</span>
-        <div className="flex-1 h-px bg-champagne/15" />
+        <div className="h-px flex-1 bg-forest/15" />
+        <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-peat/40">or</span>
+        <div className="h-px flex-1 bg-forest/15" />
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <p className="font-sans text-xs text-red-400/80 bg-red-500/10 border border-red-500/25 px-3 py-2.5">{error}</p>
+          <p className="border border-burgundy/30 bg-burgundy/5 px-3 py-2.5 font-sans text-xs text-burgundy">{error}</p>
         )}
         <div>
-          <label htmlFor="authmodal-signup-name" className="block eyebrow-muted text-cream/45 mb-2">Name</label>
+          <label htmlFor="authmodal-signup-name" className="eyebrow-muted mb-2 block">Name</label>
           <input
             id="authmodal-signup-name"
             type="text" value={name} onChange={e => setName(e.target.value)} required
             placeholder="Your name"
-            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+            className={INPUT_CLASS}
           />
         </div>
         <div>
-          <label htmlFor="authmodal-signup-email" className="block eyebrow-muted text-cream/45 mb-2">Email</label>
+          <label htmlFor="authmodal-signup-email" className="eyebrow-muted mb-2 block">Email</label>
           <input
             id="authmodal-signup-email"
             type="email" value={email} onChange={e => setEmail(e.target.value)} required
             placeholder="your@email.com"
-            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+            className={INPUT_CLASS}
           />
         </div>
         <div>
-          <label htmlFor="authmodal-signup-password" className="block eyebrow-muted text-cream/45 mb-2">Password</label>
+          <label htmlFor="authmodal-signup-password" className="eyebrow-muted mb-2 block">Password</label>
           <input
             id="authmodal-signup-password"
             type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={8}
             placeholder="Min. 8 characters"
-            className="w-full bg-transparent border-b border-champagne/25 px-1 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-colors"
+            className={INPUT_CLASS}
           />
         </div>
         <button
@@ -210,27 +213,22 @@ export default function AuthModal({ onClose, onSuccess, defaultTab = 'signin' }:
 
   return createPortal(
     <div className="fixed inset-0 z-[500] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-ink/80 backdrop-blur-sm" onClick={onClose} />
-      <div
-        className="relative z-10 w-full max-w-sm overflow-hidden shadow-modal animate-scale-in"
-        style={{ background: 'rgba(6,13,24,0.98)', border: '1px solid rgba(201,169,110,0.22)' }}
-      >
-        <div className="rule-champagne-dim" />
-
+      <div className="absolute inset-0 bg-peat/50 backdrop-blur-sm" onClick={onClose} />
+      <div className="plate-frame relative z-10 w-full max-w-sm animate-scale-in text-peat shadow-modal">
         {/* Header */}
         <div className="px-6 pt-6">
           <div className="flex items-start justify-between">
             <div>
-              <p className="eyebrow mb-2">Members Only</p>
-              <h2 className="headline-editorial text-cream text-3xl">
+              <p className="eyebrow mb-2">Membership · The Society</p>
+              <h2 className="headline-editorial text-3xl">
                 {tab === 'signin' ? (
-                  <>Welcome <span className="italic text-champagne">back</span>.</>
+                  <>Welcome <em className="italic text-gold-dark">back</em>.</>
                 ) : (
-                  <>Request <span className="italic text-champagne">entry</span>.</>
+                  <>Request <em className="italic text-gold-dark">entry</em>.</>
                 )}
               </h2>
             </div>
-            <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 -mr-1 -mt-1">
+            <button onClick={onClose} aria-label="Close" className="-mr-1 -mt-1 p-1 text-peat/40 transition-colors hover:text-burgundy">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
@@ -238,17 +236,17 @@ export default function AuthModal({ onClose, onSuccess, defaultTab = 'signin' }:
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-7 mt-6">
+          <div className="mt-6 flex gap-7">
             <button
               onClick={() => setTab('signin')}
               className={clsx(
                 'relative pb-3 font-sans text-[11px] tracking-[0.22em] uppercase transition-colors duration-300',
-                tab === 'signin' ? 'text-champagne' : 'text-cream/40 hover:text-cream/70'
+                tab === 'signin' ? 'text-forest' : 'text-peat/45 hover:text-peat/70'
               )}
             >
               Sign In
               <span className={clsx(
-                'absolute left-0 -bottom-px h-px w-full bg-champagne origin-left transition-transform duration-500',
+                'absolute left-0 -bottom-px h-px w-full bg-gold origin-left transition-transform duration-500',
                 tab === 'signin' ? 'scale-x-100' : 'scale-x-0'
               )} />
             </button>
@@ -256,12 +254,12 @@ export default function AuthModal({ onClose, onSuccess, defaultTab = 'signin' }:
               onClick={() => setTab('signup')}
               className={clsx(
                 'relative pb-3 font-sans text-[11px] tracking-[0.22em] uppercase transition-colors duration-300',
-                tab === 'signup' ? 'text-champagne' : 'text-cream/40 hover:text-cream/70'
+                tab === 'signup' ? 'text-forest' : 'text-peat/45 hover:text-peat/70'
               )}
             >
               Create Account
               <span className={clsx(
-                'absolute left-0 -bottom-px h-px w-full bg-champagne origin-left transition-transform duration-500',
+                'absolute left-0 -bottom-px h-px w-full bg-gold origin-left transition-transform duration-500',
                 tab === 'signup' ? 'scale-x-100' : 'scale-x-0'
               )} />
             </button>
@@ -269,7 +267,7 @@ export default function AuthModal({ onClose, onSuccess, defaultTab = 'signin' }:
         </div>
 
         {/* Divider */}
-        <div className="rule-champagne-dim mb-5" />
+        <div className="rule-champagne mb-5" />
 
         {tab === 'signin'
           ? <SignInForm onSuccess={onSuccess} onClose={onClose} />

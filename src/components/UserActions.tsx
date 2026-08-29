@@ -47,14 +47,14 @@ function ReportModal({ targetName, onClose, onSubmit }: {
 
   return (
     <div className="fixed inset-0 z-[500] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-navy/70 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-md overflow-hidden bg-ink border border-champagne/20">
-        <div className="flex items-center justify-between px-6 py-5 border-b border-champagne/15">
+      <div className="absolute inset-0 bg-peat/40 backdrop-blur-[8px]" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-md overflow-hidden rounded-[18px] border border-peat/10 bg-parchment-light shadow-[0_12px_48px_rgba(16, 17, 20,0.22)]">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-forest/15">
           <div>
             <p className="eyebrow mb-1">Member Conduct</p>
-            <h2 className="headline-editorial text-cream text-2xl">Report</h2>
+            <h2 className="headline-editorial text-2xl">Report</h2>
           </div>
-          <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50">
+          <button onClick={onClose} aria-label="Close" className="text-peat/35 hover:text-gold-dark transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -63,43 +63,43 @@ function ReportModal({ targetName, onClose, onSubmit }: {
 
         {done ? (
           <div className="px-6 py-12 text-center">
-            <div className="w-12 h-12 rounded-full border border-champagne/30 bg-champagne/10 flex items-center justify-center mx-auto mb-5">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-champagne">
+            <div className="w-12 h-12 rounded-full border border-forest/25 bg-forest-pale/60 flex items-center justify-center mx-auto mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-forest">
                 <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3 className="headline-editorial text-cream text-2xl mb-2">Report submitted</h3>
-            <p className="font-sans text-cream/45 text-sm mb-8 max-w-xs mx-auto leading-relaxed">
-              Thank you. We&apos;ll review this report and take action if needed.
+            <h3 className="headline-editorial text-2xl mb-2">Report filed</h3>
+            <p className="font-sans text-peat/60 text-sm mb-8 max-w-xs mx-auto leading-relaxed">
+              The Society will review the matter and act as required.
             </p>
             <button onClick={onClose}
-              className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+              className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
               Close
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
             <div>
-              <p className="font-sans text-xs text-cream/45 mb-4 leading-relaxed">
-                Reporting <span className="font-display italic text-cream/75">{targetName ?? 'this member'}</span>
+              <p className="font-sans text-xs text-peat/60 mb-4 leading-relaxed">
+                Reporting <span className="font-display italic text-forest">{targetName ?? 'this member'}</span>
               </p>
               <div className="space-y-2">
                 {REPORT_REASONS.map(r => (
                   <label key={r.value}
                     className={clsx(
-                      'flex items-center gap-3 px-4 py-3 cursor-pointer transition-all border',
+                      'flex items-center gap-3 px-4 py-3 cursor-pointer transition-all border rounded-[10px]',
                       reason === r.value
-                        ? 'bg-champagne/[0.07] border-champagne/30'
-                        : 'border-champagne/10 hover:border-champagne/25'
+                        ? 'bg-gold/[0.08] border-gold/40'
+                        : 'border-peat/10 hover:border-gold/30'
                     )}>
                     <input type="radio" name="reason" value={r.value}
                       checked={reason === r.value} onChange={() => setReason(r.value)}
                       className="sr-only" />
                     <div className={clsx('w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all',
-                      reason === r.value ? 'border-champagne' : 'border-cream/20')}>
-                      {reason === r.value && <div className="w-2 h-2 rounded-full bg-champagne" />}
+                      reason === r.value ? 'border-gold-dark' : 'border-peat/25')}>
+                      {reason === r.value && <div className="w-2 h-2 rounded-full bg-gold-dark" />}
                     </div>
-                    <span className="font-sans text-sm text-cream/75">{r.label}</span>
+                    <span className="font-sans text-sm text-peat/80">{r.label}</span>
                   </label>
                 ))}
               </div>
@@ -116,17 +116,17 @@ function ReportModal({ targetName, onClose, onSubmit }: {
                 rows={3}
                 maxLength={500}
                 placeholder="Describe what happened…"
-                className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all resize-none"
+                className="w-full bg-transparent border-b border-peat/20 px-0 py-2.5 font-sans text-base text-peat placeholder:text-peat/30 focus:outline-none focus:border-gold transition-all resize-none"
               />
             </div>
 
             <div className="flex gap-4 pt-1">
               <button type="button" onClick={onClose}
-                className="flex-1 btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                className="flex-1 btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                 Cancel
               </button>
               <button type="submit" disabled={!reason || submitting}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-red-500/40 text-red-400 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all hover:border-red-500 hover:bg-red-500/10 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                className="flex-1 inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-burgundy/40 text-burgundy font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all hover:border-burgundy hover:bg-burgundy/5 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                 {submitting ? 'Submitting…' : 'Submit Report'}
               </button>
             </div>
@@ -202,7 +202,7 @@ export default function UserActions({ targetId, targetName, showMessage = false 
       <div className="flex items-center gap-3 mt-6 justify-center">
         {showMessage && (
           <button onClick={handleMessage} disabled={messaging}
-            className="btn-editorial-ghost disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+            className="btn-editorial-ghost disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
@@ -212,7 +212,7 @@ export default function UserActions({ targetId, targetName, showMessage = false 
 
         <div className="relative" ref={menuRef}>
           <button onClick={() => setMenuOpen(o => !o)}
-            className="p-2.5 border border-champagne/20 text-cream/40 hover:text-champagne hover:border-champagne/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+            className="p-2.5 border border-forest/25 text-peat/50 hover:text-forest hover:border-forest/50 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
             aria-label="More actions" title="More actions">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="5" r="1.5" fill="currentColor"/>
@@ -222,22 +222,22 @@ export default function UserActions({ targetId, targetName, showMessage = false 
           </button>
 
           {menuOpen && (
-            <div className="absolute right-0 top-full mt-2 w-48 overflow-hidden z-50 bg-ink border border-champagne/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+            <div className="absolute right-0 top-full mt-2 w-48 overflow-hidden z-50 rounded-[12px] border border-peat/10 bg-parchment-light shadow-[0_10px_36px_rgba(16, 17, 20,0.18)]">
               <button onClick={() => { setMenuOpen(false); setReportOpen(true); }}
-                className="w-full flex items-center gap-2.5 px-4 py-3 font-sans text-[11px] tracking-[0.15em] uppercase text-cream/60 hover:text-champagne hover:bg-champagne/[0.06] transition-all text-left">
+                className="w-full flex items-center gap-2.5 px-4 py-3 font-sans text-[11px] tracking-[0.15em] uppercase text-peat/60 hover:text-gold-dark hover:bg-gold/[0.07] transition-all text-left">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                   <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   <line x1="4" y1="22" x2="4" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
                 Report member
               </button>
-              <div className="h-px bg-champagne/10" />
+              <div className="h-px bg-forest/10" />
               <button onClick={toggleBlock} disabled={blocking}
                 className={clsx(
                   'w-full flex items-center gap-2.5 px-4 py-3 font-sans text-[11px] tracking-[0.15em] uppercase transition-all text-left',
                   blocked
-                    ? 'text-cream/50 hover:text-champagne hover:bg-champagne/[0.06]'
-                    : 'text-red-400/70 hover:text-red-400 hover:bg-red-500/[0.06]',
+                    ? 'text-peat/60 hover:text-gold-dark hover:bg-gold/[0.07]'
+                    : 'text-burgundy/80 hover:text-burgundy hover:bg-burgundy/[0.06]',
                   blocking && 'opacity-50'
                 )}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none">

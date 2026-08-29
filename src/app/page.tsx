@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import EditorialLanding, { type LandingCity } from '@/components/EditorialLanding';
+import HeritageLanding, { type LandingCity } from '@/components/HeritageLanding';
 
 export const dynamic = 'force-dynamic';
 
@@ -71,5 +71,5 @@ export default async function HomePage() {
     new Set((locationRows ?? []).map((r) => r.name).filter(Boolean))
   ).slice(0, 18);
 
-  return <EditorialLanding cities={cities} locationNames={locationNames} />;
+  return <HeritageLanding cities={cities} locationNames={locationNames} />;
 }

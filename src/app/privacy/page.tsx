@@ -11,19 +11,19 @@ const CONTACT_EMAIL = 'wheretolarp@gmail.com';
 
 export default function PrivacyPage() {
   return (
-    <div className="bg-cream min-h-screen pt-nav">
+    <div className="bg-parchment min-h-screen pt-nav">
       {/* Header */}
-      <div className="bg-ink border-b border-champagne/20">
+      <div className="bg-parchment-dark/60 border-b border-gold/20">
         <div className="rule-champagne-dim" />
         <div className="max-w-3xl mx-auto px-6 py-16 sm:py-20">
           <p className="eyebrow mb-5 flex items-center gap-3">
-            <span className="inline-block h-px w-8 bg-champagne/50" />
+            <span className="inline-block h-px w-8 bg-gold/50" />
             In Confidence
           </p>
-          <h1 className="headline-editorial text-cream text-5xl sm:text-7xl">
-            Privacy <span className="italic text-champagne">policy</span>.
+          <h1 className="headline-editorial text-5xl sm:text-7xl">
+            Privacy <span className="italic text-gold-dark">policy</span>.
           </h1>
-          <p className="font-sans text-cream/40 text-xs mt-6 tracking-[0.15em] uppercase">
+          <p className="font-sans text-peat/50 text-xs mt-6 tracking-[0.15em] uppercase">
             Last updated: {LAST_UPDATED}
           </p>
         </div>

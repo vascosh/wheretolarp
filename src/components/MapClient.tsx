@@ -17,6 +17,10 @@ interface MapClientProps {
   cities: CityData[];
 }
 
+/* Green engraving duotone used across the field guide's imagery. */
+const ENGRAVING_FILTER =
+  'grayscale(1) sepia(0.35) hue-rotate(65deg) saturate(0.9) brightness(1.02) contrast(1.05)';
+
 const ISLAND_POSITIONS: Record<
   string,
   { cx: number; cy: number; rx: number; ry: number; labelOffset: { x: number; y: number }; labelAnchor: string }
@@ -52,7 +56,7 @@ export default function MapClient({ cities }: MapClientProps) {
   const router = useRouter();
 
   return (
-    <section className="relative bg-navy h-[calc(100vh-160px)] overflow-visible">
+    <section className="relative bg-parchment h-[calc(100vh-160px)] overflow-visible">
       {/* Map container — rounded, blended edges */}
       <div
         className="absolute inset-6 rounded-3xl overflow-hidden"
@@ -66,16 +70,17 @@ export default function MapClient({ cities }: MapClientProps) {
           alt="WhereTo LARP world map"
           fill
           className="object-contain"
+          style={{ filter: ENGRAVING_FILTER }}
           unoptimized
           priority
         />
 
-        {/* Inner vignette for depth */}
+        {/* Inner vignette — melts the plate into the paper */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse at center, transparent 40%, rgba(10,22,40,0.4) 75%, rgba(10,22,40,0.8) 100%)',
+              'radial-gradient(ellipse at center, transparent 40%, rgba(244,239,226,0.45) 75%, rgba(244,239,226,0.85) 100%)',
           }}
         />
       </div>
@@ -112,14 +117,14 @@ export default function MapClient({ cities }: MapClientProps) {
 
           return (
             <g key={city.slug}>
-              {/* Ambient glow aura behind island */}
+              {/* Ambient aura behind island — aged gold on paper */}
               <ellipse
                 cx={pos.cx}
                 cy={pos.cy}
                 rx={pos.rx + 30}
                 ry={pos.ry + 30}
                 fill="none"
-                stroke="#C9A96E"
+                stroke="#4B5DF0"
                 strokeWidth="2"
                 opacity={isHovered ? 0.5 : 0.15}
                 style={{
@@ -137,7 +142,7 @@ export default function MapClient({ cities }: MapClientProps) {
                 rx={pos.rx - 20}
                 ry={pos.ry - 20}
                 fill="none"
-                stroke="#C9A96E"
+                stroke="#4B5DF0"
                 strokeWidth="1.5"
                 style={{
                   animation: 'pulse-ring 3s ease-out infinite',
@@ -153,7 +158,7 @@ export default function MapClient({ cities }: MapClientProps) {
                 rx={pos.rx - 20}
                 ry={pos.ry - 20}
                 fill="none"
-                stroke="#C9A96E"
+                stroke="#4B5DF0"
                 strokeWidth="1"
                 style={{
                   animation: 'pulse-ring 3s ease-out infinite',
@@ -204,45 +209,45 @@ export default function MapClient({ cities }: MapClientProps) {
             <div
               className="pointer-events-auto px-6 py-5 min-w-[220px]"
               style={{
-                background: 'rgba(10, 22, 40, 0.95)',
-                border: '1px solid rgba(201, 169, 110, 0.4)',
+                background: 'rgba(252, 249, 241, 0.97)',
+                border: '1px solid rgba(75, 93, 240, 0.4)',
                 boxShadow:
-                  '0 0 30px rgba(201, 169, 110, 0.15), 0 8px 32px rgba(10, 22, 40, 0.6)',
+                  '0 2px 24px rgba(16, 17, 20, 0.10), 0 12px 40px rgba(27, 47, 222, 0.16)',
               }}
               onMouseEnter={() => setHovered(city.slug)}
               onMouseLeave={() => setHovered(null)}
               onClick={() => router.push(`/city/${city.slug}`)}
             >
               {/* Country */}
-              <p className="font-sans text-champagne/60 text-[10px] tracking-[0.35em] uppercase mb-2">
+              <p className="font-sans text-gold-dark text-[10px] tracking-[0.35em] uppercase mb-2">
                 {city.country}
               </p>
 
               {/* City name */}
-              <h3 className="headline-editorial text-cream text-3xl leading-[0.95] mb-3 capitalize">
+              <h3 className="headline-editorial text-3xl leading-[0.95] mb-3 capitalize">
                 {city.name}
               </h3>
 
               {/* Divider */}
-              <div className="w-full h-px bg-champagne/25 mb-3" />
+              <div className="w-full h-px bg-gold/30 mb-3" />
 
               {/* Stats row */}
               <div className="flex items-center gap-3 mb-4">
                 {city.events > 0 && (
-                  <span className="font-sans text-cream/70 text-xs tracking-wide">
-                    <span className="text-champagne font-semibold">{city.events}</span> Events
+                  <span className="font-sans text-peat/70 text-xs tracking-wide">
+                    <span className="text-gold-dark font-semibold">{city.events}</span> Events
                   </span>
                 )}
                 {city.events > 0 && city.spaces > 0 && (
-                  <span className="text-champagne/30">|</span>
+                  <span className="text-gold/30">|</span>
                 )}
                 {city.spaces > 0 && (
-                  <span className="font-sans text-cream/70 text-xs tracking-wide">
-                    <span className="text-champagne font-semibold">{city.spaces}</span> Spaces
+                  <span className="font-sans text-peat/70 text-xs tracking-wide">
+                    <span className="text-gold-dark font-semibold">{city.spaces}</span> Spaces
                   </span>
                 )}
                 {city.events === 0 && city.spaces === 0 && (
-                  <span className="font-sans text-cream/40 text-xs tracking-wide italic">
+                  <span className="font-sans text-peat/40 text-xs tracking-wide italic">
                     Coming soon
                   </span>
                 )}
@@ -250,7 +255,7 @@ export default function MapClient({ cities }: MapClientProps) {
 
               {/* Explore button */}
               <button
-                className="w-full py-2.5 px-4 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase text-navy bg-champagne hover:bg-champagne-light transition-colors duration-300 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase text-parchment-light bg-forest hover:bg-forest-light transition-colors duration-300 cursor-pointer flex items-center justify-center gap-2"
                 onClick={(e) => {
                   e.stopPropagation();
                   router.push(`/city/${city.slug}`);
@@ -271,28 +276,29 @@ export default function MapClient({ cities }: MapClientProps) {
             key={`mobile-${city.slug}`}
             className="w-full py-3 px-5 flex items-center justify-between cursor-pointer"
             style={{
-              background: 'rgba(10, 22, 40, 0.92)',
-              border: '1px solid rgba(201, 169, 110, 0.3)',
+              background: 'rgba(252, 249, 241, 0.95)',
+              border: '1px solid rgba(75, 93, 240, 0.35)',
+              boxShadow: '0 2px 16px rgba(16, 17, 20, 0.08)',
             }}
             onClick={() => router.push(`/city/${city.slug}`)}
           >
             <div className="text-left">
-              <p className="font-sans text-champagne/60 text-[9px] tracking-[0.3em] uppercase mb-0.5">
+              <p className="font-sans text-gold-dark/80 text-[9px] tracking-[0.3em] uppercase mb-0.5">
                 {city.country}
               </p>
-              <p className="headline-editorial text-cream text-2xl capitalize">
+              <p className="headline-editorial text-2xl capitalize">
                 {city.name}
               </p>
             </div>
             <div className="flex items-center gap-3">
               {city.events > 0 && (
-                <span className="font-sans text-cream/60 text-[11px]">
-                  <span className="text-champagne font-semibold">{city.events}</span> events
+                <span className="font-sans text-peat/60 text-[11px]">
+                  <span className="text-gold-dark font-semibold">{city.events}</span> events
                 </span>
               )}
               {city.spaces > 0 && (
-                <span className="font-sans text-cream/60 text-[11px]">
-                  <span className="text-champagne font-semibold">{city.spaces}</span> spaces
+                <span className="font-sans text-peat/60 text-[11px]">
+                  <span className="text-gold-dark font-semibold">{city.spaces}</span> spaces
                 </span>
               )}
               <svg
@@ -300,7 +306,7 @@ export default function MapClient({ cities }: MapClientProps) {
                 height="10"
                 viewBox="0 0 16 10"
                 fill="none"
-                className="text-champagne/60"
+                className="text-gold-dark/70"
               >
                 <path
                   d="M1 5H15M15 5L10.5 1M15 5L10.5 9"
@@ -317,7 +323,7 @@ export default function MapClient({ cities }: MapClientProps) {
 
       {/* Bottom note */}
       <div className="absolute bottom-0 inset-x-0 hidden md:block text-center py-3 z-20">
-        <p className="font-display italic text-cream/25 text-sm">
+        <p className="font-display italic text-peat/35 text-sm">
           More cities coming soon — because the aspirational life is global.
         </p>
       </div>

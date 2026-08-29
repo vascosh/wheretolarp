@@ -29,17 +29,15 @@ function timeAgo(dateStr: string) {
 
 function notifIcon(type: string) {
   if (type === 'new_message') return (
-    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-      style={{ background: 'rgba(201,169,110,0.12)', border: '1px solid rgba(201,169,110,0.2)' }}>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-champagne/70">
+    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-gold/25 bg-gold/10">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-gold-dark">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     </div>
   );
   if (type === 'friend_request') return (
-    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-      style={{ background: 'rgba(168,200,232,0.12)', border: '1px solid rgba(168,200,232,0.2)' }}>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-[#a8c8e8]/70">
+    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-forest/20 bg-forest-pale/60">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-forest/70">
         <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
         <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
         <path d="M19 8v6M22 11h-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -47,9 +45,8 @@ function notifIcon(type: string) {
     </div>
   );
   if (type === 'now_following' || type === 'friend_accepted') return (
-    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-      style={{ background: 'rgba(201,169,110,0.12)', border: '1px solid rgba(201,169,110,0.25)' }}>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-champagne/80">
+    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-gold/30 bg-gold/10">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-gold-dark">
         <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
         <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
         <path d="M22 11l-3 3-2-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -57,9 +54,8 @@ function notifIcon(type: string) {
     </div>
   );
   return (
-    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-      style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-cream/40">
+    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-peat/10 bg-peat/[0.04]">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-peat/40">
         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
         <path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
       </svg>
@@ -175,7 +171,7 @@ export default function NotificationBell({ onOpenDMs }: Props) {
           setOpen(o => !o);
           if (!wasOpen && unreadCount > 0) markAllRead();
         }}
-        className="relative p-2 text-charcoal/50 hover:text-champagne transition-colors rounded-full"
+        className="relative p-2 text-peat/50 hover:text-gold-dark transition-colors rounded-full"
         aria-label="Notifications"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -183,33 +179,30 @@ export default function NotificationBell({ onOpenDMs }: Props) {
           <path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
         </svg>
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 min-w-[16px] h-4 bg-red-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold leading-none px-0.5">
+          <span className="absolute top-1 right-1 min-w-[16px] h-4 bg-burgundy rounded-full text-[9px] text-parchment-light flex items-center justify-center font-bold leading-none px-0.5">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
       </button>
 
       {open && (
-        <div
-          className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-1rem)] rounded-sm overflow-hidden shadow-modal z-50 animate-scale-in"
-          style={{ background: '#060D18', border: '1px solid rgba(201,169,110,0.18)' }}
-        >
-          <div className="px-4 py-3.5 border-b border-champagne/12 flex items-center justify-between">
-            <p className="eyebrow">Notifications</p>
+        <div className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-1rem)] rounded-[14px] overflow-hidden z-50 animate-scale-in border border-peat/10 bg-parchment-light shadow-[0_12px_48px_rgba(16, 17, 20,0.18)]">
+          <div className="px-4 py-3.5 border-b border-forest/15 flex items-center justify-between">
+            <p className="eyebrow">Notices</p>
             {notifications.some(n => !n.read) && (
               <button
                 onClick={markAllRead}
-                className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne/50 hover:text-champagne transition-colors"
+                className="font-sans text-[10px] tracking-[0.2em] uppercase text-gold-dark/70 hover:text-gold-dark transition-colors"
               >
                 Mark all read
               </button>
             )}
           </div>
 
-          <div className="max-h-[360px] overflow-y-auto divide-y divide-white/[0.04]">
+          <div className="max-h-[360px] overflow-y-auto divide-y divide-forest/10">
             {notifications.length === 0 ? (
               <div className="py-10 text-center">
-                <p className="font-sans text-cream/20 text-sm">No notifications</p>
+                <p className="font-display italic text-peat/40 text-sm">The desk is quiet.</p>
               </div>
             ) : (
               notifications.map(n => {
@@ -218,29 +211,29 @@ export default function NotificationBell({ onOpenDMs }: Props) {
 
                 if (isFriendReq) {
                   return (
-                    <div key={n.id} className={`px-4 py-3 flex items-start gap-3 ${!n.read ? 'bg-champagne/[0.04]' : ''}`}>
+                    <div key={n.id} className={`px-4 py-3 flex items-start gap-3 ${!n.read ? 'bg-parchment-dark/50' : ''}`}>
                       {notifIcon(n.type)}
                       <div className="flex-1 min-w-0">
-                        <p className={`font-sans text-xs leading-snug ${!n.read ? 'text-cream/90 font-medium' : 'text-cream/60'}`}>
+                        <p className={`font-sans text-xs leading-snug ${!n.read ? 'text-peat font-medium' : 'text-peat/60'}`}>
                           {n.title}
                         </p>
-                        <p className="font-sans text-[10px] text-cream/20 mt-1">{timeAgo(n.created_at)}</p>
+                        <p className="font-sans text-[10px] text-peat/40 mt-1">{timeAgo(n.created_at)}</p>
                         <div className="flex gap-2 mt-2">
                           <button
                             onClick={() => acceptFriendRequest(n)}
                             disabled={processing}
-                            className="px-3 py-1 rounded-full bg-champagne text-navy font-sans text-[10px] font-semibold tracking-wider uppercase disabled:opacity-50">
+                            className="px-3 py-1 rounded-full bg-forest text-parchment-light font-sans text-[10px] font-semibold tracking-wider uppercase hover:bg-forest-light transition-colors disabled:opacity-50">
                             Accept
                           </button>
                           <button
                             onClick={() => declineFriendRequest(n)}
                             disabled={processing}
-                            className="px-3 py-1 rounded-full border border-white/[0.1] text-cream/35 font-sans text-[10px] tracking-wider uppercase hover:text-cream/60 transition-colors disabled:opacity-50">
+                            className="px-3 py-1 rounded-full border border-peat/20 text-peat/50 font-sans text-[10px] tracking-wider uppercase hover:text-peat/80 hover:border-peat/40 transition-colors disabled:opacity-50">
                             Decline
                           </button>
                         </div>
                       </div>
-                      {!n.read && <span className="w-2 h-2 rounded-full bg-champagne shrink-0 mt-1" />}
+                      {!n.read && <span className="w-2 h-2 rounded-full bg-burgundy shrink-0 mt-1" />}
                     </div>
                   );
                 }
@@ -249,20 +242,20 @@ export default function NotificationBell({ onOpenDMs }: Props) {
                   <button
                     key={n.id}
                     onClick={() => handleClick(n)}
-                    className={`w-full text-left px-4 py-3 flex items-start gap-3 hover:bg-white/[0.04] transition-all ${!n.read ? 'bg-champagne/[0.04]' : ''}`}
+                    className={`w-full text-left px-4 py-3 flex items-start gap-3 hover:bg-parchment-dark/40 transition-all ${!n.read ? 'bg-parchment-dark/50' : ''}`}
                   >
                     {notifIcon(n.type)}
                     <div className="flex-1 min-w-0">
-                      <p className={`font-sans text-xs leading-snug ${!n.read ? 'text-cream/90 font-medium' : 'text-cream/60'}`}>
+                      <p className={`font-sans text-xs leading-snug ${!n.read ? 'text-peat font-medium' : 'text-peat/60'}`}>
                         {n.title}
                       </p>
                       {n.body && (
-                        <p className="font-sans text-[11px] text-cream/35 mt-0.5 truncate">{n.body}</p>
+                        <p className="font-sans text-[11px] text-peat/50 mt-0.5 truncate">{n.body}</p>
                       )}
-                      <p className="font-sans text-[10px] text-cream/20 mt-1">{timeAgo(n.created_at)}</p>
+                      <p className="font-sans text-[10px] text-peat/40 mt-1">{timeAgo(n.created_at)}</p>
                     </div>
                     {!n.read && (
-                      <span className="w-2 h-2 rounded-full bg-champagne shrink-0 mt-1" />
+                      <span className="w-2 h-2 rounded-full bg-burgundy shrink-0 mt-1" />
                     )}
                   </button>
                 );

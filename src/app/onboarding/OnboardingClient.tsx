@@ -18,16 +18,19 @@ function Avatar({ name, image, size = 96 }: { name: string; image: string; size?
     return (
       <img src={image} alt={name} referrerPolicy="no-referrer"
         onError={() => setErr(true)}
-        className="rounded-full object-cover w-full h-full border border-champagne/30" />
+        className="rounded-full object-cover w-full h-full border border-gold/40" />
     );
   }
   return (
-    <div className="rounded-full flex items-center justify-center font-sans font-semibold text-navy w-full h-full border border-champagne/30"
-      style={{ background: 'linear-gradient(135deg, #C9A96E, #b8944d)', fontSize: size * 0.32 }}>
+    <div className="rounded-full flex items-center justify-center font-sans font-semibold text-forest w-full h-full border border-gold/40"
+      style={{ background: 'linear-gradient(135deg, #4B5DF0, #1B2FDE)', fontSize: size * 0.32 }}>
       {initials}
     </div>
   );
 }
+
+const INPUT_BASE =
+  'w-full border border-forest/20 bg-parchment-light font-sans text-base text-peat placeholder:text-peat/35 transition-colors focus:border-forest focus:outline-none focus:ring-1 focus:ring-forest';
 
 export default function OnboardingClient({ userId, initialName, initialAvatar }: Props) {
   const router = useRouter();
@@ -74,7 +77,7 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
     if (saving) return;
     const trimmedUsername = username.trim().toLowerCase();
     if (trimmedUsername && (usernameStatus === 'taken' || usernameStatus === 'invalid')) {
-      setError('Please fix your username before continuing.');
+      setError('Settle the username before proceeding.');
       return;
     }
 
@@ -94,7 +97,7 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
 
     if (!res.ok) {
       const d = await res.json();
-      setError(d.error ?? 'Something went wrong. Please try again.');
+      setError(d.error ?? 'The filing did not go through. Try again.');
       setSaving(false);
       return;
     }
@@ -104,23 +107,30 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-16 bg-ink text-cream">
-      <div className="fixed inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,169,110,0.08) 0%, transparent 70%)' }} />
-
+    <div className="min-h-screen flex items-center justify-center bg-parchment px-4 py-16 text-peat">
       <div className="relative w-full max-w-sm">
         {/* Masthead */}
         <div className="text-center mb-10">
           <p className="eyebrow mb-4 flex items-center justify-center gap-3">
-            <span className="inline-block h-px w-8 bg-champagne/40" />
-            Where To LARP
-            <span className="inline-block h-px w-8 bg-champagne/40" />
+            <span className="inline-block h-px w-8 bg-gold/50" />
+            Induction · The Society
+            <span className="inline-block h-px w-8 bg-gold/50" />
           </p>
-          <h1 className="headline-editorial text-cream text-4xl sm:text-5xl">
-            {step === 1 ? 'Welcome.' : step === 2 ? <>Choose your <span className="italic text-champagne">handle</span>.</> : 'About you.'}
+          <h1 className="headline-editorial text-4xl sm:text-5xl">
+            {step === 1 ? (
+              <>Your character <em className="italic text-gold-dark">awaits</em>.</>
+            ) : step === 2 ? (
+              <>Choose your <em className="italic text-gold-dark">handle</em>.</>
+            ) : (
+              <>For the <em className="italic text-gold-dark">record</em>.</>
+            )}
           </h1>
-          <p className="font-display italic text-cream/45 text-base mt-3">
-            {step === 1 ? 'Set up your profile to get started.' : step === 2 ? 'A unique name others can find you by.' : 'Tell the community a little about yourself.'}
+          <p className="mt-3 font-display text-base italic text-peat/50">
+            {step === 1
+              ? 'Induction papers, part one: the likeness and the name.'
+              : step === 2
+              ? 'The name by which the Society will find you.'
+              : 'A line or two for the register. Stay in character.'}
           </p>
         </div>
 
@@ -128,12 +138,14 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
         <div className="flex items-center justify-center gap-2 mb-8">
           {[1, 2, 3].map(s => (
             <div key={s} className={`h-px transition-all duration-300 ${
-              s === step ? 'w-8 bg-champagne' : s < step ? 'w-5 bg-champagne/50' : 'w-5 bg-champagne/15'
+              s === step ? 'w-8 bg-gold' : s < step ? 'w-5 bg-gold/50' : 'w-5 bg-gold/20'
             }`} />
           ))}
         </div>
 
-        <div className="border border-champagne/15 bg-navy/40 px-6 py-7 space-y-5">
+        {/* Induction papers */}
+        <div className="plate-frame shadow-[0_2px_24px_rgba(16, 17, 20,0.07)]">
+          <div className="px-6 py-7 space-y-5">
 
           {step === 1 && (
             <>
@@ -143,20 +155,20 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
                   onClick={() => fileInputRef.current?.click()}>
                   <Avatar name={name || 'You'} image={avatarUrl} size={96} />
                   <div className={`absolute inset-0 rounded-full flex items-center justify-center transition-all
-                    ${uploading ? 'bg-black/50 opacity-100' : 'bg-black/50 opacity-0 group-hover:opacity-100'}`}>
+                    ${uploading ? 'bg-forest/60 opacity-100' : 'bg-forest/60 opacity-0 group-hover:opacity-100'}`}>
                     {uploading ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <div className="w-5 h-5 border-2 border-parchment-light/30 border-t-parchment-light rounded-full animate-spin" />
                     ) : (
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 16V8M8 12l4-4 4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M20 16v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                        <path d="M12 16V8M8 12l4-4 4 4" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M20 16v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round"/>
                       </svg>
                     )}
                   </div>
                 </div>
                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} />
                 <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}
-                  className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/40 border-b border-transparent hover:text-champagne hover:border-champagne/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50">
+                  className="font-sans text-[10px] tracking-[0.25em] uppercase text-peat/45 border-b border-transparent hover:text-gold-dark hover:border-gold/50 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/50">
                   {uploading ? 'Uploading…' : 'Change photo'}
                 </button>
               </div>
@@ -164,7 +176,7 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
               {/* Display name */}
               <div>
                 <label htmlFor="onboard-name" className="eyebrow-muted block mb-2">
-                  Display Name <span className="text-champagne">*</span>
+                  Display Name <span className="text-gold-dark">*</span>
                 </label>
                 <input
                   id="onboard-name"
@@ -173,14 +185,14 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
                   onChange={e => setName(e.target.value)}
                   placeholder="Your name"
                   maxLength={60}
-                  className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all"
+                  className={`${INPUT_BASE} px-3.5 py-2.5`}
                 />
               </div>
 
               <button
                 onClick={() => { if (name.trim()) setStep(2); }}
                 disabled={!name.trim()}
-                className="btn-editorial w-full disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+                className="btn-editorial w-full disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
               >
                 Continue
               </button>
@@ -191,10 +203,10 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
             <>
               <div>
                 <label htmlFor="onboard-username" className="eyebrow-muted block mb-2">
-                  Username <span className="text-cream/25 font-normal normal-case tracking-normal">(optional)</span>
+                  Username <span className="text-peat/40 font-normal normal-case tracking-normal">(optional)</span>
                 </label>
                 <div className="relative">
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 font-sans text-base text-champagne/50 pointer-events-none">@</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-sans text-base text-gold-dark/60 pointer-events-none">@</span>
                   <input
                     id="onboard-username"
                     type="text"
@@ -202,47 +214,47 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
                     onChange={e => setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g, '').slice(0, 20))}
                     placeholder="your_handle"
                     maxLength={20}
-                    className="w-full bg-transparent border-b border-champagne/25 pl-5 pr-9 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all"
+                    className={`${INPUT_BASE} pl-8 pr-10 py-2.5`}
                   />
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2">
+                  <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
                     {usernameStatus === 'checking' && (
-                      <div className="w-3.5 h-3.5 border-2 border-champagne/20 border-t-champagne rounded-full animate-spin" />
+                      <div className="w-3.5 h-3.5 border-2 border-gold/25 border-t-gold-dark rounded-full animate-spin" />
                     )}
                     {usernameStatus === 'available' && (
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-champagne">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-forest">
                         <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     )}
                     {usernameStatus === 'taken' && (
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-red-400/70">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-burgundy">
                         <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                       </svg>
                     )}
                   </div>
                 </div>
                 {usernameStatus === 'invalid' && (
-                  <p className="font-sans text-[11px] text-red-400/60 mt-1.5">3–20 chars · letters, numbers, underscores only</p>
+                  <p className="font-sans text-[11px] text-burgundy mt-1.5">3–20 characters. Letters, numbers, underscores.</p>
                 )}
                 {usernameStatus === 'taken' && (
-                  <p className="font-sans text-[11px] text-red-400/60 mt-1.5">That username is taken</p>
+                  <p className="font-sans text-[11px] text-burgundy mt-1.5">That name is already on the register.</p>
                 )}
                 {usernameStatus === 'available' && (
-                  <p className="font-sans text-[11px] text-champagne/50 mt-1.5">Available!</p>
+                  <p className="font-sans text-[11px] text-forest/70 mt-1.5">Available. It suits you.</p>
                 )}
                 {!username && (
-                  <p className="font-sans text-[11px] text-cream/25 mt-1.5">You can set this later in Settings</p>
+                  <p className="font-sans text-[11px] text-peat/40 mt-1.5">You can set this later in Settings</p>
                 )}
               </div>
 
               <div className="flex gap-3 pt-1">
                 <button onClick={() => setStep(1)}
-                  className="btn-editorial-ghost flex-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy">
+                  className="btn-editorial-ghost flex-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                   Back
                 </button>
                 <button
                   onClick={() => { if (usernameStatus !== 'taken' && usernameStatus !== 'checking') setStep(3); }}
                   disabled={usernameStatus === 'taken' || usernameStatus === 'checking'}
-                  className="btn-editorial flex-1 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+                  className="btn-editorial flex-1 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
                 >
                   Continue
                 </button>
@@ -254,40 +266,41 @@ export default function OnboardingClient({ userId, initialName, initialAvatar }:
             <>
               <div>
                 <label htmlFor="onboard-bio" className="eyebrow-muted block mb-2">
-                  Bio <span className="text-cream/25 font-normal normal-case tracking-normal">(optional)</span>
+                  Bio <span className="text-peat/40 font-normal normal-case tracking-normal">(optional)</span>
                 </label>
                 <textarea
                   id="onboard-bio"
                   value={bio}
                   onChange={e => setBio(e.target.value.slice(0, 200))}
-                  placeholder="Tell the LARP community something about yourself…"
+                  placeholder="A line for the register. Old money, new hobby…"
                   rows={4}
-                  className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all resize-none"
+                  className={`${INPUT_BASE} px-3.5 py-2.5 resize-none`}
                 />
-                <p className="font-sans text-[10px] text-cream/25 mt-1 text-right tabular-nums">{bio.length}/200</p>
+                <p className="font-sans text-[10px] text-peat/40 mt-1 text-right tabular-nums">{bio.length}/200</p>
               </div>
 
-              {error && <p className="font-sans text-xs text-red-400/70">{error}</p>}
+              {error && <p className="font-sans text-xs text-burgundy">{error}</p>}
 
               <div className="flex gap-3 pt-1">
                 <button onClick={() => setStep(2)}
-                  className="btn-editorial-ghost flex-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy">
+                  className="btn-editorial-ghost flex-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                   Back
                 </button>
                 <button
                   onClick={handleFinish}
                   disabled={saving}
-                  className="btn-editorial flex-1 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+                  className="btn-editorial flex-1 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
                 >
-                  {saving ? 'Setting up…' : 'Enter'}
+                  {saving ? 'Filing…' : 'Enter the Society'}
                 </button>
               </div>
             </>
           )}
+          </div>
         </div>
 
-        <p className="font-sans text-cream/25 text-[11px] tracking-wide text-center mt-6 leading-relaxed">
-          You can change all of this later in Settings.
+        <p className="font-sans text-peat/45 text-[11px] tracking-wide text-center mt-6 leading-relaxed">
+          All of this may be amended later, in Settings.
         </p>
       </div>
     </div>

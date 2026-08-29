@@ -26,14 +26,14 @@ export default function Footer() {
       {/* ambient champagne glow */}
       <div
         className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-80 w-[120%]"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(201,169,110,0.10), transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse at center, rgba(75, 93, 240,0.10), transparent 70%)' }}
       />
 
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-12">
         {/* Masthead */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 pb-12">
           <div className="max-w-md">
-            <p className="eyebrow mb-5">Est. MMXXV · A Field Guide</p>
+            <p className="eyebrow-light mb-5">Est. MMXXV · A Field Guide</p>
             <Link
               href="/"
               className="headline-editorial text-cream text-5xl sm:text-6xl block leading-[0.9] hover:text-champagne transition-colors duration-300"
@@ -49,7 +49,7 @@ export default function Footer() {
           {/* Link columns */}
           <div className="grid grid-cols-2 gap-12 sm:gap-20">
             <div>
-              <p className="eyebrow-muted mb-5">The Cities</p>
+              <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-gold-light/50 mb-5">The Cities</p>
               <ul className="space-y-3">
                 {CITIES.map((c) => (
                   <li key={c.slug}>
@@ -65,7 +65,7 @@ export default function Footer() {
               </ul>
             </div>
             <div>
-              <p className="eyebrow-muted mb-5">The Register</p>
+              <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-gold-light/50 mb-5">The Register</p>
               <ul className="space-y-3">
                 {SECTIONS.map((s) => (
                   <li key={s.href}>

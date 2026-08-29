@@ -71,22 +71,26 @@ export default function ProfileStats({ userId, initialStats, isOwnProfile = fals
       <div className="flex flex-col items-center gap-6">
         {tier !== 'none' && <TierBadge tier={tier} size="md" />}
 
-        <div className="flex items-stretch justify-center w-full max-w-xs">
-          {statItems.map(({ value, label, onClick }, i) => (
-            <div key={label} className="flex items-stretch flex-1">
-              {i > 0 && <div className="w-px self-stretch bg-champagne/15" />}
-              {onClick ? (
-                <button onClick={onClick} className="flex-1 text-center group px-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink rounded-sm">
-                  <p className="font-display text-champagne text-3xl leading-none numeral !text-champagne group-hover:text-champagne-light transition-colors">{value}</p>
-                  <p className="eyebrow-muted mt-2 group-hover:text-champagne/70 transition-colors">{label}</p>
-                </button>
-              ) : (
-                <div className="flex-1 text-center px-2">
-                  <p className="font-display text-champagne text-3xl leading-none">{value}</p>
-                  <p className="eyebrow-muted mt-2">{label}</p>
-                </div>
-              )}
-            </div>
+        {/* The standings — dotted-leader ledger rows */}
+        <div className="w-full max-w-xs space-y-2.5 text-left">
+          {statItems.map(({ value, label, onClick }) => (
+            onClick ? (
+              <button
+                key={label}
+                onClick={onClick}
+                className="ledger-row w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light rounded-sm"
+              >
+                <span className="shrink-0 font-sans text-[10px] uppercase tracking-[0.25em] text-peat/45 group-hover:text-gold-dark transition-colors">{label}</span>
+                <span className="leader" />
+                <span className="shrink-0 font-display text-2xl leading-none text-forest tabular-nums group-hover:text-forest-light transition-colors">{value}</span>
+              </button>
+            ) : (
+              <div key={label} className="ledger-row">
+                <span className="shrink-0 font-sans text-[10px] uppercase tracking-[0.25em] text-peat/45">{label}</span>
+                <span className="leader" />
+                <span className="shrink-0 font-display text-2xl leading-none text-forest tabular-nums">{value}</span>
+              </div>
+            )
           ))}
         </div>
 
@@ -94,7 +98,7 @@ export default function ProfileStats({ userId, initialStats, isOwnProfile = fals
           <button
             onClick={toggleFollow}
             disabled={followLoading}
-            className={`transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink ${
+            className={`transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light ${
               following
                 ? 'btn-editorial-ghost'
                 : 'btn-editorial'

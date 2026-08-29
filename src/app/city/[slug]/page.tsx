@@ -46,45 +46,45 @@ export default async function CityPage({ params }: CityPageProps) {
     if (!cityName) notFound();
 
     return (
-      <div className="min-h-screen bg-ink flex items-center justify-center p-8">
+      <div className="min-h-screen bg-parchment flex items-center justify-center p-8 pt-nav">
         <div className="max-w-lg text-center">
           <p className="eyebrow mb-5">Database Setup Required</p>
-          <h1 className="headline-editorial text-cream text-5xl sm:text-6xl mb-6">{cityName}</h1>
+          <h1 className="headline-editorial text-5xl sm:text-6xl mb-6 capitalize">{cityName}</h1>
           <div className="rule-champagne-dim mb-6" />
-          <p className="font-sans text-cream/60 text-sm leading-relaxed mb-6">
+          <p className="font-sans text-peat/70 text-sm leading-relaxed mb-6">
             The database tables haven&apos;t been created yet. Run the SQL files in the{' '}
             <a
               href="https://supabase.com/dashboard/project/dlamwzkiicqrvzqxzyet/editor"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-champagne underline underline-offset-2"
+              className="text-gold-dark underline underline-offset-2"
             >
               Supabase SQL Editor
             </a>
             :
           </p>
-          <ol className="text-left space-y-3 font-sans text-sm text-cream/70 mb-8">
+          <ol className="text-left space-y-3 font-sans text-sm text-peat/75 mb-8">
             <li className="flex gap-3">
-              <span className="text-champagne font-medium shrink-0">1.</span>
+              <span className="text-gold-dark font-medium shrink-0">1.</span>
               <span>
-                Run <code className="text-champagne/80 bg-white/5 px-1 rounded">supabase/schema.sql</code>
+                Run <code className="text-gold-dark bg-forest/5 px-1 rounded">supabase/schema.sql</code>
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="text-champagne font-medium shrink-0">2.</span>
+              <span className="text-gold-dark font-medium shrink-0">2.</span>
               <span>
-                Run <code className="text-champagne/80 bg-white/5 px-1 rounded">supabase/schema_v2_events.sql</code>
+                Run <code className="text-gold-dark bg-forest/5 px-1 rounded">supabase/schema_v2_events.sql</code>
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="text-champagne font-medium shrink-0">3.</span>
+              <span className="text-gold-dark font-medium shrink-0">3.</span>
               <span>
-                Run <code className="text-champagne/80 bg-white/5 px-1 rounded">supabase/seed.sql</code> and{' '}
-                <code className="text-champagne/80 bg-white/5 px-1 rounded">supabase/seed_events.sql</code>
+                Run <code className="text-gold-dark bg-forest/5 px-1 rounded">supabase/seed.sql</code> and{' '}
+                <code className="text-gold-dark bg-forest/5 px-1 rounded">supabase/seed_events.sql</code>
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="text-champagne font-medium shrink-0">4.</span>
+              <span className="text-gold-dark font-medium shrink-0">4.</span>
               <span>Refresh this page</span>
             </li>
           </ol>

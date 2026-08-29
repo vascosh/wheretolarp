@@ -80,8 +80,8 @@ function Avatar({ name, image, size = 40 }: { name?: string | null; image?: stri
 
   return (
     <div
-      className="rounded-full flex items-center justify-center font-sans font-semibold text-navy shrink-0"
-      style={{ width: size, height: size, background: 'linear-gradient(135deg, #C9A96E, #b8944d)', fontSize: size * 0.35 }}
+      className="rounded-full flex items-center justify-center font-sans font-semibold text-forest shrink-0"
+      style={{ width: size, height: size, background: 'linear-gradient(135deg, #4B5DF0, #1B2FDE)', fontSize: size * 0.35 }}
     >
       {initials}
     </div>
@@ -112,22 +112,22 @@ function ProfileCalendar({ plans, onDateSelect, selectedDate }: {
   }
 
   return (
-    <div className="p-5 select-none border border-champagne/15 bg-navy/40">
+    <div className="card-paper p-5 select-none">
       <div className="flex items-center justify-between mb-5">
-        <button onClick={prev} aria-label="Previous month" className="w-8 h-8 flex items-center justify-center text-cream/40 hover:text-champagne transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
+        <button onClick={prev} aria-label="Previous month" className="w-8 h-8 flex items-center justify-center text-peat/40 hover:text-gold-dark transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </button>
-        <h3 className="font-display text-cream text-xl">
-          {MONTHS[viewMonth]} <span className="text-champagne/45 italic">{viewYear}</span>
+        <h3 className="font-display text-forest text-xl">
+          {MONTHS[viewMonth]} <span className="text-gold-dark italic">{viewYear}</span>
         </h3>
-        <button onClick={next} aria-label="Next month" className="w-8 h-8 flex items-center justify-center text-cream/40 hover:text-champagne transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
+        <button onClick={next} aria-label="Next month" className="w-8 h-8 flex items-center justify-center text-peat/40 hover:text-gold-dark transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </button>
       </div>
 
       <div className="grid grid-cols-7 mb-1">
         {WEEKDAYS.map(d => (
-          <div key={d} className="text-center font-sans text-[10px] tracking-[0.2em] uppercase text-cream/25 py-1">{d}</div>
+          <div key={d} className="text-center font-sans text-[10px] tracking-[0.2em] uppercase text-peat/35 py-1">{d}</div>
         ))}
       </div>
 
@@ -144,28 +144,28 @@ function ProfileCalendar({ plans, onDateSelect, selectedDate }: {
             <button key={day} onClick={() => onDateSelect(isSelected ? null : dateStr)}
               className={clsx(
                 'relative flex flex-col items-center justify-center h-9 rounded-lg font-sans text-sm transition-all duration-150',
-                isSelected ? 'bg-champagne/20 text-champagne border border-champagne/35'
-                : isToday ? 'text-champagne border border-champagne/15 bg-champagne/[0.06]'
-                : 'text-cream/55 hover:bg-white/[0.06] hover:text-cream border border-transparent'
+                isSelected ? 'bg-forest text-parchment-light border border-forest'
+                : isToday ? 'text-gold-dark border border-gold/40 bg-gold/[0.07]'
+                : 'text-peat/60 hover:bg-peat/[0.05] hover:text-peat border border-transparent'
               )}>
               <span className="leading-none">{day}</span>
               {hasPlan && (
                 <span className={clsx('absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full',
-                  isSelected ? 'bg-champagne' : 'bg-champagne/50')} />
+                  isSelected ? 'bg-gold-light' : 'bg-gold')} />
               )}
             </button>
           );
         })}
       </div>
 
-      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-champagne/10">
+      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-forest/10">
         <div className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-champagne/50 inline-block" />
-          <span className="font-sans text-[10px] text-cream/30 tracking-wide">Plan saved</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
+          <span className="font-sans text-[10px] text-peat/45 tracking-wide">Plan saved</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-3.5 h-3.5 rounded-sm border border-champagne/15 bg-champagne/[0.06] inline-block" />
-          <span className="font-sans text-[10px] text-cream/30 tracking-wide">Today</span>
+          <span className="w-3.5 h-3.5 rounded-sm border border-gold/40 bg-gold/[0.07] inline-block" />
+          <span className="font-sans text-[10px] text-peat/45 tracking-wide">Today</span>
         </div>
       </div>
     </div>
@@ -240,15 +240,15 @@ function EditProfileModal({ user, showEmail, onToggleShowEmail, onSaved, onClose
 
   return createPortal(
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-ink/80 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-md overflow-hidden bg-ink border border-champagne/20 shadow-[0_8px_48px_rgba(0,0,0,0.5)]"
+      <div className="absolute inset-0 bg-peat/40 backdrop-blur-[8px]" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-md overflow-hidden rounded-[18px] border border-peat/10 bg-parchment-light shadow-[0_12px_48px_rgba(16, 17, 20,0.22)]"
         role="dialog" aria-modal="true" aria-label="Edit profile">
-        <div className="flex items-center justify-between px-6 py-5 border-b border-champagne/15">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-forest/15">
           <div>
             <p className="eyebrow mb-1">Your Dossier</p>
-            <h2 className="headline-editorial text-cream text-2xl">Edit Profile</h2>
+            <h2 className="headline-editorial text-2xl">Edit Profile</h2>
           </div>
-          <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
+          <button onClick={onClose} aria-label="Close" className="text-peat/35 hover:text-gold-dark transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -261,8 +261,8 @@ function EditProfileModal({ user, showEmail, onToggleShowEmail, onSaved, onClose
               <Avatar name={name || 'U'} image={avatarUrl || null} size={56} />
               {uploading && (
                 <div className="absolute inset-0 rounded-full flex items-center justify-center"
-                  style={{ background: 'rgba(6,13,24,0.7)' }}>
-                  <div className="w-4 h-4 border-2 border-champagne/40 border-t-champagne rounded-full animate-spin" />
+                  style={{ background: 'rgba(27, 47, 222,0.6)' }}>
+                  <div className="w-4 h-4 border-2 border-parchment-light/40 border-t-parchment-light rounded-full animate-spin" />
                 </div>
               )}
             </div>
@@ -279,7 +279,7 @@ function EditProfileModal({ user, showEmail, onToggleShowEmail, onSaved, onClose
                 type="button"
                 disabled={uploading}
                 onClick={() => fileInputRef.current?.click()}
-                className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/55 border-b border-champagne/30 pb-1 hover:text-champagne hover:border-champagne transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50"
+                className="font-sans text-[10px] tracking-[0.25em] uppercase text-peat/60 border-b border-gold/40 pb-1 hover:text-gold-dark hover:border-gold transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50"
               >
                 {uploading ? 'Uploading…' : 'Choose Photo'}
               </button>
@@ -288,29 +288,29 @@ function EditProfileModal({ user, showEmail, onToggleShowEmail, onSaved, onClose
           <div>
             <label htmlFor="edit-name" className="eyebrow-muted block mb-2">Name</label>
             <input id="edit-name" type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Your name"
-              className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all" />
+              className="w-full bg-transparent border-b border-peat/20 px-0 py-2.5 font-sans text-base text-peat placeholder:text-peat/30 focus:outline-none focus:border-gold transition-all" />
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-sans text-sm text-cream/75 mb-0.5">Show email address</p>
-              <p className="font-sans text-xs text-cream/35">Hide your email from the profile header.</p>
+              <p className="font-sans text-sm text-peat/80 mb-0.5">Show email address</p>
+              <p className="font-sans text-xs text-peat/50">Hide your email from the profile header.</p>
             </div>
             <button type="button" onClick={() => setEmailPrivacy(!emailPrivacy)}
               aria-pressed={emailPrivacy} aria-label="Show email address"
-              className={clsx('relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 shrink-0 ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink',
-                emailPrivacy ? 'bg-champagne' : 'bg-cream/15')}>
-              <span className={clsx('inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200',
+              className={clsx('relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 shrink-0 ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light',
+                emailPrivacy ? 'bg-forest' : 'bg-peat/20')}>
+              <span className={clsx('inline-block h-4 w-4 transform rounded-full bg-parchment-light shadow transition-transform duration-200',
                 emailPrivacy ? 'translate-x-6' : 'translate-x-1')} />
             </button>
           </div>
-          {error && <p className="font-sans text-xs text-red-400/70">{error}</p>}
+          {error && <p className="font-sans text-xs text-burgundy">{error}</p>}
           <div className="flex gap-4 pt-2">
             <button type="button" onClick={onClose}
-              className="flex-1 btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+              className="flex-1 btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
               Cancel
             </button>
             <button type="submit" disabled={saving}
-              className="flex-1 btn-editorial disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+              className="flex-1 btn-editorial disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
               {saving ? 'Saving...' : 'Save'}
             </button>
           </div>
@@ -384,15 +384,15 @@ function AddFriendModal({ onClose, onAdded }: { onClose: () => void; onAdded: ()
 
   return createPortal(
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-ink/80 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-sm overflow-hidden bg-ink border border-champagne/20 shadow-[0_8px_48px_rgba(0,0,0,0.5)]"
+      <div className="absolute inset-0 bg-peat/40 backdrop-blur-[8px]" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-sm overflow-hidden rounded-[18px] border border-peat/10 bg-parchment-light shadow-[0_12px_48px_rgba(16, 17, 20,0.22)]"
         role="dialog" aria-modal="true" aria-label="Add friend">
-        <div className="flex items-center justify-between px-6 py-5 border-b border-champagne/15">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-forest/15">
           <div>
             <p className="eyebrow mb-1">The Register</p>
-            <h2 className="headline-editorial text-cream text-2xl">Add Member</h2>
+            <h2 className="headline-editorial text-2xl">Add Member</h2>
           </div>
-          <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
+          <button onClick={onClose} aria-label="Close" className="text-peat/35 hover:text-gold-dark transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -406,39 +406,39 @@ function AddFriendModal({ onClose, onAdded }: { onClose: () => void; onAdded: ()
             placeholder="Search by name…"
             autoFocus
             aria-label="Search members by name"
-            className="w-full bg-transparent border-b border-champagne/25 px-0 py-2.5 font-sans text-base text-cream placeholder:text-cream/20 focus:outline-none focus:border-champagne transition-all"
+            className="w-full bg-transparent border-b border-peat/20 px-0 py-2.5 font-sans text-base text-peat placeholder:text-peat/30 focus:outline-none focus:border-gold transition-all"
           />
         </div>
         <div className="px-6 pb-5 min-h-[60px]">
           {searching && (
-            <p className="font-display italic text-cream/30 text-sm mt-4 text-center">Searching…</p>
+            <p className="font-display italic text-peat/40 text-sm mt-4 text-center">Searching…</p>
           )}
           {!searching && query.trim().length >= 2 && results.length === 0 && (
-            <p className="font-display italic text-cream/30 text-sm mt-4 text-center">No members found.</p>
+            <p className="font-display italic text-peat/40 text-sm mt-4 text-center">No members found.</p>
           )}
           {results.map(r => {
             const isSent = sentIds.has(r.id) || r.status === 'pending_sent';
             const isAccepted = r.status === 'accepted';
             const isPendingReceived = r.status === 'pending_received';
             return (
-              <div key={r.id} className="flex items-center gap-3 py-3.5 border-b border-champagne/10 last:border-0">
+              <div key={r.id} className="flex items-center gap-3 py-3.5 border-b border-forest/10 last:border-0">
                 <Avatar name={r.name} image={r.avatar_url} size={34} />
                 <div className="flex-1 min-w-0">
-                  <p className="font-serif text-sm text-cream/85 truncate">{r.name ?? 'Member'}</p>
-                  {msgs[r.id] && <p className="font-sans text-[10px] text-red-400/60">{msgs[r.id]}</p>}
+                  <p className="font-serif text-sm text-peat truncate">{r.name ?? 'Member'}</p>
+                  {msgs[r.id] && <p className="font-sans text-[10px] text-burgundy">{msgs[r.id]}</p>}
                 </div>
                 {isAccepted ? (
                   <span className="eyebrow-muted">Friends</span>
                 ) : isPendingReceived ? (
                   <button onClick={() => acceptRequest(r)}
-                    className="font-sans text-[10px] font-semibold tracking-[0.2em] uppercase bg-champagne text-navy px-4 py-2 hover:bg-champagne-light transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                    className="font-sans text-[10px] font-semibold tracking-[0.2em] uppercase bg-forest text-parchment-light px-4 py-2 hover:bg-forest-light transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                     Accept
                   </button>
                 ) : isSent ? (
                   <span className="eyebrow-muted">Sent</span>
                 ) : (
                   <button onClick={() => sendRequest(r)}
-                    className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne border border-champagne/30 px-4 py-2 hover:border-champagne hover:bg-champagne/5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                    className="font-sans text-[10px] tracking-[0.2em] uppercase text-forest border border-forest/30 px-4 py-2 hover:border-forest hover:bg-forest/5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                     Add
                   </button>
                 )}
@@ -464,8 +464,6 @@ function PlanDetailModal({ plan, friends, onClose }: {
   const [invitingFriend, setInvitingFriend] = useState<string | null>(null);
   const [invitedFriends, setInvitedFriends] = useState<Set<string>>(new Set());
   const [inviteError, setInviteError] = useState('');
-
-  const labelColor = plan.spot_category ? (CATEGORY_COLORS[plan.spot_category] ?? '#a8c8e8') : '#a8c8e8';
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -553,21 +551,21 @@ function PlanDetailModal({ plan, friends, onClose }: {
 
   return createPortal(
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-ink/80 backdrop-blur-[8px]" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-md overflow-hidden flex flex-col max-h-[85vh] bg-ink border border-champagne/20 shadow-[0_8px_48px_rgba(0,0,0,0.5)]"
+      <div className="absolute inset-0 bg-peat/40 backdrop-blur-[8px]" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-md overflow-hidden flex flex-col max-h-[85vh] rounded-[18px] border border-peat/10 bg-parchment-light shadow-[0_12px_48px_rgba(16, 17, 20,0.22)]"
         role="dialog" aria-modal="true" aria-label={plan.spot_name}>
 
         {/* Header */}
-        <div className="px-6 py-5 border-b border-champagne/15 shrink-0">
+        <div className="px-6 py-5 border-b border-forest/15 shrink-0">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
               <p className="eyebrow mb-2">An Engagement</p>
-              <h2 className="headline-editorial text-cream text-2xl sm:text-3xl leading-snug mb-1">{plan.spot_name}</h2>
+              <h2 className="headline-editorial text-2xl sm:text-3xl leading-snug mb-1">{plan.spot_name}</h2>
               {plan.spot_neighborhood && (
-                <p className="font-sans text-xs text-cream/40 tracking-wide">{plan.spot_neighborhood}</p>
+                <p className="font-sans text-xs text-peat/50 tracking-wide">{plan.spot_neighborhood}</p>
               )}
             </div>
-            <button onClick={onClose} aria-label="Close" className="text-cream/30 hover:text-champagne transition-colors p-1 -mr-1 -mt-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm shrink-0">
+            <button onClick={onClose} aria-label="Close" className="text-peat/35 hover:text-gold-dark transition-colors p-1 -mr-1 -mt-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm shrink-0">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
@@ -579,32 +577,31 @@ function PlanDetailModal({ plan, friends, onClose }: {
           {/* Details */}
           <div className="space-y-3">
             {plan.spot_category && (
-              <span className="inline-block font-sans text-[9px] tracking-[0.12em] uppercase px-3 py-1"
-                style={{ background: `${labelColor}15`, color: labelColor, border: `1px solid ${labelColor}30` }}>
+              <span className="inline-block font-sans text-[9px] tracking-[0.12em] uppercase px-3 py-1 border border-gold/40 bg-gold/[0.08] text-gold-dark">
                 {plan.spot_category}
               </span>
             )}
             <div className="flex items-center gap-3">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-champagne/50 shrink-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-gold-dark/70 shrink-0">
                 <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
                 <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
-              <span className="font-sans text-sm text-cream/75">{dateStr}</span>
+              <span className="font-sans text-sm text-peat/80">{dateStr}</span>
             </div>
             {plan.plan_time && (
               <div className="flex items-center gap-3">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-champagne/50 shrink-0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-gold-dark/70 shrink-0">
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
                   <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
-                <span className="font-sans text-sm text-cream/75">{formatTime(plan.plan_time)}</span>
+                <span className="font-sans text-sm text-peat/80">{formatTime(plan.plan_time)}</span>
               </div>
             )}
             {plan.spot_description && (
-              <p className="font-sans text-xs text-cream/40 leading-relaxed">{plan.spot_description}</p>
+              <p className="font-sans text-xs text-peat/55 leading-relaxed">{plan.spot_description}</p>
             )}
             {plan.notes && (
-              <p className="font-display italic text-sm text-cream/40">{plan.notes}</p>
+              <p className="font-display italic text-sm text-peat/55">{plan.notes}</p>
             )}
           </div>
 
@@ -614,11 +611,11 @@ function PlanDetailModal({ plan, friends, onClose }: {
               <p className="eyebrow-muted mb-3">Invite Members</p>
               <div className="space-y-2">
                 {friends.map(f => (
-                  <div key={f.id} className="flex items-center gap-3 p-2.5 border border-champagne/10">
+                  <div key={f.id} className="flex items-center gap-3 p-2.5 border border-forest/15 rounded-[10px] bg-parchment">
                     <Avatar name={f.name} image={f.avatar_url} size={30} />
-                    <p className="font-serif text-sm text-cream/65 flex-1 truncate">{f.name ?? f.email}</p>
+                    <p className="font-serif text-sm text-peat/75 flex-1 truncate">{f.name ?? f.email}</p>
                     {invitedFriends.has(f.id) ? (
-                      <span className="eyebrow-muted !text-champagne/60 flex items-center gap-1">
+                      <span className="eyebrow-muted !text-gold-dark flex items-center gap-1">
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
                           <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
@@ -626,21 +623,21 @@ function PlanDetailModal({ plan, friends, onClose }: {
                       </span>
                     ) : (
                       <button onClick={() => inviteFriend(f.id)} disabled={invitingFriend === f.id}
-                        className="font-sans text-[10px] tracking-[0.2em] uppercase text-champagne border border-champagne/30 px-3 py-1.5 hover:border-champagne hover:bg-champagne/5 transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                        className="font-sans text-[10px] tracking-[0.2em] uppercase text-forest border border-forest/30 px-3 py-1.5 hover:border-forest hover:bg-forest/5 transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                         {invitingFriend === f.id ? '…' : 'Invite'}
                       </button>
                     )}
                   </div>
                 ))}
               </div>
-              {inviteError && <p className="font-sans text-xs text-red-400/60 mt-2">{inviteError}</p>}
+              {inviteError && <p className="font-sans text-xs text-burgundy mt-2">{inviteError}</p>}
             </div>
           )}
 
           {/* Share link + Google Calendar */}
-          <div className="space-y-3 pt-4 border-t border-champagne/10">
+          <div className="space-y-3 pt-4 border-t border-forest/10">
             <button onClick={handleCopyLink} disabled={loadingToken}
-              className="w-full btn-editorial-ghost disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+              className="w-full btn-editorial-ghost disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
                 <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -649,7 +646,7 @@ function PlanDetailModal({ plan, friends, onClose }: {
             </button>
 
             <a href={buildGoogleCalendarUrl()} target="_blank" rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-champagne/15 text-cream/45 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all hover:text-cream/70 hover:border-champagne/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+              className="w-full inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-forest/20 text-peat/55 font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all hover:text-forest hover:border-forest/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
                 <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
                 <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -783,43 +780,41 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
   }
 
   return (
-    <div className="min-h-screen pt-nav bg-ink text-cream">
-      <div className="fixed inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 50% at 30% 20%, rgba(201,169,110,0.06) 0%, transparent 70%)' }} />
-
+    <div className="min-h-screen pt-nav bg-parchment text-peat">
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-10">
 
-        {/* Member dossier header */}
-        <div className="mb-8 sm:mb-10">
-          <p className="eyebrow mb-5">Your Dossier</p>
-          <div className="flex items-start gap-5">
-            <Avatar name={displayUser.name} image={displayUser.image} size={64} />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 flex-wrap">
-                <h1 className="headline-editorial text-cream text-3xl sm:text-4xl">{displayUser.name ?? 'Member'}</h1>
-                <button onClick={() => setEditProfileOpen(true)}
-                  className="text-cream/30 hover:text-champagne transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm"
-                  aria-label="Edit profile" title="Edit profile">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                    <path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+        {/* Member dossier header — plate-frame character sheet */}
+        <div className="plate-frame mb-8 sm:mb-10">
+          <div className="relative p-6 sm:p-8">
+            <p className="eyebrow mb-5">Your Dossier</p>
+            <div className="flex items-start gap-5">
+              <Avatar name={displayUser.name} image={displayUser.image} size={64} />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h1 className="headline-editorial text-3xl sm:text-4xl">{displayUser.name ?? 'Member'}</h1>
+                  <button onClick={() => setEditProfileOpen(true)}
+                    className="text-peat/35 hover:text-gold-dark transition-colors p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm"
+                    aria-label="Edit profile" title="Edit profile">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                      <path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+                {username && (
+                  <p className="font-sans text-gold-dark text-[11px] tracking-[0.25em] uppercase mt-1">@{username}</p>
+                )}
+                {bio && (
+                  <p className="font-display italic text-peat/60 text-base leading-relaxed mt-2 max-w-sm">{bio}</p>
+                )}
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <button onClick={() => signOut({ callbackUrl: '/' })}
+                  className="font-sans text-[10px] tracking-[0.25em] uppercase text-peat/45 border border-forest/20 px-4 py-2.5 hover:text-forest hover:border-forest/50 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
+                  Sign out
                 </button>
               </div>
-              {username && (
-                <p className="font-sans text-champagne/55 text-xs tracking-[0.2em] mt-1">@{username}</p>
-              )}
-              {bio && (
-                <p className="font-display italic text-cream/50 text-base leading-relaxed mt-2 max-w-sm">{bio}</p>
-              )}
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <button onClick={() => signOut({ callbackUrl: '/' })}
-                className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/30 border border-champagne/15 px-4 py-2.5 hover:text-champagne hover:border-champagne/40 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
-                Sign out
-              </button>
             </div>
           </div>
-          <div className="rule-champagne-dim mt-7" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
@@ -835,7 +830,7 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                   {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                 </p>
                 {plansForSelectedDate.length === 0 ? (
-                  <p className="font-display italic text-cream/30 text-base">Nothing planned.</p>
+                  <p className="font-display italic text-peat/40 text-base">Nothing planned.</p>
                 ) : (
                   <div className="space-y-3">
                     {plansForSelectedDate.map(p => (
@@ -847,12 +842,12 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
             )}
 
             {/* Tabs */}
-            <div className="flex border-b border-champagne/15">
+            <div className="flex border-b border-forest/15">
               {(['plans', 'settings'] as const).map(t => (
                 <button key={t} onClick={() => setActiveTab(t)}
                   className={clsx(
-                    'font-sans text-[11px] tracking-[0.25em] uppercase pb-3 mr-7 border-b-2 transition-all duration-200 -mb-px focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm',
-                    activeTab === t ? 'border-champagne text-champagne' : 'border-transparent text-cream/30 hover:text-cream/60'
+                    'font-sans text-[11px] tracking-[0.25em] uppercase pb-3 mr-7 border-b-2 transition-all duration-200 -mb-px focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm',
+                    activeTab === t ? 'border-gold text-forest' : 'border-transparent text-peat/40 hover:text-peat/70'
                   )}>
                   {t === 'plans' ? `Plans (${upcomingPlans.length})` : 'Settings'}
                 </button>
@@ -867,15 +862,15 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                   <div className="space-y-2 pb-2">
                     <p className="eyebrow-muted">Friend Requests</p>
                     {pending.map(p => (
-                      <div key={p.friendshipId} className="flex items-center gap-3 p-3 border border-champagne/15 bg-champagne/[0.04]">
+                      <div key={p.friendshipId} className="flex items-center gap-3 p-3 rounded-[14px] border border-gold/30 bg-gold/[0.06]">
                         <Avatar name={p.name} image={p.avatar_url} size={32} />
-                        <p className="flex-1 font-serif text-sm text-cream/75 truncate">{p.name ?? 'Someone'}</p>
+                        <p className="flex-1 font-serif text-sm text-peat/80 truncate">{p.name ?? 'Someone'}</p>
                         <button onClick={() => declineFriend(p.friendshipId)}
-                          className="font-sans text-[10px] tracking-[0.2em] uppercase text-cream/35 border-b border-transparent hover:text-cream/60 hover:border-cream/30 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50">
+                          className="font-sans text-[10px] tracking-[0.2em] uppercase text-peat/45 border-b border-transparent hover:text-peat/70 hover:border-peat/30 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50">
                           Decline
                         </button>
                         <button onClick={() => acceptFriend(p.friendshipId)}
-                          className="font-sans text-[10px] font-semibold tracking-[0.2em] uppercase bg-champagne text-navy px-4 py-2 hover:bg-champagne-light transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                          className="font-sans text-[10px] font-semibold tracking-[0.2em] uppercase bg-forest text-parchment-light px-4 py-2 hover:bg-forest-light transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment">
                           Accept
                         </button>
                       </div>
@@ -883,10 +878,10 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                   </div>
                 )}
                 {upcomingPlans.length === 0 ? (
-                  <div className="border border-champagne/15 bg-navy/40 p-10 text-center">
-                    <p className="headline-editorial text-cream/35 text-3xl mb-3">No plans yet</p>
-                    <p className="font-sans text-cream/30 text-xs mb-6">Browse a city and tap &ldquo;LARP here together&rdquo; to save.</p>
-                    <Link href="/" className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                  <div className="card-paper p-10 text-center">
+                    <p className="headline-editorial text-3xl mb-3 opacity-50">The diary is blank</p>
+                    <p className="font-sans text-peat/50 text-xs mb-6">Browse a city and tap &ldquo;LARP here together&rdquo; to save.</p>
+                    <Link href="/" className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                       Browse Cities
                     </Link>
                   </div>
@@ -901,10 +896,10 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
               <div className="space-y-8">
                 <div>
                   <p className="eyebrow-muted mb-4">Edit Profile</p>
-                  <div className="border border-champagne/15 bg-navy/40 p-5">
-                    <p className="font-sans text-sm text-cream/55 mb-4">Update your name, avatar, and privacy settings.</p>
+                  <div className="card-paper p-5">
+                    <p className="font-sans text-sm text-peat/65 mb-4">Update your name, avatar, and privacy settings.</p>
                     <button onClick={() => setEditProfileOpen(true)}
-                      className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
+                      className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
                       Edit Profile
                     </button>
                   </div>
@@ -912,11 +907,11 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
 
                 <div>
                   <p className="eyebrow-muted mb-4">Privacy</p>
-                  <div className="border border-champagne/15 bg-navy/40 p-5">
+                  <div className="card-paper p-5">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-sans text-sm text-cream/75 mb-0.5">Show email address</p>
-                        <p className="font-sans text-xs text-cream/35 leading-relaxed">
+                        <p className="font-sans text-sm text-peat/80 mb-0.5">Show email address</p>
+                        <p className="font-sans text-xs text-peat/50 leading-relaxed">
                           When off, your email is hidden — useful while streaming or sharing your screen.
                         </p>
                       </div>
@@ -932,12 +927,12 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                           });
                         }}
                         className={clsx(
-                          'relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 shrink-0 ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink',
-                          showEmail ? 'bg-champagne' : 'bg-cream/15'
+                          'relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 shrink-0 ml-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light',
+                          showEmail ? 'bg-forest' : 'bg-peat/20'
                         )}
                       >
                         <span className={clsx(
-                          'inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200',
+                          'inline-block h-4 w-4 transform rounded-full bg-parchment-light shadow transition-transform duration-200',
                           showEmail ? 'translate-x-6' : 'translate-x-1'
                         )} />
                       </button>
@@ -956,7 +951,7 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
               const tiers = [
                 { name: 'Bronze',   threshold: 0,    color: '#C8834A' },
                 { name: 'Silver',   threshold: 300,  color: '#B0B8C8' },
-                { name: 'Gold',     threshold: 600,  color: '#C9A96E' },
+                { name: 'Gold',     threshold: 600,  color: '#C9A227' },
                 { name: 'Platinum', threshold: 900,  color: '#D4D8F0' },
                 { name: 'Diamond',  threshold: 1500, color: '#88F0FF' },
               ];
@@ -969,26 +964,26 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
                 ? Math.min(100, ((seasonXP - current.threshold) / (next.threshold - current.threshold)) * 100)
                 : 100;
               return (
-                <div className="border border-champagne/15 bg-navy/40 p-5">
+                <div className="card-paper p-5">
                   <div className="flex items-center justify-between mb-3">
                     <p className="eyebrow-muted">LARP Level</p>
-                    <span className="font-sans text-[10px] font-semibold tabular-nums" style={{ color: current.color }}>{seasonXP} XP</span>
+                    <span className="font-sans text-[10px] font-semibold tabular-nums text-gold-dark">{seasonXP} XP</span>
                   </div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-display text-base" style={{ color: current.color }}>{current.name}</span>
-                    {next && <span className="font-sans text-[10px] text-cream/30 tracking-wider">{next.name}</span>}
+                    <span className="font-display text-base text-forest">{current.name}</span>
+                    {next && <span className="font-sans text-[10px] text-peat/40 tracking-wider">{next.name}</span>}
                   </div>
-                  <div className="h-1.5 overflow-hidden" style={{ background: 'rgba(201,169,110,0.1)' }}>
+                  <div className="h-1.5 overflow-hidden bg-peat/10">
                     <div className="h-full transition-all duration-700"
-                      style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${current.color}99, ${current.color})`, boxShadow: `0 0 8px ${current.color}55` }} />
+                      style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${current.color}99, ${current.color})` }} />
                   </div>
                   {next && (
-                    <p className="font-sans text-[10px] text-cream/30 mt-2 text-right tabular-nums">
+                    <p className="font-sans text-[10px] text-peat/40 mt-2 text-right tabular-nums">
                       {next.threshold - seasonXP} XP to {next.name}
                     </p>
                   )}
                   {!next && (
-                    <p className="font-sans text-[10px] tracking-[0.2em] uppercase mt-2 text-center" style={{ color: current.color }}>Max Tier Reached</p>
+                    <p className="font-sans text-[10px] tracking-[0.2em] uppercase mt-2 text-center text-gold-dark">Max Tier Reached</p>
                   )}
                 </div>
               );
@@ -996,7 +991,7 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
 
             <button
               onClick={() => setAddFriendOpen(true)}
-              className="btn-editorial-ghost w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+              className="btn-editorial-ghost w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                 <circle cx="9" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.5" />
@@ -1006,41 +1001,42 @@ export default function ProfileClient({ user, initialPlans, initialFriends, init
               Add Members
             </button>
 
-            <div className="border border-champagne/15 bg-navy/40 p-5">
-              <p className="eyebrow-muted mb-5">Stats</p>
-              <div className="space-y-5">
+            {/* The standings — dotted-leader ledger */}
+            <div className="card-paper p-5">
+              <p className="eyebrow-muted mb-5">The Standings</p>
+              <div className="space-y-3">
                 {[
                   { value: plans.length, label: 'Total Plans', onClick: undefined },
                   { value: followingCount, label: 'Following', onClick: () => setFollowModal('following') },
                   { value: followerCount, label: 'Followers', onClick: () => setFollowModal('followers') },
                   { value: upcomingPlans.length, label: 'Upcoming', onClick: undefined },
-                ].map(({ value, label, onClick }, i, arr) => (
-                  <div key={label}>
-                    {onClick ? (
-                      <button onClick={onClick} className="text-left group w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 rounded-sm">
-                        <p className="font-display text-champagne text-3xl leading-none group-hover:text-champagne-light transition-colors">{value}</p>
-                        <p className="eyebrow-muted mt-1.5 group-hover:text-champagne/70 transition-colors">{label}</p>
-                      </button>
-                    ) : (
-                      <>
-                        <p className="font-display text-champagne text-3xl leading-none">{value}</p>
-                        <p className="eyebrow-muted mt-1.5">{label}</p>
-                      </>
-                    )}
-                    {i < arr.length - 1 && <div className="rule-champagne-dim mt-5" />}
-                  </div>
+                ].map(({ value, label, onClick }) => (
+                  onClick ? (
+                    <button key={label} onClick={onClick}
+                      className="ledger-row w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
+                      <span className="shrink-0 font-sans text-[10px] uppercase tracking-[0.25em] text-peat/45 group-hover:text-gold-dark transition-colors">{label}</span>
+                      <span className="leader" />
+                      <span className="shrink-0 font-display text-2xl leading-none text-forest tabular-nums group-hover:text-forest-light transition-colors">{value}</span>
+                    </button>
+                  ) : (
+                    <div key={label} className="ledger-row">
+                      <span className="shrink-0 font-sans text-[10px] uppercase tracking-[0.25em] text-peat/45">{label}</span>
+                      <span className="leader" />
+                      <span className="shrink-0 font-display text-2xl leading-none text-forest tabular-nums">{value}</span>
+                    </div>
+                  )
                 ))}
               </div>
             </div>
 
             {upcomingPlans[0] && (
-              <button className="w-full text-left border border-champagne/15 bg-champagne/[0.04] p-5 cursor-pointer hover:bg-champagne/[0.07] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink" onClick={() => setSelectedPlan(upcomingPlans[0])}>
+              <button className="w-full text-left rounded-[18px] border border-gold/30 bg-gold/[0.06] p-5 cursor-pointer hover:bg-gold/[0.1] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment" onClick={() => setSelectedPlan(upcomingPlans[0])}>
                 <p className="eyebrow mb-3">Next LARP</p>
-                <p className="font-display text-cream text-xl leading-snug mb-1">{upcomingPlans[0].spot_name}</p>
+                <p className="font-display text-forest text-xl leading-snug mb-1">{upcomingPlans[0].spot_name}</p>
                 {upcomingPlans[0].spot_neighborhood && (
-                  <p className="font-sans text-xs text-cream/40 mb-2 tracking-wide">{upcomingPlans[0].spot_neighborhood}</p>
+                  <p className="font-sans text-xs text-peat/50 mb-2 tracking-wide">{upcomingPlans[0].spot_neighborhood}</p>
                 )}
-                <p className="font-sans text-xs text-champagne/55 tracking-wide">
+                <p className="font-sans text-xs text-gold-dark tracking-wide">
                   {new Date(upcomingPlans[0].plan_date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
                   {upcomingPlans[0].plan_time && ` · ${formatTime(upcomingPlans[0].plan_time)}`}
                 </p>
@@ -1097,26 +1093,26 @@ function PlanCard({ plan, onDelete, deleting, onClick }: { plan: Plan; onDelete:
   }
 
   return (
-    <div className="border border-champagne/15 bg-navy/40 p-5 flex items-start gap-4 group cursor-pointer hover:bg-white/[0.03] transition-colors"
+    <div className="card-paper p-5 flex items-start gap-4 group cursor-pointer hover:shadow-[0_6px_32px_rgba(27, 47, 222,0.12)] transition-shadow"
       onClick={onClick}>
       <div className="shrink-0 text-center" style={{ minWidth: 38 }}>
-        <p className="font-sans text-[9px] tracking-[0.2em] uppercase" style={{ color: labelColor }}>
+        <p className="font-sans text-[9px] tracking-[0.2em] uppercase text-gold-dark">
           {new Date(plan.plan_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}
         </p>
-        <p className="font-display text-cream text-2xl leading-none">
+        <p className="font-display text-forest text-2xl leading-none">
           {new Date(plan.plan_date + 'T00:00:00').getDate()}
         </p>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="font-display text-cream text-lg leading-snug mb-0.5">{plan.spot_name}</p>
+        <p className="font-display text-forest text-lg leading-snug mb-0.5">{plan.spot_name}</p>
         {plan.spot_neighborhood && (
-          <p className="font-sans text-xs mb-1.5 tracking-wide" style={{ color: labelColor, opacity: 0.6 }}>{plan.spot_neighborhood}</p>
+          <p className="font-sans text-xs mb-1.5 tracking-wide text-peat/50">{plan.spot_neighborhood}</p>
         )}
         <div className="flex items-center gap-2.5 flex-wrap">
-          {plan.plan_time && <span className="font-sans text-[10px] text-cream/30 tracking-wide">{formatTime(plan.plan_time)}</span>}
+          {plan.plan_time && <span className="font-sans text-[10px] text-peat/45 tracking-wide">{formatTime(plan.plan_time)}</span>}
           {plan.spot_category && (
-            <span className="font-sans text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 border"
-              style={{ background: `${labelColor}12`, color: labelColor, borderColor: `${labelColor}30` }}>
+            <span className="font-sans text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 border text-peat/70"
+              style={{ background: `${labelColor}30`, borderColor: `${labelColor}80` }}>
               {plan.spot_category}
             </span>
           )}
@@ -1127,7 +1123,7 @@ function PlanCard({ plan, onDelete, deleting, onClick }: { plan: Plan; onDelete:
           <button
             onClick={copyInviteLink}
             title="Copy invite link"
-            className={`opacity-0 group-hover:opacity-100 transition-all p-1 ${copied ? 'text-champagne' : 'text-cream/20 hover:text-champagne/60'}`}
+            className={`opacity-0 group-hover:opacity-100 transition-all p-1 ${copied ? 'text-gold-dark' : 'text-peat/30 hover:text-gold-dark'}`}
           >
             {copied ? (
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -1141,7 +1137,7 @@ function PlanCard({ plan, onDelete, deleting, onClick }: { plan: Plan; onDelete:
           </button>
         )}
         <button onClick={(e) => { e.stopPropagation(); onDelete(plan.id); }} disabled={deleting}
-          className="opacity-0 group-hover:opacity-100 text-cream/15 hover:text-red-400/50 transition-all p-1">
+          className="opacity-0 group-hover:opacity-100 text-peat/25 hover:text-burgundy transition-all p-1">
           {deleting ? (
             <svg width="14" height="14" viewBox="0 0 14 14" className="animate-spin" fill="none">
               <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.5" strokeDasharray="20" strokeDashoffset="10"/>

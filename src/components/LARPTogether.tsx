@@ -121,18 +121,18 @@ function LARPTogetherModal({
 
   return createPortal(
     <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6">
-      <div className="absolute inset-0 bg-navy/70 backdrop-blur-[8px] animate-backdrop-enter" onClick={onClose} />
+      <div className="absolute inset-0 bg-forest/60 backdrop-blur-[8px] animate-backdrop-enter" onClick={onClose} />
 
-      <div className="relative z-10 bg-cream w-full max-w-md shadow-modal overflow-hidden animate-modal-enter flex flex-col max-h-[85vh] border border-champagne/20">
+      <div className="relative z-10 bg-parchment-light w-full max-w-md rounded-[18px] shadow-modal overflow-hidden animate-modal-enter flex flex-col max-h-[85vh] border border-gold/30">
         {/* Header */}
-        <div className="relative bg-ink px-6 py-7 sm:px-8 sm:py-8 shrink-0">
-          <span className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-champagne to-transparent" />
+        <div className="relative bg-parchment px-6 py-7 sm:px-8 sm:py-8 shrink-0 border-b border-gold/20">
+          <span className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-gold to-transparent" />
           <div className="flex items-start justify-between">
             <div>
               <p className="eyebrow mb-3">LARP Here</p>
-              <h2 className="headline-editorial text-cream text-3xl sm:text-4xl">{name}</h2>
+              <h2 className="headline-editorial text-3xl sm:text-4xl">{name}</h2>
             </div>
-            <button onClick={onClose} className="text-cream/30 hover:text-cream transition-colors duration-200 p-1 -mr-1 -mt-1 rounded-full">
+            <button onClick={onClose} className="text-peat/35 hover:text-gold-dark transition-colors duration-200 p-1 -mr-1 -mt-1 rounded-full">
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                 <path d="M5 5L17 17M17 5L5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
@@ -143,14 +143,14 @@ function LARPTogetherModal({
         {/* Success state */}
         {saved ? (
           <div className="p-8 text-center flex flex-col items-center gap-5">
-            <div className="w-14 h-14 rounded-full bg-champagne/15 flex items-center justify-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-champagne">
+            <div className="w-14 h-14 rounded-full bg-gold/15 flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-gold-dark">
                 <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
             <div>
-              <h3 className="font-serif text-navy text-xl mb-1">Plan Saved</h3>
-              <p className="font-sans text-charcoal/60 text-sm">
+              <h3 className="font-serif text-forest text-xl mb-1">Plan Saved</h3>
+              <p className="font-sans text-peat/60 text-sm">
                 Added to your calendar for {formatReadableDate(date)} at {formatReadableTime(time)}.
               </p>
             </div>
@@ -166,8 +166,8 @@ function LARPTogetherModal({
                 className={clsx(
                   'flex items-center gap-2 px-5 py-2.5 rounded-full border font-sans text-xs tracking-wider uppercase transition-all w-full justify-center',
                   copied
-                    ? 'border-champagne/40 bg-champagne/10 text-champagne'
-                    : 'border-charcoal/15 text-charcoal/50 hover:border-champagne/40 hover:text-champagne hover:bg-champagne/5'
+                    ? 'border-gold/50 bg-gold/10 text-gold-dark'
+                    : 'border-peat/15 text-peat/50 hover:border-gold/50 hover:text-gold-dark hover:bg-gold/5'
                 )}
               >
                 {copied ? (
@@ -190,10 +190,10 @@ function LARPTogetherModal({
             )}
 
             <div className="flex gap-3 w-full">
-              <button onClick={onClose} className="flex-1 py-2.5 rounded-full border border-charcoal/20 font-sans text-xs tracking-wider uppercase text-charcoal/60 hover:border-charcoal/40 transition-all">
+              <button onClick={onClose} className="flex-1 py-2.5 rounded-full border border-peat/20 font-sans text-xs tracking-wider uppercase text-peat/60 hover:border-peat/40 transition-all">
                 Close
               </button>
-              <a href="/profile" className="flex-1 py-2.5 rounded-full bg-champagne text-navy font-sans text-xs font-semibold tracking-wider uppercase hover:bg-champagne/90 transition-all text-center">
+              <a href="/profile" className="flex-1 py-2.5 rounded-full bg-forest text-parchment-light font-sans text-xs font-semibold tracking-wider uppercase hover:bg-forest-light transition-all text-center">
                 My Plans
               </a>
             </div>
@@ -204,16 +204,16 @@ function LARPTogetherModal({
             {/* Date + Time row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div ref={dateRef} className="relative">
-                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-charcoal/50 mb-2">
-                  Date <span className="text-champagne">*</span>
+                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-peat/50 mb-2">
+                  Date <span className="text-gold-dark">*</span>
                 </label>
                 <button
                   type="button"
                   onClick={() => setCalendarOpen(o => !o)}
                   className={clsx(
-                    'w-full flex items-center justify-between border rounded-lg px-3 py-2.5 font-sans text-sm transition-all bg-white',
-                    calendarOpen ? 'border-champagne text-charcoal' : 'border-charcoal/[0.12] text-charcoal hover:border-champagne/50',
-                    !date && 'text-charcoal/30'
+                    'w-full flex items-center justify-between border rounded-lg px-3 py-2.5 font-sans text-sm transition-all bg-parchment-light',
+                    calendarOpen ? 'border-gold text-peat' : 'border-peat/15 text-peat hover:border-gold/50',
+                    !date && 'text-peat/30'
                   )}
                 >
                   <span>
@@ -221,14 +221,14 @@ function LARPTogetherModal({
                       ? new Date(date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
                       : 'Pick a date'}
                   </span>
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={clsx('text-charcoal/40 transition-transform duration-200', calendarOpen && 'rotate-180')}>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={clsx('text-peat/40 transition-transform duration-200', calendarOpen && 'rotate-180')}>
                     <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
                 {calendarOpen && (
                   <div
-                    className="absolute left-0 top-full mt-1 z-50 rounded-lg border border-champagne/20 shadow-modal animate-modal-enter overflow-hidden"
-                    style={{ background: '#0e1e32' }}
+                    className="absolute left-0 top-full mt-1 z-50 rounded-lg border border-gold/30 shadow-modal animate-modal-enter overflow-hidden"
+                    style={{ background: '#1B2FDE' }}
                   >
                     <div className="p-3">
                       <Calendar
@@ -244,13 +244,13 @@ function LARPTogetherModal({
                 )}
               </div>
               <div>
-                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-charcoal/50 mb-2">Time</label>
+                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-peat/50 mb-2">Time</label>
                 <select
                   value={time}
                   onChange={e => setTime(e.target.value)}
-                  className="w-full border border-charcoal/[0.12] rounded-lg px-3 py-2.5 text-sm font-sans text-charcoal bg-white focus:outline-none focus:border-champagne focus:ring-1 focus:ring-champagne/20 transition-all appearance-none"
+                  className="w-full border border-peat/15 rounded-lg px-3 py-2.5 text-sm font-sans text-peat bg-parchment-light focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/20 transition-all appearance-none"
                   style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238A8578' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'right 12px center',
                   }}
@@ -265,14 +265,14 @@ function LARPTogetherModal({
             {/* Info blurb */}
             <div
               className="rounded-lg px-4 py-3 flex items-start gap-3"
-              style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.15)' }}
+              style={{ background: 'rgba(75, 93, 240,0.06)', border: '1px solid rgba(75, 93, 240,0.18)' }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-champagne/60 shrink-0 mt-0.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-gold/70 shrink-0 mt-0.5">
                 <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
                 <path d="M3 9h18" stroke="currentColor" strokeWidth="1.5"/>
                 <path d="M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
-              <p className="font-sans text-xs text-charcoal/70 leading-relaxed">
+              <p className="font-sans text-xs text-peat/70 leading-relaxed">
                 {session
                   ? 'Saves this LARP to your profile calendar. You can view and manage it in your account.'
                   : 'Sign in to save this plan to your personal LARP calendar.'}
@@ -280,7 +280,7 @@ function LARPTogetherModal({
             </div>
 
             {saveError && (
-              <p className="font-sans text-xs text-red-500">{saveError}</p>
+              <p className="font-sans text-xs text-burgundy">{saveError}</p>
             )}
 
             {/* CTA */}
@@ -290,14 +290,14 @@ function LARPTogetherModal({
               className={clsx(
                 'w-full py-3.5 text-[11px] font-sans font-semibold tracking-[0.22em] uppercase transition-all duration-300',
                 date && !saving
-                  ? 'bg-champagne text-navy hover:bg-champagne-light cursor-pointer'
-                  : 'bg-charcoal/10 text-charcoal/30 cursor-not-allowed'
+                  ? 'bg-forest text-parchment-light hover:bg-forest-light cursor-pointer'
+                  : 'bg-peat/10 text-peat/30 cursor-not-allowed'
               )}
             >
               {saving ? 'Saving…' : session ? 'Save to My Calendar' : 'Sign In to Save'}
             </button>
 
-            <p className="font-sans text-[11px] text-muted text-center leading-relaxed">
+            <p className="font-sans text-[11px] text-peat/45 text-center leading-relaxed">
               View and manage all your plans from your profile.
             </p>
           </div>
@@ -326,7 +326,7 @@ export default function LARPTogether({
       <button
         onClick={e => { e.stopPropagation(); setIsOpen(true); }}
         className="w-full flex items-center justify-center gap-2 py-3 px-4 mt-3
-          border border-champagne/30 text-champagne-dark hover:border-champagne hover:bg-champagne/[0.06]
+          border border-gold/40 text-gold-dark hover:border-gold hover:bg-gold/[0.06]
           font-sans text-[11px] tracking-[0.22em] uppercase transition-all duration-300"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">

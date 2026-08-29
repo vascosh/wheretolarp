@@ -8,6 +8,18 @@ interface Props {
   showLabel?: boolean;
 }
 
+/* Tier colours read as *metals*, not brand palette — a Gold tier badge that
+   renders blue is just confusing. Deliberately exempt from the Swiss Blue
+   repalette. All AA-safe on white paper.
+   (TIER_META keeps the legacy colours for pages not yet rethemed.) */
+export const TIER_HERITAGE: Record<Exclude<Tier, 'none'>, { color: string; bg: string; border: string }> = {
+  bronze:   { color: '#8C5A2B', bg: 'rgba(140,90,43,0.10)',  border: 'rgba(140,90,43,0.35)'  },
+  silver:   { color: '#64676E', bg: 'rgba(100,103,110,0.10)', border: 'rgba(100,103,110,0.35)' },
+  gold:     { color: '#86691A', bg: 'rgba(134,105,26,0.10)', border: 'rgba(134,105,26,0.35)' },
+  platinum: { color: '#5B6470', bg: 'rgba(91,100,112,0.10)', border: 'rgba(91,100,112,0.35)' },
+  diamond:  { color: '#157A8C', bg: 'rgba(21,122,140,0.10)', border: 'rgba(21,122,140,0.35)' },
+};
+
 function TierIcon({ tier, px }: { tier: Exclude<Tier, 'none'>; px: number }) {
   switch (tier) {
     case 'bronze':
@@ -60,6 +72,7 @@ function TierIcon({ tier, px }: { tier: Exclude<Tier, 'none'>; px: number }) {
 export default function TierBadge({ tier, size = 'md', showLabel = true }: Props) {
   if (tier === 'none') return null;
   const meta = TIER_META[tier];
+  const heritage = TIER_HERITAGE[tier];
 
   const iconPx  = size === 'sm' ? 11 : size === 'md' ? 14 : 18;
   const textCls = size === 'sm' ? 'text-[9px]' : size === 'md' ? 'text-[10px]' : 'text-[11px]';
@@ -69,9 +82,9 @@ export default function TierBadge({ tier, size = 'md', showLabel = true }: Props
     <span
       className={`inline-flex items-center font-sans tracking-[0.25em] uppercase font-medium ${padCls} ${textCls}`}
       style={{
-        color: meta.color,
-        background: meta.bg,
-        border: `1px solid ${meta.border}`,
+        color: heritage.color,
+        background: heritage.bg,
+        border: `1px solid ${heritage.border}`,
       }}
     >
       <TierIcon tier={tier} px={iconPx} />

@@ -123,17 +123,17 @@ function CategoryIcon({ category, className }: { category: string; className?: s
 // ── Skeleton Card ──────────────────────────────────────────────────
 function SkeletonCard() {
   return (
-    <div className="p-5 sm:p-6 animate-pulse" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,169,110,0.12)' }}>
+    <div className="card-paper p-5 sm:p-6 animate-pulse">
       <div className="flex items-start gap-4">
-        <div className="w-7 sm:w-9 h-6 bg-white/[0.05]" />
-        <div className="w-10 h-10 bg-white/[0.06]" />
+        <div className="w-7 sm:w-9 h-6 bg-parchment-dark/70" />
+        <div className="w-10 h-10 bg-parchment-dark/70" />
         <div className="flex-1 space-y-3">
-          <div className="h-4 w-32 bg-white/[0.06]" />
-          <div className="h-3 w-48 bg-white/[0.04]" />
+          <div className="h-4 w-32 bg-parchment-dark/70" />
+          <div className="h-3 w-48 bg-parchment-dark/50" />
         </div>
-        <div className="h-6 w-14 bg-white/[0.06]" />
+        <div className="h-6 w-14 bg-parchment-dark/70" />
       </div>
-      <div className="mt-4 h-1 bg-white/[0.04]" />
+      <div className="mt-4 h-1 bg-parchment-dark/50" />
     </div>
   );
 }
@@ -147,7 +147,7 @@ function Confetti() {
         const delay = Math.random() * 0.5;
         const duration = 1.5 + Math.random() * 1;
         const size = 6 + Math.random() * 6;
-        const colors = ['#C9A96E', '#F5F0E8', '#b8944d', '#E8D5A3', '#8B6914'];
+        const colors = ['#1B2FDE', '#4B5DF0', '#8B97F5', '#D4183D', '#EBEBE7'];
         const color = colors[i % colors.length];
         const rotation = Math.random() * 360;
         return (
@@ -193,7 +193,7 @@ function Confetti() {
 function PointsPopup({ points }: { points: number }) {
   return (
     <div className="fixed inset-0 pointer-events-none z-[99] flex items-center justify-center">
-      <div className="animate-points-rise font-serif text-4xl font-bold" style={{ color: '#C9A96E', textShadow: '0 0 30px rgba(201,169,110,0.6)' }}>
+      <div className="animate-points-rise font-serif text-4xl font-bold" style={{ color: '#1B2FDE', textShadow: '0 0 30px rgba(75, 93, 240,0.45)' }}>
         +{points} XP
       </div>
       <style jsx>{`
@@ -274,141 +274,133 @@ function QuizModal({
   function getOptionStyle(option: string) {
     if (!selected) {
       return {
-        background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: '#F7F7F5',
+        border: '1px solid rgba(27, 47, 222,0.15)',
       };
     }
     if (result) {
       if (option === selected && result.correct) {
         return {
-          background: 'rgba(34,197,94,0.15)',
-          border: '1px solid rgba(34,197,94,0.5)',
+          background: 'rgba(27, 47, 222,0.10)',
+          border: '1px solid rgba(27, 47, 222,0.45)',
         };
       }
       if (option === selected && !result.correct) {
         return {
-          background: 'rgba(239,68,68,0.15)',
-          border: '1px solid rgba(239,68,68,0.5)',
+          background: 'rgba(212, 24, 61,0.10)',
+          border: '1px solid rgba(212, 24, 61,0.45)',
         };
       }
       if (result.correctAnswer && option === result.correctAnswer) {
         return {
-          background: 'rgba(34,197,94,0.1)',
-          border: '1px solid rgba(34,197,94,0.3)',
+          background: 'rgba(27, 47, 222,0.06)',
+          border: '1px solid rgba(27, 47, 222,0.30)',
         };
       }
     }
     return {
-      background: 'rgba(255,255,255,0.02)',
-      border: '1px solid rgba(255,255,255,0.05)',
+      background: '#F7F7F5',
+      border: '1px solid rgba(27, 47, 222,0.08)',
     };
   }
 
   function getOptionTextClass(option: string) {
-    if (!result) return 'text-cream/80';
-    if (option === selected && result.correct) return 'text-green-400';
-    if (option === selected && !result.correct) return 'text-red-400';
-    if (result.correctAnswer && option === result.correctAnswer) return 'text-green-400';
-    return 'text-cream/30';
+    if (!result) return 'text-peat/80';
+    if (option === selected && result.correct) return 'text-forest';
+    if (option === selected && !result.correct) return 'text-burgundy';
+    if (result.correctAnswer && option === result.correctAnswer) return 'text-forest';
+    return 'text-peat/40';
   }
 
   return (
     <div className="fixed inset-0 z-[80] flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-ink/75 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-forest/40 backdrop-blur-sm" />
       <div
-        className="relative w-full max-w-lg p-5 sm:p-8 shadow-2xl overflow-hidden"
-        style={{
-          background: '#060D18',
-          border: '1px solid rgba(201,169,110,0.2)',
-        }}
+        className="relative w-full max-w-lg plate-frame shadow-[0_18px_60px_rgba(27, 47, 222,0.25)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent)' }} />
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          aria-label="Close quiz"
-          className="absolute top-4 right-4 text-cream/30 hover:text-champagne transition-colors"
-        >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </button>
-
-        {/* Quiz icon */}
-        <div className="flex items-center gap-3 mb-7">
-          <div
-            className="w-10 h-10 flex items-center justify-center"
-            style={{ background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.18)' }}
+        <div className="relative p-5 sm:p-8 overflow-hidden">
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            aria-label="Close quiz"
+            className="absolute top-4 right-4 text-peat/40 hover:text-gold-dark transition-colors"
           >
-            <QuizIcon className="text-[#C9A96E]" />
-          </div>
-          <div>
-            <p className="eyebrow text-[10px] text-[#C9A96E]/70">Daily Quiz</p>
-            <p className="font-sans text-xs text-cream/35 mt-0.5">{challenge.points} XP · one attempt only</p>
-          </div>
-        </div>
-
-        {/* Already attempted warning */}
-        {previouslyAttempted && (
-          <div className="mb-6 px-4 py-3 flex items-start gap-2.5"
-            style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-red-400/70 shrink-0 mt-0.5">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
-              <path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            <p className="font-sans text-xs text-red-300/70 leading-relaxed">
-              You&apos;ve already used your one attempt today. You can still answer, but no XP will be awarded.
-            </p>
+          </button>
+
+          {/* Quiz icon */}
+          <div className="flex items-center gap-3 mb-7">
+            <div className="w-10 h-10 flex items-center justify-center bg-forest-pale border border-forest/20">
+              <QuizIcon className="text-forest" />
+            </div>
+            <div>
+              <p className="eyebrow text-[10px]">The Daily Examination</p>
+              <p className="font-sans text-xs text-peat/55 mt-0.5">{challenge.points} XP · one attempt only</p>
+            </div>
           </div>
-        )}
 
-        {/* Question */}
-        <h3 className="headline-editorial text-cream text-2xl sm:text-3xl mb-8 leading-snug">
-          {challenge.quiz_question}
-        </h3>
-
-        {/* Options */}
-        <div className="space-y-3">
-          {options.map((option, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleSelect(option)}
-              disabled={!!selected}
-              className={`w-full text-left px-5 py-4 font-sans text-sm transition-all duration-300 ${getOptionTextClass(option)} ${
-                !selected ? 'hover:bg-white/[0.06] cursor-pointer' : 'cursor-default'
-              }`}
-              style={getOptionStyle(option)}
-            >
-              <span className="numeral text-champagne/40 mr-3 text-xs">
-                {String.fromCharCode(65 + idx)}
-              </span>
-              {option}
-            </button>
-          ))}
-        </div>
-
-        {/* Result message */}
-        {result && (
-          <div className="mt-7 text-center">
-            <p
-              className={`font-display italic text-xl ${
-                result.correct ? 'text-green-400' : 'text-red-400'
-              }`}
-            >
-              {result.correct ? 'Correct!' : 'Not quite!'}
-            </p>
-            {!result.correct && result.correctAnswer && (
-              <p className="font-sans text-sm text-cream/40 mt-1">
-                The answer was: <span className="text-cream/60">{result.correctAnswer}</span>
+          {/* Already attempted warning */}
+          {previouslyAttempted && (
+            <div className="mb-6 px-4 py-3 flex items-start gap-2.5 border border-burgundy/25 bg-burgundy/[0.06]">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-burgundy/70 shrink-0 mt-0.5">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              <p className="font-sans text-xs text-burgundy leading-relaxed">
+                You&apos;ve already used your one attempt today. You can still answer, but no XP will be awarded.
               </p>
-            )}
-            {result.alreadyAttempted && (
-              <p className="font-sans text-xs text-cream/25 mt-2">No XP awarded — one attempt per day.</p>
-            )}
+            </div>
+          )}
+
+          {/* Question */}
+          <h3 className="headline-editorial text-2xl sm:text-3xl mb-8 leading-snug">
+            {challenge.quiz_question}
+          </h3>
+
+          {/* Options */}
+          <div className="space-y-3">
+            {options.map((option, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleSelect(option)}
+                disabled={!!selected}
+                className={`w-full text-left px-5 py-4 font-sans text-sm transition-all duration-300 ${getOptionTextClass(option)} ${
+                  !selected ? 'hover:bg-parchment-dark/60 cursor-pointer' : 'cursor-default'
+                }`}
+                style={getOptionStyle(option)}
+              >
+                <span className="numeral text-gold-dark/60 mr-3 text-xs">
+                  {String.fromCharCode(65 + idx)}
+                </span>
+                {option}
+              </button>
+            ))}
           </div>
-        )}
+
+          {/* Result message */}
+          {result && (
+            <div className="mt-7 text-center">
+              <p
+                className={`font-display italic text-xl ${
+                  result.correct ? 'text-forest' : 'text-burgundy'
+                }`}
+              >
+                {result.correct ? 'Correct!' : 'Not quite!'}
+              </p>
+              {!result.correct && result.correctAnswer && (
+                <p className="font-sans text-sm text-peat/55 mt-1">
+                  The answer was: <span className="text-forest">{result.correctAnswer}</span>
+                </p>
+              )}
+              {result.alreadyAttempted && (
+                <p className="font-sans text-xs text-peat/45 mt-2">No XP awarded — one attempt per day.</p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -454,42 +446,34 @@ function ChallengeCard({
 
   return (
     <div
-      className={`p-5 sm:p-6 transition-all duration-300 ${
+      className={`card-paper p-5 sm:p-6 transition-all duration-300 ${
         isCompleted ? 'opacity-75' : ''
       }`}
       style={{
-        background: isCompleted
-          ? 'rgba(201,169,110,0.04)'
-          : 'rgba(255,255,255,0.02)',
         border: isCompleted
-          ? '1px solid rgba(201,169,110,0.22)'
-          : '1px solid rgba(201,169,110,0.12)',
+          ? '1px solid rgba(75, 93, 240,0.40)'
+          : undefined,
+        background: isCompleted ? 'rgba(75, 93, 240,0.05)' : undefined,
       }}
     >
       <div className="flex items-start gap-4">
-        {/* Catalogue numeral */}
-        <span className="numeral text-xl sm:text-2xl leading-none shrink-0 w-7 sm:w-9 text-right mt-1 tabular-nums">
+        {/* Exercise numeral */}
+        <span className="numeral text-gold-dark text-xl sm:text-2xl leading-none shrink-0 w-7 sm:w-9 text-right mt-1 tabular-nums">
           {String(index + 1).padStart(2, '0')}
         </span>
 
         {/* Category icon */}
         <div
-          className="w-10 h-10 flex items-center justify-center shrink-0 mt-0.5"
-          style={{
-            background: isCompleted
-              ? 'rgba(201,169,110,0.12)'
-              : 'rgba(255,255,255,0.03)',
-            border: isCompleted
-              ? '1px solid rgba(201,169,110,0.2)'
-              : '1px solid rgba(201,169,110,0.12)',
-          }}
+          className={`w-10 h-10 flex items-center justify-center shrink-0 mt-0.5 border ${
+            isCompleted ? 'bg-gold/10 border-gold/35' : 'bg-forest-pale border-forest/20'
+          }`}
         >
           {isCompleted ? (
-            <CheckIcon className="text-[#C9A96E]" />
+            <CheckIcon className="text-gold-dark" />
           ) : (
             <CategoryIcon
               category={challenge.category}
-              className="text-champagne/50"
+              className="text-forest"
             />
           )}
         </div>
@@ -497,20 +481,20 @@ function ChallengeCard({
         {/* Text */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="headline-editorial text-cream text-lg sm:text-xl truncate">
+            <h3 className="headline-editorial text-lg sm:text-xl truncate">
               {challenge.title}
             </h3>
             {isCompleted && (
-              <span className="eyebrow text-[9px] text-[#C9A96E]/60 shrink-0">
+              <span className="eyebrow text-[9px] shrink-0">
                 Completed
               </span>
             )}
           </div>
-          <p className="font-sans text-xs sm:text-sm text-cream/40 mt-1 line-clamp-1">
+          <p className="font-sans text-xs sm:text-sm text-peat/60 mt-1 line-clamp-1">
             {challenge.description}
           </p>
           {!isQuiz && challenge.target_count > 1 && (
-            <p className="numeral text-xs mt-1.5 tabular-nums">
+            <p className="numeral text-gold-dark text-xs mt-1.5 tabular-nums">
               {challenge.user_progress} / {challenge.target_count}
             </p>
           )}
@@ -522,12 +506,12 @@ function ChallengeCard({
             className="inline-flex items-center gap-1.5 font-display text-sm px-3 py-1"
             style={{
               background: isCompleted
-                ? 'rgba(201,169,110,0.12)'
-                : 'rgba(201,169,110,0.08)',
-              color: isCompleted ? '#C9A96E' : 'rgba(201,169,110,0.8)',
+                ? 'rgba(75, 93, 240,0.14)'
+                : 'rgba(75, 93, 240,0.08)',
+              color: '#1B2FDE',
               border: isCompleted
-                ? '1px solid rgba(201,169,110,0.25)'
-                : '1px solid rgba(201,169,110,0.15)',
+                ? '1px solid rgba(75, 93, 240,0.40)'
+                : '1px solid rgba(75, 93, 240,0.25)',
             }}
           >
             <StarIcon className="w-3 h-3" />
@@ -550,7 +534,7 @@ function ChallengeCard({
           ) : isQuiz ? (
             <>
               {challenge.quiz_question && (
-                <p className="font-display italic text-sm sm:text-base text-cream/65 leading-relaxed mb-4">
+                <p className="font-display italic text-sm sm:text-base text-peat/70 leading-relaxed mb-4">
                   &ldquo;{challenge.quiz_question}&rdquo;
                 </p>
               )}
@@ -564,9 +548,9 @@ function ChallengeCard({
           ) : (
             <>
               {/* Progress bar */}
-              <div className="h-1 overflow-hidden mb-4" style={{ background: 'rgba(255,255,255,0.05)' }}>
+              <div className="h-1 overflow-hidden mb-4 bg-parchment-dark">
                 <div className="h-full transition-all duration-500"
-                  style={{ width: `${progressPct}%`, background: 'linear-gradient(90deg, #C9A96E, #b8944d)' }} />
+                  style={{ width: `${progressPct}%`, background: 'linear-gradient(90deg, #1B2FDE, #4B5DF0)' }} />
               </div>
               {/* Redirect button(s) */}
               {(challenge.title === 'Plan Something' || challenge.title === 'Five-Plan Week' || challenge.title === 'LARP Legend') ? (
@@ -575,7 +559,7 @@ function ChallengeCard({
                     <Link
                       key={href}
                       href={href}
-                      className="flex-1 py-3 text-center font-sans text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-cream/45 border border-champagne/15 hover:border-champagne/40 hover:text-champagne transition-all duration-300"
+                      className="flex-1 py-3 text-center font-sans text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-peat/55 border border-forest/20 hover:border-forest hover:text-forest transition-all duration-300"
                     >
                       {label}
                     </Link>
@@ -604,15 +588,12 @@ function ChallengeCard({
       {/* Completed progress bar (full) */}
       {isCompleted && (
         <div className="mt-4">
-          <div
-            className="h-1 overflow-hidden"
-            style={{ background: 'rgba(255,255,255,0.04)' }}
-          >
+          <div className="h-1 overflow-hidden bg-parchment-dark">
             <div
               className="h-full"
               style={{
                 width: '100%',
-                background: 'linear-gradient(90deg, rgba(201,169,110,0.5), rgba(201,169,110,0.25))',
+                background: 'linear-gradient(90deg, rgba(75, 93, 240,0.55), rgba(75, 93, 240,0.30))',
               }}
             />
           </div>
@@ -713,19 +694,19 @@ export default function ChallengesClient() {
   // Not authenticated
   if (status === 'unauthenticated') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-ink text-cream px-6">
+      <div className="min-h-screen flex items-center justify-center bg-parchment text-peat px-6">
         <div className="text-center max-w-md">
           <p className="eyebrow mb-6 flex items-center justify-center gap-4">
-            <span className="inline-block h-px w-10 bg-champagne/50" />
+            <span className="inline-block h-px w-10 bg-gold/50" />
             Members Only
-            <span className="inline-block h-px w-10 bg-champagne/50" />
+            <span className="inline-block h-px w-10 bg-gold/50" />
           </p>
-          <h1 className="headline-editorial text-cream text-4xl sm:text-5xl mb-5">
-            The <span className="italic text-champagne">Catalogue</span> awaits.
+          <h1 className="headline-editorial text-4xl sm:text-5xl mb-5">
+            The field <em className="italic text-gold-dark">exercises</em> await.
           </h1>
-          <p className="font-sans text-sm text-cream/45 leading-relaxed mb-8">
-            Sign in to complete daily, weekly, and monthly quests — earn XP and
-            climb the ranked register.
+          <p className="font-sans text-sm text-peat/65 leading-relaxed mb-8">
+            Sign in to complete daily, weekly, and monthly assignments — earn XP
+            and climb the ranked register.
           </p>
           <Link href="/" className="btn-editorial">
             Go Home <span aria-hidden>→</span>
@@ -736,9 +717,7 @@ export default function ChallengesClient() {
   }
 
   return (
-    <div className="min-h-screen pb-20 bg-ink text-cream">
-      <div className="fixed inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 35% at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 60%)' }} />
+    <div className="min-h-screen pb-20 bg-parchment text-peat">
       {/* Confetti & points animations */}
       {showConfetti && <Confetti />}
       {pointsPopup !== null && <PointsPopup points={pointsPopup} />}
@@ -757,62 +736,62 @@ export default function ChallengesClient() {
         <div className="max-w-2xl mx-auto text-center">
           {/* Season label */}
           <p className="eyebrow mb-5 flex items-center justify-center gap-4">
-            <span className="inline-block h-px w-10 bg-champagne/50" />
-            The Catalogue · Season 1
-            <span className="inline-block h-px w-10 bg-champagne/50" />
+            <span className="inline-block h-px w-10 bg-gold/50" />
+            The Society Papers · Season 1
+            <span className="inline-block h-px w-10 bg-gold/50" />
           </p>
 
-          {/* Month heading */}
-          {loading ? (
-            <div className="h-12 w-56 mx-auto rounded bg-white/[0.04] animate-pulse mb-4" />
-          ) : (
-            <h1 className="headline-editorial text-champagne text-5xl sm:text-7xl mb-4">
-              {data?.monthLabel ?? 'Challenges'}
-            </h1>
-          )}
+          {/* Chapter heading */}
+          <h1 className="headline-editorial text-5xl sm:text-7xl mb-4">
+            Field <em className="italic text-gold-dark">Exercises</em>.
+          </h1>
 
-          {/* Countdown */}
-          {!loading && data && (
-            <p className="font-display italic text-cream/40 text-base sm:text-lg mb-7">
-              Resets in{' '}
-              <span className="text-champagne not-italic tabular-nums">
-                {data.daysRemaining}
-              </span>{' '}
-              {data.daysRemaining === 1 ? 'day' : 'days'}
-            </p>
+          {/* Month + countdown */}
+          {loading ? (
+            <div className="h-6 w-56 mx-auto rounded bg-parchment-dark/70 animate-pulse mb-7" />
+          ) : (
+            data && (
+              <p className="font-display italic text-peat/55 text-base sm:text-lg mb-7">
+                {data.monthLabel} · resets in{' '}
+                <span
+                  className={`not-italic tabular-nums ${
+                    data.daysRemaining <= 2 ? 'text-burgundy' : 'text-gold-dark'
+                  }`}
+                >
+                  {data.daysRemaining}
+                </span>{' '}
+                {data.daysRemaining === 1 ? 'day' : 'days'}
+              </p>
+            )
           )}
 
           {/* Season XP */}
           {!loading && data && (
             <div className="max-w-sm mx-auto">
               <div className="flex items-center justify-between mb-3">
-                <span className="eyebrow text-[10px] text-cream/35">
+                <span className="eyebrow-muted text-[10px]">
                   {currentTier.name}
                 </span>
-                <span className="font-display text-base tabular-nums" style={{ color: '#C9A96E' }}>
+                <span className="font-display text-base tabular-nums text-gold-dark">
                   {data.seasonXP} XP
                 </span>
                 {nextTier && (
-                  <span className="eyebrow text-[10px] text-cream/35">
+                  <span className="eyebrow-muted text-[10px]">
                     {nextTier.name}
                   </span>
                 )}
               </div>
-              <div
-                className="h-2 rounded-full overflow-hidden"
-                style={{ background: 'rgba(255,255,255,0.04)' }}
-              >
+              <div className="h-2 rounded-full overflow-hidden bg-parchment-dark">
                 <div
                   className="h-full rounded-full transition-all duration-700"
                   style={{
                     width: `${Math.min(100, tierProgress * 100)}%`,
-                    background: 'linear-gradient(90deg, #8B6914, #C9A96E, #E8D5A3)',
-                    boxShadow: '0 0 10px rgba(201,169,110,0.3)',
+                    background: 'linear-gradient(90deg, #1B2FDE, #4B5DF0, #8B97F5)',
                   }}
                 />
               </div>
               {nextTier && (
-                <p className="font-sans text-[10px] text-cream/20 mt-1.5 text-center">
+                <p className="font-sans text-[10px] text-peat/45 mt-1.5 text-center">
                   {nextTier.threshold - data.seasonXP} XP to {nextTier.name}
                 </p>
               )}
@@ -824,7 +803,7 @@ export default function ChallengesClient() {
       {/* ── Tab Bar ─────────────────────────────────────────────── */}
       <div className="px-4 sm:px-6 mb-8">
         <div className="max-w-2xl mx-auto">
-          <div className="flex w-full border-y border-champagne/15">
+          <div className="flex w-full border-y border-forest/15">
             {(['daily', 'weekly', 'monthly'] as Tab[]).map((t, i) => {
               const isActive = tab === t;
               const count = data?.challenges.filter((c) => c.frequency === t).length ?? 0;
@@ -838,21 +817,21 @@ export default function ChallengesClient() {
                   onClick={() => setTab(t)}
                   aria-pressed={isActive}
                   className={`relative flex-1 py-4 font-sans text-[11px] tracking-[0.25em] uppercase transition-colors duration-300 ${
-                    i > 0 ? 'border-l border-champagne/15' : ''
+                    i > 0 ? 'border-l border-forest/15' : ''
                   } ${
-                    isActive ? 'text-champagne' : 'text-cream/35 hover:text-cream/60'
+                    isActive ? 'text-gold-dark' : 'text-peat/45 hover:text-peat/70'
                   }`}
                 >
                   {t}
                   {count > 0 && (
                     <span
                       className="ml-2 numeral text-[9px] tabular-nums"
-                      style={{ color: isActive ? 'rgba(201,169,110,0.6)' : 'rgba(245,240,232,0.2)' }}
+                      style={{ color: isActive ? 'rgba(124,95,40,0.8)' : 'rgba(16, 17, 20,0.35)' }}
                     >
                       {completedCount}/{count}
                     </span>
                   )}
-                  <span className={`absolute left-0 -bottom-px h-px w-full bg-champagne origin-center transition-transform duration-500 ${
+                  <span className={`absolute left-0 -bottom-px h-px w-full bg-gold origin-center transition-transform duration-500 ${
                     isActive ? 'scale-x-100' : 'scale-x-0'
                   }`} />
                 </button>
@@ -862,7 +841,7 @@ export default function ChallengesClient() {
         </div>
       </div>
 
-      {/* ── Challenge Cards ─────────────────────────────────────── */}
+      {/* ── Exercise Cards ──────────────────────────────────────── */}
       <div className="px-4 sm:px-6">
         <div className="max-w-2xl mx-auto space-y-3">
           {loading ? (
@@ -873,12 +852,12 @@ export default function ChallengesClient() {
               <SkeletonCard />
             </>
           ) : filtered.length === 0 ? (
-            <div className="text-center py-20 border-y border-champagne/15">
-              <p className="font-display italic text-cream/30 text-2xl mb-2">
-                The catalogue is empty
+            <div className="text-center py-20 border-y border-forest/15">
+              <p className="font-display italic text-peat/45 text-2xl mb-2">
+                No exercises posted
               </p>
-              <p className="font-sans text-cream/30 text-xs tracking-wide">
-                No challenges available for this period.
+              <p className="font-sans text-peat/50 text-xs tracking-wide">
+                The Society will issue new assignments shortly.
               </p>
             </div>
           ) : (
@@ -900,7 +879,7 @@ export default function ChallengesClient() {
       {!loading && data && (
         <div className="px-4 sm:px-6 mt-12">
           <div className="max-w-2xl mx-auto">
-            <p className="eyebrow-muted mb-4 text-champagne/35">The Tally</p>
+            <p className="eyebrow-muted mb-4">The Tally</p>
             <div className="rule-champagne-dim mb-6" />
             <div className="flex items-center justify-around">
               {(['daily', 'weekly', 'monthly'] as const).map((freq) => {
@@ -911,14 +890,14 @@ export default function ChallengesClient() {
                 const total = freqChallenges.reduce((sum, c) => sum + c.points, 0);
                 return (
                   <div key={freq} className="text-center">
-                    <p className="eyebrow text-[9px] text-cream/30 mb-2">
+                    <p className="eyebrow-muted text-[9px] mb-2">
                       {freq}
                     </p>
-                    <p className="font-display text-2xl sm:text-3xl tabular-nums leading-none" style={{ color: '#C9A96E' }}>
+                    <p className="font-display text-2xl sm:text-3xl tabular-nums leading-none text-gold-dark">
                       {earned}
-                      <span className="text-cream/20">/{total}</span>
+                      <span className="text-peat/30">/{total}</span>
                     </p>
-                    <p className="eyebrow text-[9px] text-cream/20 mt-2">XP</p>
+                    <p className="eyebrow-muted text-[9px] mt-2">XP</p>
                   </div>
                 );
               })}

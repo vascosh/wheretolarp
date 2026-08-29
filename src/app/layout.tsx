@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -7,18 +6,8 @@ import Providers from '@/components/Providers';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  variable: '--font-playfair',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
+// Type is Helvetica Neue via the system stack (see --font-helvetica in
+// globals.css) — no webfont, no licence, no network request.
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -46,23 +35,13 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-      <head>
-        {/* Fontshare Gambetta — characterful display serif for editorial headlines */}
-        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=gambetta@300,400,500,600,700&display=swap"
-        />
-      </head>
-      <body className="bg-cream text-charcoal antialiased">
+    <html lang="en">
+      <body className="bg-parchment text-peat antialiased">
         <Providers session={session}>
           <Navigation />
           <main className="min-h-screen">{children}</main>
           <Footer />
         </Providers>
-        {/* Site-wide film-grain atmosphere (pointer-events-none, fixed) */}
-        <div className="grain-overlay" aria-hidden />
       </body>
     </html>
   );

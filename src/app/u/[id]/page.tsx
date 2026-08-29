@@ -27,11 +27,11 @@ function Avatar({ name, image, size = 80 }: { name: string; image?: string | nul
   const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || '?';
   if (image) {
     return <img src={image} alt={name} referrerPolicy="no-referrer"
-      className="rounded-full object-cover border border-champagne/25" style={{ width: size, height: size }} />;
+      className="rounded-full object-cover border border-gold/40" style={{ width: size, height: size }} />;
   }
   return (
-    <div className="rounded-full flex items-center justify-center font-sans font-semibold text-navy shrink-0 border border-champagne/25"
-      style={{ width: size, height: size, background: 'linear-gradient(135deg, #C9A96E, #b8944d)', fontSize: size * 0.32 }}>
+    <div className="rounded-full flex items-center justify-center font-sans font-semibold text-forest shrink-0 border border-gold/40"
+      style={{ width: size, height: size, background: 'linear-gradient(135deg, #4B5DF0, #1B2FDE)', fontSize: size * 0.32 }}>
       {initials}
     </div>
   );
@@ -40,9 +40,9 @@ function Avatar({ name, image, size = 80 }: { name: string; image?: string | nul
 function mutualLabel(mutuals: { name: string | null }[]) {
   if (mutuals.length === 0) return null;
   const first = mutuals[0].name ?? 'Someone';
-  if (mutuals.length === 1) return <><span className="font-display italic text-champagne/70">{first}</span> larps together</>;
+  if (mutuals.length === 1) return <><span className="font-display italic text-gold-dark">{first}</span> larps together</>;
   const rest = mutuals.length - 1;
-  return <><span className="font-display italic text-champagne/70">{first}</span> and {rest} {rest === 1 ? 'other' : 'others'} larp together</>;
+  return <><span className="font-display italic text-gold-dark">{first}</span> and {rest} {rest === 1 ? 'other' : 'others'} larp together</>;
 }
 
 type FriendStatus = 'none' | 'pending_sent' | 'pending_received' | 'accepted';
@@ -59,10 +59,10 @@ export default async function PublicProfilePage({ params }: { params: { id: stri
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-nav bg-ink text-cream">
+      <div className="min-h-screen flex items-center justify-center pt-nav bg-parchment text-peat">
         <div className="text-center px-6">
           <p className="eyebrow mb-5">Not in the Register</p>
-          <h1 className="headline-editorial text-cream text-4xl sm:text-5xl mb-6">Member not found</h1>
+          <h1 className="headline-editorial text-4xl sm:text-5xl mb-6">Member not found</h1>
           <Link href="/" className="link-underline">← Return home</Link>
         </div>
       </div>
@@ -121,56 +121,55 @@ export default async function PublicProfilePage({ params }: { params: { id: stri
   // Friends can see the full profile
   if (!user.public_profile && !isOwnProfile && friendStatus !== 'accepted') {
     return (
-      <div className="min-h-screen pt-nav bg-ink text-cream">
-        <div className="fixed inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 20%, rgba(201,169,110,0.06) 0%, transparent 70%)' }} />
-
+      <div className="min-h-screen pt-nav bg-parchment text-peat">
         <div className="relative max-w-xl mx-auto px-4 sm:px-6 py-14">
-          <div className="border border-champagne/15 bg-navy/40 p-8 sm:p-10 text-center mb-8">
-            <p className="eyebrow mb-6">A Member of the Register</p>
-            <div className="flex justify-center mb-5">
-              <Avatar name={user.name ?? 'Member'} image={user.avatar_url} size={88} />
-            </div>
-            <h1 className="headline-editorial text-cream text-3xl sm:text-4xl mb-1">{user.name ?? 'Member'}</h1>
-            {user.username && (
-              <p className="font-sans text-champagne/55 text-xs mb-4 tracking-[0.2em]">@{user.username}</p>
-            )}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-champagne/20 mb-2">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-champagne/50">
-                <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="2"/>
-                <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              <span className="font-sans text-[10px] text-cream/40 tracking-[0.3em] uppercase">Private Dossier</span>
-            </div>
+          <div className="plate-frame mb-8">
+            <div className="relative p-8 sm:p-10 text-center">
+              <p className="eyebrow mb-6">A Member of the Register</p>
+              <div className="flex justify-center mb-5">
+                <Avatar name={user.name ?? 'Member'} image={user.avatar_url} size={88} />
+              </div>
+              <h1 className="headline-editorial text-3xl sm:text-4xl mb-1">{user.name ?? 'Member'}</h1>
+              {user.username && (
+                <p className="font-sans text-gold-dark text-[11px] mb-4 tracking-[0.25em] uppercase">@{user.username}</p>
+              )}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-forest/25 mb-2">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-gold-dark/70">
+                  <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <span className="font-sans text-[10px] text-peat/50 tracking-[0.3em] uppercase">Private Dossier</span>
+              </div>
 
-            {mutualFriends.length > 0 && (
-              <p className="font-sans text-xs text-cream/40 mt-5 mb-1">
-                {mutualLabel(mutualFriends)}
-              </p>
-            )}
+              {mutualFriends.length > 0 && (
+                <p className="font-sans text-xs text-peat/55 mt-5 mb-1">
+                  {mutualLabel(mutualFriends)}
+                </p>
+              )}
 
-            {session?.user ? (
-              <>
-                <AddFriendButton
-                  targetId={user.id}
-                  initialStatus={friendStatus}
-                  friendshipId={friendshipId}
-                />
-                <UserActions
-                  targetId={user.id}
-                  targetName={user.name}
-                  showMessage
-                />
-              </>
-            ) : (
-              <p className="font-display italic text-cream/35 text-base mt-5">
-                Sign in to connect.
-              </p>
-            )}
+              {session?.user ? (
+                <>
+                  <AddFriendButton
+                    targetId={user.id}
+                    initialStatus={friendStatus}
+                    friendshipId={friendshipId}
+                  />
+                  <UserActions
+                    targetId={user.id}
+                    targetName={user.name}
+                    showMessage
+                  />
+                </>
+              ) : (
+                <p className="font-display italic text-peat/45 text-base mt-5">
+                  Sign in to connect.
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="text-center">
-            <Link href="/" className="eyebrow-muted hover:text-champagne transition-colors">
+            <Link href="/" className="eyebrow-muted hover:text-gold-dark transition-colors">
               Where To LARP
             </Link>
           </div>
@@ -210,65 +209,64 @@ export default async function PublicProfilePage({ params }: { params: { id: stri
   const showEmail = user.show_email && isOwnProfile;
 
   return (
-    <div className="min-h-screen pt-nav bg-ink text-cream">
-      <div className="fixed inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 20%, rgba(201,169,110,0.06) 0%, transparent 70%)' }} />
-
+    <div className="min-h-screen pt-nav bg-parchment text-peat">
       <div className="relative max-w-xl mx-auto px-4 sm:px-6 py-14">
 
-        {/* Profile dossier card */}
-        <div className="border border-champagne/15 bg-navy/40 p-8 sm:p-10 text-center mb-8">
-          <p className="eyebrow mb-6">A Member of the Register</p>
-          <div className="flex justify-center mb-5">
-            <Avatar name={user.name ?? 'Member'} image={user.avatar_url} size={88} />
-          </div>
-          <h1 className="headline-editorial text-cream text-3xl sm:text-4xl mb-1">{user.name ?? 'Member'}</h1>
-          {user.username && (
-            <p className="font-sans text-champagne/55 text-xs mb-1 tracking-[0.2em]">@{user.username}</p>
-          )}
-          <p className="font-sans text-cream/30 text-[10px] tracking-[0.25em] uppercase">Member since {joinedYear}</p>
-          {user.bio && (
-            <p className="font-display italic text-cream/55 text-base leading-relaxed mt-4 max-w-xs mx-auto">{user.bio}</p>
-          )}
-
-          <div className="rule-champagne-dim my-7" />
-          <ProfileStats
-            userId={user.id}
-            initialStats={initialStats}
-            isOwnProfile={isOwnProfile}
-          />
-
-          {mutualFriends.length > 0 && (
-            <p className="font-sans text-xs text-cream/40 mt-7 pt-7 border-t border-champagne/10">
-              {mutualLabel(mutualFriends)}
-            </p>
-          )}
-
-          {isOwnProfile ? (
-            <div className="mt-7 flex flex-wrap gap-3 justify-center">
-              <Link href="/profile"
-                className="btn-editorial focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
-                My Profile
-              </Link>
-              <Link href="/settings"
-                className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
-                Settings
-              </Link>
+        {/* Character sheet — specimen plate */}
+        <div className="plate-frame mb-8">
+          <div className="relative p-8 sm:p-10 text-center">
+            <p className="eyebrow mb-6">A Member of the Register</p>
+            <div className="flex justify-center mb-5">
+              <Avatar name={user.name ?? 'Member'} image={user.avatar_url} size={88} />
             </div>
-          ) : session?.user ? (
-            <>
-              <AddFriendButton
-                targetId={user.id}
-                initialStatus={friendStatus}
-                friendshipId={friendshipId}
-              />
-              <UserActions
-                targetId={user.id}
-                targetName={user.name}
-                showMessage
-              />
-            </>
-          ) : null}
+            <h1 className="headline-editorial text-3xl sm:text-4xl mb-1">{user.name ?? 'Member'}</h1>
+            {user.username && (
+              <p className="font-sans text-gold-dark text-[11px] mb-1 tracking-[0.25em] uppercase">@{user.username}</p>
+            )}
+            <p className="font-sans text-peat/40 text-[10px] tracking-[0.25em] uppercase">Member since {joinedYear}</p>
+            {user.bio && (
+              <p className="font-display italic text-peat/60 text-base leading-relaxed mt-4 max-w-xs mx-auto">{user.bio}</p>
+            )}
+
+            <div className="rule-champagne-dim my-7" />
+            <ProfileStats
+              userId={user.id}
+              initialStats={initialStats}
+              isOwnProfile={isOwnProfile}
+            />
+
+            {mutualFriends.length > 0 && (
+              <p className="font-sans text-xs text-peat/55 mt-7 pt-7 border-t border-forest/10">
+                {mutualLabel(mutualFriends)}
+              </p>
+            )}
+
+            {isOwnProfile ? (
+              <div className="mt-7 flex flex-wrap gap-3 justify-center">
+                <Link href="/profile"
+                  className="btn-editorial focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
+                  My Profile
+                </Link>
+                <Link href="/settings"
+                  className="btn-editorial-ghost focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light">
+                  Settings
+                </Link>
+              </div>
+            ) : session?.user ? (
+              <>
+                <AddFriendButton
+                  targetId={user.id}
+                  initialStatus={friendStatus}
+                  friendshipId={friendshipId}
+                />
+                <UserActions
+                  targetId={user.id}
+                  targetName={user.name}
+                  showMessage
+                />
+              </>
+            ) : null}
+          </div>
         </div>
 
         {/* Plans & calendar — visible to friends and own profile */}
@@ -285,7 +283,7 @@ export default async function PublicProfilePage({ params }: { params: { id: stri
         )}
 
         <div className="text-center">
-          <Link href="/" className="eyebrow-muted hover:text-champagne transition-colors">
+          <Link href="/" className="eyebrow-muted hover:text-gold-dark transition-colors">
             Where To LARP
           </Link>
         </div>

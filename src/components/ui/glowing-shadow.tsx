@@ -24,7 +24,7 @@ const CSS = `
   @property --white-shadow { syntax: "<number>"; inherits: true; initial-value: 0; }
 
   .gs-container {
-    --card-color: #f7f3eb;
+    --card-color: #F7F7F5;
     --card-radius: 2rem;
     --border-width: 2px;
     --bg-size: 1;

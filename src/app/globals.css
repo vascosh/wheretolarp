@@ -68,10 +68,10 @@
 
 @keyframes glow-pulse {
   0%, 100% {
-    filter: drop-shadow(0 8px 40px rgba(201,169,110,0.12));
+    filter: drop-shadow(0 8px 40px rgba(75, 93, 240, 0.12));
   }
   50% {
-    filter: drop-shadow(0 12px 60px rgba(201,169,110,0.25));
+    filter: drop-shadow(0 12px 60px rgba(75, 93, 240, 0.25));
   }
 }
 
@@ -81,18 +81,29 @@
 }
 
 :root {
-  --color-champagne: #C9A96E;
-  --color-champagne-light: #E8D5B0;
-  --color-champagne-dark: #A07C45;
-  --color-navy: #0A1628;
-  --color-navy-light: #142240;
-  --color-cream: #FAF7F2;
-  --color-cream-dark: #F0EBE3;
-  --color-charcoal: #2C2C2C;
-  --color-muted: #888888;
-  --color-ink: #060D18;
-  /* Fontshare display serif, falls back to Playfair if the CDN is unavailable */
-  --font-gambetta: 'Gambetta', var(--font-playfair), Georgia, serif;
+  /* Swiss Blue — neutral off-white paper, electric Klein blue, ink black */
+  --color-parchment: #F7F7F5;
+  --color-parchment-light: #FFFFFF;
+  --color-parchment-dark: #EBEBE7;
+  --color-forest: #1B2FDE;
+  --color-forest-light: #3D4EE8;
+  --color-gold: #4B5DF0;
+  --color-gold-light: #C3CBFA;
+  --color-burgundy: #D4183D;
+  --color-peat: #101114;
+  /* Legacy aliases (remapped in tailwind.config.ts as well) */
+  --color-champagne: #4B5DF0;
+  --color-champagne-light: #C3CBFA;
+  --color-champagne-dark: #1B2FDE;
+  --color-navy: #1B2FDE;
+  --color-navy-light: #3D4EE8;
+  --color-cream: #FFFFFF;
+  --color-cream-dark: #F7F7F5;
+  --color-charcoal: #101114;
+  --color-muted: #6B6D75;
+  --color-ink: #101114;
+  /* One typeface, everywhere. True Helvetica Neue on macOS/iOS, Arial elsewhere. */
+  --font-helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 @layer base {
@@ -101,15 +112,15 @@
   }
 
   body {
-    background-color: #FAF7F2;
-    color: #2C2C2C;
-    font-family: var(--font-inter), system-ui, sans-serif;
+    background-color: #F7F7F5;
+    color: #101114;
+    font-family: var(--font-helvetica);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4 {
-    font-family: var(--font-playfair), Georgia, serif;
+    font-family: var(--font-helvetica);
   }
 
   * {
@@ -117,8 +128,8 @@
   }
 
   ::selection {
-    background-color: rgba(201, 169, 110, 0.3);
-    color: #0A1628;
+    background-color: rgba(75, 93, 240, 0.22);
+    color: #101114;
   }
 
   /* iOS Safari zooms in when an input is focused if its font-size < 16px.
@@ -134,7 +145,7 @@
 
 @layer components {
   .btn-champagne {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full border border-champagne text-champagne text-xs font-sans tracking-[0.15em] uppercase hover:bg-champagne hover:text-navy transition-all duration-300 cursor-pointer;
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full border border-champagne text-champagne text-xs font-sans tracking-[0.15em] uppercase hover:bg-champagne hover:text-white transition-all duration-300 cursor-pointer;
   }
 
   .btn-navy {
@@ -158,15 +169,15 @@
   }
 
   .filter-pill-active {
-    @apply bg-champagne text-navy border-champagne font-semibold shadow-sm;
+    @apply bg-champagne text-white border-champagne font-semibold shadow-sm;
   }
 
   .filter-pill-inactive {
     @apply bg-white text-charcoal/70 hover:text-champagne hover:shadow-sm;
-    border-color: rgba(44, 44, 44, 0.12);
+    border-color: rgba(16, 17, 20, 0.12);
   }
   .filter-pill-inactive:hover {
-    border-color: rgba(201, 169, 110, 0.6);
+    border-color: rgba(75, 93, 240, 0.6);
   }
 
   /* Long-form legal / prose pages (Terms, Privacy) */
@@ -267,8 +278,9 @@
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   EDITORIAL LUXURY DESIGN SYSTEM  ("The Register")
-   Same champagne / navy / cream palette — new visual language.
+   SWISS BLUE DESIGN SYSTEM
+   Neutral off-white paper · electric Klein blue · ink black.
+   Blue is the only loud colour — use it with restraint.
    ════════════════════════════════════════════════════════════════════ */
 
 @keyframes underline-draw {
@@ -281,71 +293,78 @@
   to   { transform: translateX(-50%); }
 }
 
-@keyframes grain-shift {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  30% { transform: translate(3%, -15%); }
-  50% { transform: translate(-12%, 8%); }
-  70% { transform: translate(7%, 12%); }
-  90% { transform: translate(-8%, 4%); }
-}
-
 @layer components {
-  /* ── Film-grain atmosphere — fixed, ambient, never interactive ── */
-  .grain-overlay {
-    position: fixed;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    animation: grain-shift 8s steps(6) infinite;
-    mix-blend-mode: overlay;
-  }
-
-  /* ── Eyebrow micro-label (uppercase, wide-tracked) ── */
+  /* ── Eyebrow micro-label (uppercase, wide-tracked) ──
+     Default reads on paper; .eyebrow-light is for on-blue sections. */
   .eyebrow {
-    @apply font-sans text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-champagne;
+    @apply font-sans text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-gold-dark;
+  }
+  .eyebrow-light {
+    @apply font-sans text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-gold-light;
   }
   .eyebrow-muted {
-    @apply font-sans text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-charcoal/40;
+    @apply font-sans text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-peat/40;
   }
 
   /* ── Hairline rules ── */
-  .rule-champagne { @apply h-px w-full bg-champagne/25; }
-  .rule-champagne-dim { @apply h-px w-full bg-champagne/10; }
+  .rule-champagne { @apply h-px w-full bg-gold/40; }
+  .rule-champagne-dim { @apply h-px w-full bg-gold/15; }
 
-  /* ── Editorial display headline (Gambetta) ── */
+  /* ── Editorial display headline ── */
   .headline-editorial {
-    @apply font-display font-medium leading-[0.92] tracking-[-0.03em];
+    @apply font-display font-medium leading-[0.92] tracking-[-0.03em] text-forest;
   }
 
   /* ── Underline-draw link/button — gold rule wipes in on hover ── */
   .link-underline {
-    @apply relative inline-flex items-center gap-2 font-sans text-[11px] tracking-[0.25em] uppercase text-champagne transition-colors duration-300;
+    @apply relative inline-flex items-center gap-2 font-sans text-[11px] tracking-[0.25em] uppercase text-gold-dark transition-colors duration-300 hover:text-peat;
   }
   .link-underline::after {
     content: '';
-    @apply absolute left-0 -bottom-1 h-px w-full bg-champagne origin-left;
+    @apply absolute left-0 -bottom-1 h-px w-full bg-gold origin-left;
     transform: scaleX(0);
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .link-underline:hover::after { transform: scaleX(1); }
 
-  /* ── Solid editorial button (champagne fill) ── */
+  /* ── Solid editorial button (racing-green fill) ── */
   .btn-editorial {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-champagne text-navy font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all duration-300 hover:bg-champagne-light cursor-pointer;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-forest text-parchment-light font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all duration-300 hover:bg-forest-light cursor-pointer;
   }
   .btn-editorial-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-champagne/40 text-champagne font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all duration-300 hover:border-champagne hover:bg-champagne/5 cursor-pointer;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-forest/30 text-forest font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all duration-300 hover:border-forest hover:bg-forest/5 cursor-pointer;
+  }
+  /* Light-on-blue variant, for CTAs sitting on filled blue sections */
+  .btn-editorial-gold {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-parchment-light text-forest font-sans text-[11px] font-semibold tracking-[0.25em] uppercase transition-all duration-300 hover:bg-champagne-light cursor-pointer;
   }
 
   /* ── Animated hero underline (draws once on load) ── */
   .draw-underline {
     transform-origin: left;
     animation: underline-draw 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+  }
+
+  /* ── Paper card — the standard Heritage Daylight surface ── */
+  .card-paper {
+    @apply rounded-[18px] border border-peat/10 bg-parchment-light shadow-[0_2px_24px_rgba(16,17,20,0.07)];
+  }
+
+  /* ── Specimen plate — double hairline frame, like an engraved plate ── */
+  .plate-frame {
+    @apply relative border border-forest/25 bg-parchment-light p-1.5;
+  }
+  .plate-frame::before {
+    content: '';
+    @apply pointer-events-none absolute inset-1.5 border border-forest/15;
+  }
+
+  /* ── Ledger row — index entries with a dotted leader line ── */
+  .ledger-row {
+    @apply flex items-baseline gap-3;
+  }
+  .ledger-row .leader {
+    @apply flex-1 border-b border-dotted border-peat/30 translate-y-[-0.3em];
   }
 }
 
@@ -374,14 +393,13 @@
 
   /* Hanging numeral for index/register entries */
   .numeral {
-    @apply font-sans tabular-nums text-champagne/50;
+    @apply font-sans tabular-nums text-gold/60;
     font-variant-numeric: tabular-nums;
   }
 }
 
 /* Respect reduced-motion: kill ambient + reveal motion */
 @media (prefers-reduced-motion: reduce) {
-  .grain-overlay,
   .animate-marquee,
   .draw-underline { animation: none !important; }
   .draw-underline { transform: scaleX(1); }

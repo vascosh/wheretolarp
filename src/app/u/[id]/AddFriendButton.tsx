@@ -56,7 +56,7 @@ export default function AddFriendButton({
         <button
           onClick={removeRequest}
           disabled={loading}
-          className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/30 border-b border-transparent hover:text-red-400/70 hover:border-red-400/40 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+          className="font-sans text-[10px] tracking-[0.25em] uppercase text-peat/40 border-b border-transparent hover:text-burgundy hover:border-burgundy/40 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
         >
           Remove
         </button>
@@ -71,7 +71,7 @@ export default function AddFriendButton({
         <button
           onClick={removeRequest}
           disabled={loading}
-          className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/30 border-b border-transparent hover:text-cream/60 hover:border-cream/30 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+          className="font-sans text-[10px] tracking-[0.25em] uppercase text-peat/40 border-b border-transparent hover:text-peat/70 hover:border-peat/30 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
         >
           Cancel
         </button>
@@ -86,14 +86,14 @@ export default function AddFriendButton({
         <button
           onClick={acceptRequest}
           disabled={loading}
-          className="btn-editorial disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+          className="btn-editorial disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
         >
           Accept
         </button>
         <button
           onClick={removeRequest}
           disabled={loading}
-          className="font-sans text-[10px] tracking-[0.25em] uppercase text-cream/30 border-b border-transparent hover:text-cream/60 hover:border-cream/30 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+          className="font-sans text-[10px] tracking-[0.25em] uppercase text-peat/40 border-b border-transparent hover:text-peat/70 hover:border-peat/30 transition-all disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
         >
           Decline
         </button>
@@ -106,7 +106,7 @@ export default function AddFriendButton({
       <button
         onClick={sendRequest}
         disabled={loading}
-        className="btn-editorial-ghost disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+        className="btn-editorial-ghost disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment-light"
       >
         {loading ? 'Sending…' : 'Add to Register'}
       </button>
