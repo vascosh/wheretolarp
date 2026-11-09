@@ -10,12 +10,11 @@ export type Category =
   | 'Rooftop Bar';
 
 export type EventCategory =
-  | 'Art & Galleries'
-  | 'Dining & Nightlife'
-  | 'Hotel Bars & Lounges'
-  | 'Cultural'
-  | 'Members Clubs'
-  | 'Rooftop & Outdoor';
+  | 'Founder & VC Mixers'
+  | 'Pitch Nights & Demo Days'
+  | 'Dinners & Breakfasts'
+  | 'Summits & Investor Days'
+  | 'Hackathons';
 
 export interface OutfitDetails {
   brands: string[];

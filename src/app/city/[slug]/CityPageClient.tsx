@@ -32,12 +32,11 @@ const ENGRAVING_FILTER =
 const GOLD = '#4B5DF0';
 
 const EVENT_CATEGORIES = [
-  'Art & Galleries',
-  'Dining & Nightlife',
-  'Hotel Bars & Lounges',
-  'Cultural',
-  'Members Clubs',
-  'Rooftop & Outdoor',
+  'Founder & VC Mixers',
+  'Pitch Nights & Demo Days',
+  'Dinners & Breakfasts',
+  'Summits & Investor Days',
+  'Hackathons',
 ] as const;
 
 export default function CityPageClient({ city, events, spaces }: CityPageClientProps) {
